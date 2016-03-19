@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Year Slider</title>
+  <link rel="stylesheet" href="d3.slider.css" />  
+  <style>
+
+    body {
+      font-family: Verdana,Arial,sans-serif;
+    }
+
+    h2 {
+      font-size: 1.2em;
+      margin: 60px 0 5px 0;
+    }
+
+    .wrapper {
+      width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .wrapper > div {
+      margin: 35px 0;
+    }
+
+    #slider8 {
+      height: 250px;
+    }
+
+    #slider9 {
+      height: 250px;
+    }
+
+
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+     <span id="year"></span>
+     <div id="slider7"></div>
+  </div>
+
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="d3.slider.js"></script>
+  <script>
+
+  d3.csv("../gross_fiscal_deficit.csv", function(error,dataset){
+        if(error){
+          console.log(error);
+       }
+
+    years_keys= (Object.keys(dataset[0]));
+    years_keys.shift();
+    year_dic={};
+    var year_list=[];
+    for(var i =0;i <years_keys.length ;i++){
+      year_dic[parseInt(years_keys[i].substr(0, 4))]=years_keys[i];
+      year_list.push(parseInt(years_keys[i].substr(0, 4)));
+    }
+    console.log( year_dic);
+
+   var startyear=String(year_list[0]);
+   var endyear=String(year_list[year_list.length-1]);
+   function getdata(year_dic){
+      return year_dic;
+    }
+
+ 
+
+    d3.select('#slider7').call(d3.slider().axis(d3.svg.axis().ticks(20)).min(startyear).max(endyear).step(1).on("slide", function(  evt, value) {
+      console.log(value);getdata();d3.select('#year').text(year_dic[value]);
+    }));
+
+});
+  </script>
+ 
+</body>
+</html>

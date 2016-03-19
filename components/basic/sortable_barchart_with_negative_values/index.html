@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<!-- saved from url=(0039)http://bl.ocks.org/slnader/raw/9452976/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Positive and Negative Value Bar Chart</title>
+
+
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>  <style>
+ svg{
+  /*background-image: url(background.jpg);*/
+  border: 1px solid;
+ }
+ body{
+  font-family: sans-serif;
+}
+.positive{
+    fill: #10222B;
+    fill-opacity: 0.9;
+  }
+.negative{
+    fill: #B9121B;
+    fill-opacity: 0.9;
+  }
+.axis path,
+.axis line {
+      fill: none;
+      stroke: black;
+      shape-rendering: crispEdges;
+  }
+.axis text {
+      font-family: sans-serif;
+      font-size: 10px;  
+  }
+div.tooltip {   
+        
+    text-align: center;
+    vertical-align: middle;   
+    width: 150px;                  
+    height: 50px;                 
+    padding: 5px; 
+    color: #000000;          
+    font-size: 12px;     
+    background: #FFF;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    border: 2px;  
+    border-radius: 8px;  
+    pointer-events: none;                  
+  } 
+li{
+  overflow:hidden;
+  display: inline-block;
+}
+ul{
+  padding-left: 0;
+  padding-right: 0;
+}
+#chart-container{
+  float:left;
+}
+
+
+.axis text {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+#visualisation-area{
+  margin: 0 auto;
+  display: block;
+
+}
+  </style>
+  </head>
+
+  <body>
+  <div id="visualisation-area">
+      <label><input type="checkbox"> Sort values</label>
+      <br>
+      <div id="chart-container"></div>
+      <div class="tooltip" style="opacity: 0;"></div>
+  </div>
+    <script src="index.js"></script>
+
+
+<script>var dataset;
+
+//Define bar chart function 
+  function barChart(dataset){ 
+
+    //Set width and height as fixed variables
+
+    var margin = {top: 20, right: 30, bottom: 65, left: 30},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+
+    
+    var padding = 25;
+    var year="2006-07";
+    //Scale funcion for axes and radius
+    var y = d3.scale.linear()
+            .domain(d3.extent(dataset, function(d){return parseFloat(d[year]);}))
+            .range([height - margin.top - margin.bottom, 0])
+            .nice();
+
+    var x = d3.scale.ordinal()
+            .domain(dataset.map(function(d){ return d.States;}))
+            .rangeRoundBands([padding, width - margin.left - margin.right],0.2);
+
+    //To format axis as a percent
+    var formatPercent = d3.format("%1");
+
+    //Create y axis
+    var yAxis = d3.svg.axis().scale(y).orient("left").ticks(15);
+
+
+    var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+    var tooltip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+    return "<strong>"+d.States+":</strong> <span style='color:red'>" + d[year] + "</span>";
+  });
+
+    //Define key function
+    var key = function(d){return d.States};
+
+    //Define tooltip for hover-over info windows
+    var div = d3.select("body").append("div")   
+                .attr("class", "tooltip")               
+                .style("opacity", 0);
+
+    //Create svg element
+   
+
+        var svg = d3.select("#chart-container").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .attr("id", "chart")
+        .attr("viewBox", "0 0 "+width+ " "+height)
+        .attr("preserveAspectRatio", "xMinYMin")
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    
+    svg.call(tooltip);
+    //Resizing function to maintain aspect ratio (uses jquery)
+    var aspect = width / height;
+    var chart = $("#chart");
+      $(window).on("resize", function() {
+          var targetWidth = $("body").width();
+          
+          if(targetWidth<width){
+            chart.attr("width", targetWidth); 
+            chart.attr("height", targetWidth / aspect);       
+          }
+          else{
+            chart.attr("width", width);  
+            chart.attr("height", width / aspect); 
+          }
+
+      });
+
+
+      //Create barchart
+    svg.selectAll("rect")
+      .data(dataset)
+      .enter()
+        .append("rect")
+        .attr("class", function(d){return parseFloat(d[year]) < 0 ? "negative bar"  : "positive bar";})
+        .attr({
+          x: function(d){
+         
+            return x(d.States);
+          },
+          y: function(d){
+
+            return y(Math.max(0, parseFloat(d[year]))); 
+          },
+          width: x.rangeBand(),
+          height: function(d){
+            return Math.abs(y(parseFloat(d[year])) - y(0)); 
+          }
+        })   .on('mouseover', tooltip.show)
+      .on('mouseout', tooltip.hide)
+      
+
+      svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + (height - margin.top - margin.bottom) + ")")
+      .call(xAxis) 
+      .selectAll("text")  
+            .style("text-anchor", "end")
+            .attr("dx", "-.8em")
+            .attr("dy", "0em")
+            .attr("transform", function(d) {
+                return "rotate(-75)" 
+                });
+//Add y-axis
+    svg.append("g")
+        .attr("class", "y axis")
+        .attr("transform", "translate(20,0)")
+        .call(yAxis)  .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+
+      .text("Gross Fiscal Deficit");
+
+    //Sort data when sort is checked
+  d3.select("input").on("change", change);
+
+ /* var sortTimeout = setTimeout(function() {
+  d3.select("input").property("checked", true).each(change);
+  }, 2000);
+*/
+  function change() {
+    //clearTimeout(sortTimeout);
+
+    // Copy-on-write since tweens are evaluated after a delay.
+    var x0 = x.domain(dataset.sort(this.checked
+        ? function(a, b) { return parseFloat(b[year]) - parseFloat(a[year]); }
+        : function(a, b) { return d3.ascending(a.States, b.States); })
+        .map(function(d) { return d.States; }))
+        .copy();
+
+    svg.selectAll(".bar")
+        .sort(function(a, b) { return x0(a.States) - x0(b.States); });
+
+    var transition = svg.transition().duration(750),
+        delay = function(d, i) { return i * 50; };
+
+    transition.selectAll(".bar")
+        .delay(delay)
+        .attr("x", function(d) { return x0(d.States); });
+
+
+    transition.select(".x.axis")
+        .call(xAxis)
+      .selectAll("g")
+      .selectAll("text")  
+      .style("text-anchor", "end")
+      .attr("dx", "-.8em")
+            .attr("dy", "0em")
+        .delay(delay);;
+
+    /*transition.select(".x.axis")
+        .call(xAxis)
+      .selectAll("g")
+        .delay(delay);*/
+  }
+
+  
+    
+    }
+
+  //Load data and call bar chart function 
+    d3.csv("gross_fiscal_deficit.csv", function(error,data){
+        if(error){
+          console.log(error);
+        }
+        else{
+          var year="2009-10(BE)";
+          /*data.forEach(function(d) {
+            d[year] = parseFloat(d[year]);
+                      });*/
+          dataset=data;
+          barChart(dataset);
+        }
+        
+      });
+
+  
+      </script>
+    </body></html>
