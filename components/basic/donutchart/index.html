@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  width: 960px;
+  height: 500px;
+  position: relative;
+}
+
+svg {
+	width: 100%;
+	height: 100%;
+}
+
+path.slice{
+	stroke-width:2px;
+}
+
+polyline{
+	opacity: .3;
+	stroke: black;
+	stroke-width: 2px;
+	fill: none;
+}
+
+.arc path {
+  stroke: #fff;
+}
+
+text {
+    text-rendering: optimize-legibility;
+}
+
+</style>
+<body>
+<button class="randomize">randomize</button>
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+
+
+d3.csv("gross_fiscal_deficit.csv", function(error,data){
+        if(error){
+          console.log(error);
+        }
+        else{
+          var year="2009-10(BE)";
+          data.forEach(function(d) {
+            d[year] = parseFloat(d[year]);
+                      });
+          dataset=data;
+          
+        }
+    
+var svg = d3.select("body")
+	.append("svg")
+	.append("g")
+
+svg.append("g")
+	.attr("class", "slices");
+svg.append("g")
+	.attr("class", "labels");
+svg.append("g")
+	.attr("class", "lines");
+
+var width = 960,
+    height = 450,
+	radius = Math.min(width, height) / 2;
+
+var pie = d3.layout.pie()
+	.sort(null)
+	.value(function(d) {
+		return d[year];
+	});
+
+var arc = d3.svg.arc()
+	.outerRadius(radius * 0.8)
+	.innerRadius(radius * 0.4);
+
+var outerArc = d3.svg.arc()
+	.innerRadius(radius * 0.9)
+	.outerRadius(radius * 0.9);
+
+svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+var key = function(d){ return d.data.States; };
+
+var color = d3.scale.category20c()
+	.domain(data.map(function(d){ return d.States;}));
+
+
+change(data);
+
+d3.select(".randomize")
+	.on("click", function(){
+		change(data);
+	});
+
+
+function change(data) {
+
+	/* ------- PIE SLICES -------*/
+
+	var g = svg.selectAll(".arc")
+      .data(pie(data),key)
+    .enter().append("g")
+      .attr("class", "arc");
+
+  g.append("path")
+      .attr("d", arc)
+      .attr("class", "slice")
+      .style("fill", function(d) { return color(d.data.States); });
+
+	
+var pos = d3.svg.arc().innerRadius(radius + 2).outerRadius(radius + 2); 
+	   var getAngle = function (d) {
+      return (180 / Math.PI * (d.startAngle + d.endAngle) / 2 - 90);
+  };
+
+
+	 g.append("text")
+      .attr("transform", function(d) { 
+              return "translate(" + pos.centroid(d) + ") " +
+                      "rotate(" + getAngle(d) + ")"; }) 
+      .attr("dy", 5) 
+      .style("text-anchor", "start")
+      .text(function(d) { return d.data.States; });
+
+      
+	g.transition().duration(1000)
+		.attrTween("d", function(d) {
+			this._current = this._current || d;
+			var interpolate = d3.interpolate(this._current, d);
+			this._current = interpolate(0);
+			return function(t) {
+				return arc(interpolate(t));
+			};
+		})
+
+	g.exit()
+		.remove();
+	 
+
+
+	/* ------- TEXT LABELS -------
+
+	var text = svg.select(".labels").selectAll("text")
+		.data(pie(data), key);
+
+	text.enter()
+		.append("text")
+		.attr("dy", ".35em")
+		.text(function(d) {
+			return d.data.States;
+		});
+	
+	function midAngle(d){
+		return d.startAngle + (d.endAngle - d.startAngle)/2;
+	}
+
+	text.transition().duration(1000)
+		.attrTween("transform", function(d) {
+			this._current = this._current || d;
+			var interpolate = d3.interpolate(this._current, d);
+			this._current = interpolate(0);
+			return function(t) {
+				var d2 = interpolate(t);
+				var pos = outerArc.centroid(d2);
+				pos[0] = radius * (midAngle(d2) < Math.PI ? 1 : -1);
+				return "translate("+ pos +")";
+			};
+		})
+		.styleTween("text-anchor", function(d){
+			this._current = this._current || d;
+			var interpolate = d3.interpolate(this._current, d);
+			this._current = interpolate(0);
+			return function(t) {
+				var d2 = interpolate(t);
+				return midAngle(d2) < Math.PI ? "start":"end";
+			};
+		});
+
+	text.exit()
+		.remove();
+*/
+	/* ------- SLICE TO TEXT POLYLINES -------
+
+	var polyline = svg.select(".lines").selectAll("polyline")
+		.data(pie(data), key);
+	
+	polyline.enter()
+		.append("polyline");
+
+	polyline.transition().duration(1000)
+		.attrTween("points", function(d){
+			this._current = this._current || d;
+			var interpolate = d3.interpolate(this._current, d);
+			this._current = interpolate(0);
+			return function(t) {
+				var d2 = interpolate(t);
+				var pos = outerArc.centroid(d2);
+				pos[0] = radius * 0.95 * (midAngle(d2) < Math.PI ? 1 : -1);
+				return [arc.centroid(d2), outerArc.centroid(d2), pos];
+			};			
+		});
+
+
+	
+	polyline.exit()
+		.remove();
+
+		*/
+};
+});
+</script>
+</body>
