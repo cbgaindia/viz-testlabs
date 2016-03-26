@@ -265,14 +265,14 @@ ul{
     //clearTimeout(sortTimeout);
 
     // Copy-on-write since tweens are evaluated after a delay.
-    var x0 = x.domain(dataset.sort(this.checked
-        ? function(a, b) { return parseFloat(b[year]) - parseFloat(a[year]); }
-        : function(a, b) { return d3.ascending(a.States, b.States); })
+    var x0 = x.domain(dataset.sort(
+     function(a, b) { return parseFloat(b[year]) - parseFloat(a[year]); }
+        )
         .map(function(d) { return d.States; }))
         .copy();
 
     svg.selectAll(".bar")
-        .sort(function(a, b) { return x0(a.States) - x0(b.States); });
+        .sort(function(a, b) {return x0(a.States) - x0(b.States); });
 
     var transition = svg.transition().duration(750),
         delay = function(d, i) { return i * 50; };

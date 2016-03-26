@@ -20,6 +20,10 @@
   stroke: #000;
   shape-rendering: crispEdges;
 }
+body{
+  margin: 0px auto;
+  width :70%;
+}
 
 </style>
 <body>
@@ -27,7 +31,7 @@
 <script>
 
 var margin = {top: 20, right: 30, bottom: 40, left: 30},
-    width = 960 - margin.left - margin.right,
+    width = 760 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
 var year="2006-07";
@@ -86,6 +90,7 @@ d3.csv("../../../test-data/gross_fiscal_deficit.csv", type, function(error, data
 
 function type(d) {
   d[year] = +d[year];
+
   return d;
 }
 
