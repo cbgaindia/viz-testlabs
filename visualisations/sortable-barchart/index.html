@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<link href="introjs.min.css" rel="stylesheet">
+<link href="sb-admin.css" rel="stylesheet">
+<link href="bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="d3.slider.css" /> 
+<style>
+
+.bar--positive {
+  fill: #94090D;
+}
+
+.bar--negative {
+  fill:#247337 ;
+}
+
+.axis text {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+body{
+  margin: 0px auto;
+  width :80%;
+}
+#option{
+  float: right;
+  display: block; 
+  clear: left;
+
+}
+.panel-heading .panel-body{
+   overflow:hidden;
+}
+
+</style>
+<body>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Area Chart
+        <div id="option" >
+          <a class="btn btn-large btn-info" href="javascript:void(0);" onclick="javascript:introJs().start();">Help!</a>
+          
+ 
+            <a data-step="2" data-intro="Click this button to sort the bars." class="btn btn-large btn-success" id ="sortbutton" name="sortButton" type="button" value="Sort Data"  />Sort Data</a>
+        </div>
+        </h3>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-lg-7">
+          <div class="viz-area" data-step="1" data-intro="Bar Chart represents the comparisions between the States" data-position='right' >
+            <div class="chart-area" data-step="4" data-intro="Move your mouse to the bar to get more details on the side bar." data-position="bottom-right-aligned">
+              
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5">        
+          <div class="panel panel-default">
+            <div class="panel-heading" id="panel-statename"><h3 class="panel-title" ><span id="state-name">State Name - </span> Year <span id="figure-year"></span></h3>
+            </div>
+            <div class='panel-body'>
+                <div class="row">
+                  <div id="viz-radial">
+                    <div class="col-lg-5" id="radial-bar" data-step="5" data-intro="The radial bar shows the proporation of state figures to national figures. " data-position="bottom"></div>
+                    <div class="col-lg-7" id="radial-details" data-step="6" data-intro="The details of the figures for the selected state." data-position="bottom">
+                      <div class="row" >
+                        State Figure - <span id="state-fig"></span><br>
+                        National Figure - <span id="national-fig"></span><br>
+                      </div>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="wrapper " data-step="3" data-intro="Use the slider to view data of different fiscal years." data-position="top">
+         <div id="slider7" ></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    
+  <script src="jquery.js"></script>
+  <script src="bootstrap.min.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="d3.slider.js"></script>
+  <script type="text/javascript" src="intro.min.js"></script>
+<script>
+
+var margin = {top: 20, right: 30, bottom: 40, left: 30},
+    width = 560 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+var year="2006-07";
+
+
+var x = d3.scale.linear()
+    .range([0, width]);
+
+var y = d3.scale.ordinal()
+    .rangeRoundBands([0, height], 0.1);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left")
+    .tickSize(0)
+    .tickPadding(6);
+
+var svg = d3.select(".chart-area").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+d3.csv("gross_fiscal_deficit.csv", type, function(error, data) {
+  allstates=data[data.length-1];
+  data.pop();
+  
+  var current_state_fig;
+
+   years_keys= (Object.keys(data[0]));
+    years_keys.shift();
+    year_dic={};
+    var year_list=[];
+    for(var i =0;i <years_keys.length ;i++){
+      year_dic[parseInt(years_keys[i].substr(0, 4))]=years_keys[i];
+      year_list.push(parseInt(years_keys[i].substr(0, 4)));
+    }
+    //year=String(year_dic[year_list[year_list.length-1]]);
+
+
+  x.domain(d3.extent(data, function(d) { return d[year]; })).nice();
+  y.domain(data.map(function(d) { return d.States; }));
+
+
+
+  var states = data.map(function(d) { return d.States; })
+  
+  var bar = svg.selectAll(".bar")
+      .data(data)
+    .enter().append("rect")
+      .attr("class", function(d) { return "bar bar--" + (d[year] < 0 ? "negative" : "positive"); })
+      .attr("x", function(d) { return x(Math.min(0, d[year])); })
+      .attr("y", function(d) { return y(d.States); })
+      .attr("fig-value", function(d){ return d[year]})
+      .attr("fig-year", function(d){ return year})
+      .attr("width", function(d) { return Math.abs(x(d[year]) - x(0)); })
+      .attr("height", y.rangeBand())
+      .on("mouseover", function(d){
+        d3.select("#figure-year").html($(this).attr("fig-year"));
+        console.log(allstates[year]);
+          
+           d3.select("#state-fig").html($(this).attr("fig-value"));
+        d3.select("#figure-value").html($(this).attr("fig-value"));
+        d3.select("#state-name").html((d.States));
+        updateradial(d[$(this).attr("fig-year")],$(this).attr("fig-year"));
+      });
+  d3.select("#national-fig").html(allstates[year]);
+  svg.append("g")
+      .attr("class", "x-axis axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+  svg.append("g")
+      .attr("class", "y-axis axis")
+      .attr("transform", "translate(" + x(0) + ",0)")
+      .call(yAxis);
+
+    
+
+   
+
+
+    var startyear=String(year_list[0]);
+    var endyear=String(year_list[year_list.length-1]);
+    function getdata(year_dic){
+      return year_dic;
+    }
+    var current_year=year;
+ 
+    console.log(year_dic);
+    d3.select('#slider7').call(d3.slider().value(parseInt(year.substr(0, 4))).axis(d3.svg.axis().ticks(20)).min(startyear).max(endyear).step(1).on("slide", function(  evt, value) {
+      updatechart(year_dic[value]);
+      current_year=year_dic[value];
+
+      bar.attr("fig-year", function(d){ return year_dic[value]})
+      d3.select("#figure-year").html(year_dic[value]);
+      d3.select("#national-fig").html(allstates[year_dic[value]]);
+      console.log(allstates[year_dic[value]]);
+
+
+    }));
+
+d3.select("#sortbutton").on("click",function(){
+  sortchart()});
+
+
+    
+    function sortchart(){
+      console.log(year_dic);
+      var y0 = y.domain(data.sort(
+     function(a, b) { return b[current_year] - a[current_year]; })
+        .map(function(d) { return d.States; }))
+        .copy();
+
+    svg.selectAll(".bar")
+        .sort(function(a, b) {return y0(a.States) - y0(b.States); });
+
+    var transition = svg.transition().duration(750),
+        delay = function(d, i) { return i * 50; };
+
+    transition.selectAll(".bar")
+        .delay(delay)
+        .attr("y", function(d) { return y0(d.States); })
+        ;
+  
+
+    transition.select(".y-axis")
+        .call(yAxis)
+      .selectAll("g")
+      .selectAll("text")  
+      .style("text-anchor", "end")
+      .attr("dx", "-.8em")
+            .attr("dy", "0em")
+        .delay(delay);;
+
+
+  
+
+
+    }
+
+
+
+
+d3.select(".sortbutton").on("click", function(){
+  sortchart(year_dic[current_value]);});
+    function updatechart(year){
+
+
+       svg.selectAll("rect")
+      .data(data)
+  
+       .attr("class", function(d) { return "bar bar--" + (d[year] < 0 ? "negative" : "positive"); })
+          .attr("x", function(d) { return x(Math.min(0, d[year])); })
+
+          .attr("fig-value", function(d){ return d[year]})
+          .attr("width", function(d) { return Math.abs(x(d[year]) - x(0)); })
+    }
+
+
+
+    //Radial Bar
+
+
+
+var rad_width = 140,
+    rad_height = 140,
+    full_angle = 2 * Math.PI, 
+    rad_fontSize=10
+
+
+var arc = d3.svg.arc()
+    .innerRadius(40)
+    .outerRadius(60)
+    .startAngle(0);
+
+
+var rad_svg = d3.select("#radial-bar").append("svg")
+    .attr("width", rad_width)
+    .attr("height", rad_height)
+    .append("g")
+    .attr("transform", "translate(" + rad_width / 2 + "," + rad_height / 2 + ")")
+
+// Add the background arc, from 0 to 100% (full_angle).
+var background = rad_svg.append("path")
+    .datum({endAngle: full_angle})
+    .style("fill", "#ddd")
+    .attr("d", arc);
+
+    var foreground = rad_svg.append("path")
+    .datum({endAngle: 0 * full_angle})
+    .style("fill", "orange")
+    .attr("d", arc);
+
+    var label_layer=rad_svg.append("text")
+      .attr("id", "label")
+      .attr("transform", "translate(" + -93 + "," + -70 + ")")
+    .attr("y",rad_width/2)
+    .attr("x",rad_width/2)
+    .attr("cursor","pointer")
+    .attr("width",rad_width)
+    // .attr("x",(3*_fontSize/2))
+    .text((current_state_fig/allstates[year])*100)
+    .style("font-size","14px")
+    .style("color","black");
+           
+
+console.log(current_state_fig);
+// Add the foreground arc in orange, currently showing 12.7%.
+
+
+
+
+
+
+
+function updateradial (state_figure,year) {
+  console.log(state_figure,year,allstates[year]);
+
+  foreground.transition()
+      .duration(750)
+      .call(arcTween, ( state_figure/allstates[year])* full_angle);
+
+      label_layer.transition()
+      .text(((state_figure/allstates[year])*100).toFixed(3) + "%");
+}
+function arcTween(transition, newAngle) {
+
+  transition.attrTween("d", function(d) {
+
+ var interpolate = d3.interpolate(d.endAngle, newAngle);
+
+    return function(t) {
+
+      d.endAngle = interpolate(t);
+
+      return arc(d);
+    };
+  });
+}
+
+
+
+
+});
+
+
+function type(d) {
+  d[year] = +d[year];
+
+  return d;
+}
+
+</script>

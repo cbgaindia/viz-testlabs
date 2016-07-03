@@ -49,7 +49,11 @@ var xAxis = d3.svg.axis()
 
 var yAxis = d3.svg.axis()
     .scale(y)
+<<<<<<< HEAD
     .orient("left")
+=======
+    .orient("right")
+>>>>>>> t_bar_chart
     .tickSize(0)
     .tickPadding(6);
 
@@ -70,9 +74,15 @@ d3.csv("../../../test-data/gross_fiscal_deficit.csv", type, function(error, data
       .data(data)
     .enter().append("rect")
       .attr("class", function(d) { return "bar bar--" + (d[year] < 0 ? "negative" : "positive"); })
+<<<<<<< HEAD
       .attr("x", function(d) { return x(Math.min(0, d[year])); })
       .attr("y", function(d) { return y(d.States); })
       .attr("width", function(d) { return Math.abs(x(d[year]) - x(0)); })
+=======
+      .attr("x", function(d) {console.log(d.States, d[year]); return x(Math.min(0,d[year])); })
+      .attr("y", function(d) { return y(d.States); })
+      .attr("width", function(d) { console.log(Math.abs( x(0)));return Math.abs(x(d[year]) - x(0)); })
+>>>>>>> t_bar_chart
       .attr("height", y.rangeBand());
 
   svg.append("g")
