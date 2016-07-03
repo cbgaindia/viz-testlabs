@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Bruhat Bengaluru Mahanagara Palike (Bbmp) Municipal Corporation</title>
+    <link href="nv.d3.css" rel="stylesheet" type="text/css">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.min.js'></script>
+    <link rel="stylesheet" type="text/css" href="card.css">
+    <script src="bootstrap.js"></script>
+    <link href="bootstrap.min.css" rel="stylesheet" type="text/css">
+    <script src="d3.v3.min.js"></script>
+    <script src="nv.d3.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <style>
+    .nvd3 text,
+    .nv-axislabel {
+        font-family: 'Open Sans', sans-serif;
+    }
+    
+    text {
+        font-size: 12px;
+    }
+    
+    svg {
+        display: block;
+    }
+    
+    body {
+        margin: 0 auto;
+    }
+    
+    #chart,
+    svg {
+        margin: 0 auto;
+        padding: 0px;
+        height: 400px;
+        width: 100%;
+        opacity: 0.95;
+    }
+    
+    .nvd3 .nv-axis.nv-x path.domain {
+        stroke-opacity: 1;
+    }
+    
+    svg,
+    .nv-background rect {}
+    
+    .nvd3 .nv-axis line {
+        stroke: rgba(0, 0, 0, 0.05);
+        opacity: 0.7;
+    }
+    
+    path.domain {
+        opacity: 0.2;
+    }
+    
+    .nvtooltip.with-3d-shadow,
+    .with-3d-shadow .nvtooltip {
+        border-radius: 3px;
+        font-family: 'Open Sans', sans-serif;
+    }
+    
+    .nv-point {
+        stroke-opacity: 1!important;
+        stroke-width: 1px!important;
+        fill-opacity: 0!important;
+    }
+    
+    .nv-point.hover {
+        stroke-width: 9px!important;
+        fill-opacity: .95 !important;
+        stroke-opacity: .95 !important;
+    }
+    
+    .infocard {
+        background-image: url("body-background.png");
+        padding: 20px;
+    }
+    
+    .viz-header {
+        float: left;
+        font-family: 'Lora', serif;
+        font-size: 22px;
+        padding-left: 20px;
+        padding-top: 10px;
+        opacity: 0.8;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+    }
+    
+    .scheme-select {
+        float: right;
+    }
+    </style>
+     <style>
+    text {
+        font: 10px sans-serif;
+    }
+    
+    rect.background {
+        fill: white;
+        opactiy: 1;
+    }
+    
+    .axis {
+        shape-rendering: crispEdges;
+    }
+    
+    .axis path,
+    .axis line {
+        fill: none;
+        stroke: #000;
+    }
+    
+    svg {
+        margin: 0 auto;
+        display: block;
+    }
+    
+    body {
+        font-family: 'Open Sans', sans-serif;
+        background-image: url("body-background.png");
+    }
+    
+    .one-edge-shadow {
+        -webkit-box-shadow: 0 8px 6px -6px black;
+        -moz-box-shadow: 0 8px 6px -6px black;
+        box-shadow: 0 8px 6px -6px black;
+    }
+    </style>
+    <style type="text/css"></style>
+    <style id="style-1-cropbar-clipper">
+    .en-markup-crop-options {
+        top: 18px !important;
+        left: 50% !important;
+        margin-left: -100px !important;
+        width: 200px !important;
+        border: 2px rgba(255, 255, 255, .38) solid !important;
+        border-radius: 4px !important;
+    }
+    
+    .en-markup-crop-options div div:first-of-type {
+        margin-left: 0px !important;
+    }
+    </style>
+</head>
+
+<body>
+    <br>
+    <br>
+    <div class="infocard">
+        <div class="row">
+            <div class="col-lg-7">
+                <div class="viz-header">
+                    <span id="viz-header"></h2>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="year-select"></div>
+                
+            </div>
+        </div>
+        <hr>
+        <div id="chart" class='with-3d-shadow with-transitions'>
+          
+        </div>
+    </div>
+    <!--<script src="custom.js">
+    </script>-->
+
+
+    <script type="text/javascript">
+        var margin = {
+        top: 30,
+        right: 100,
+        bottom: 0,
+        left: 270
+    },
+    width = 860 - margin.left - margin.right,
+    height = 350 - margin.top - margin.bottom,
+    valueMargin = 4,
+    labelWidth = 0;
+
+var x = d3.scale.linear()
+    .range([0, width]).nice();
+
+var barHeight = 20;
+
+var color = d3.scale.ordinal()
+    .range(["#263248", "#BDD684"]);
+
+var duration = 750,
+    delay = 25;
+
+
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("top")
+    .ticks(7);
+
+var svg = d3.select("#chart").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+
+
+
+        svg.append("rect")
+            .attr("class", "background")
+            .attr("width", width)
+            .attr("height", height)
+            .on("click", up)
+            .style("opacity", "0.4");
+
+        svg.append("g")
+            .attr("class", "x axis");
+function drawviz(root, year) {
+    
+    var partition = d3.layout.partition()
+        .value(function(d) {
+            return parseInt(d[year]); });
+   
+    
+    //populate_selection(root);
+    partition.nodes(root)
+    console.log("data", root)
+        //console.log(partition.nodes(root))
+    x.domain([0, root.value]).nice();
+    down(root, 0);
+}
+
+
+
+
+
+function down(d, i) {
+    console.log("function called");
+    if (!d.children || this.__transition__) return;
+    var end = duration + d.children.length * delay;
+   
+        // Mark any currently-displayed bars as exiting.
+    var exit = svg.selectAll(".enter")
+        .attr("class", "exit");
+
+    // Entering nodes immediately obscure the clicked-on bar, so hide it.
+    exit.selectAll("rect").filter(function(p) {
+            return p === d;
+        })
+        .style("fill-opacity", 1e-6);
+
+    // Update the x-scale domain.
+    // Update the x-scale domain.
+ 
+    // Enter the new bars for the clicked-on data.
+    // Per above, entering bars are immediately visible.
+    var enter = bar(d)
+        .attr("transform", stack(i))
+        .style("opacity", 1);
+
+    // Have the text fade-in, even though the bars are visible.
+    // Color the bars as parents; they will fade to children if appropriate.
+    enter.select("text").style("fill-opacity", 1e-6);
+    enter.select("rect").style("fill", color(true));
+
+     x.domain([0, d3.max(d.children, function(d) { return d.value; })]).nice();
+
+
+    // Update the x-axis.
+    svg.selectAll(".x.axis").transition()
+        .duration(duration)
+        .call(xAxis);
+
+
+    // Transition entering bars to their new position.
+    var enterTransition = enter.transition()
+        .duration(duration)
+        .delay(function(d, i) {
+            return i * delay;
+        })
+        .attr("transform", function(d, i) {
+            return "translate(0," + barHeight * i * 1.2 + ")";
+        });
+
+
+    // Transition entering text.
+    enterTransition.select("text")
+        .style("fill-opacity", 1);
+
+
+
+    // Transition entering rects to the new x-scale.
+    enterTransition.select("rect")
+        .attr("width", function(d) {
+            return x(d.value);
+        })
+        .style("fill", function(d) {
+            return color(!!d.children);
+        });
+
+    /*enterTransition.selectAll(".bar-value")
+        .attr("x", function(d){
+                  var width = this.getBBox().width;
+                  return width +11 + (2.9* x(d.value)) ;
+              });
+    */
+    // Transition exiting bars to fade out.
+    var exitTransition = exit.transition()
+        .duration(duration)
+        .style("opacity", 1e-6)
+        .remove();
+
+    // Transition exiting bars to the new x-scale.
+    exitTransition.selectAll("rect")
+        .attr("width", function(d) {
+            return x(d.value);
+        });
+
+    // Rebind the current node to the background.
+    svg.select(".background")
+        .datum(d)
+        .transition()
+        .duration(end);
+
+    d.index = i;
+}
+
+function up(d) {
+    if (!d.parent || this.__transition__) return;
+    var end = duration + d.children.length * delay;
+
+
+    // Mark any currently-displayed bars as exiting.
+    var exit = svg.selectAll(".enter")
+        .attr("class", "exit");
+
+    svg.selectAll(".bar-value").transition()
+        .duration(duration)
+        .style("opacity", 0);
+
+    // Update the x-scale domain.
+    x.domain([0, d3.max(d.parent.children, function(d) {
+        return d.value;
+    })]).nice();
+
+
+    // Enter the new bars for the clicked-on data's parent.
+    var enter = bar(d.parent)
+        .attr("transform", function(d, i) {
+            return "translate(0," + barHeight * i * 1.2 + ")";
+        })
+        .style("opacity", 1e-6);
+
+    // Color the bars as appropriate.
+    // Exiting nodes will obscure the parent bar, so hide it.
+    enter.select("rect")
+        .style("fill", function(d) {
+            return color(!!d.children);
+        })
+        .filter(function(p) {
+            return p === d;
+        })
+        .style("fill-opacity", 1e-6);
+
+
+
+
+
+    // Update the x-axis.
+    svg.selectAll(".x.axis").transition()
+        .duration(duration)
+        .call(xAxis);
+
+    // Transition entering bars to fade in over the full duration.
+    var enterTransition = enter.transition()
+        .duration(end)
+        .style("opacity", 1);
+
+
+
+    // Transition entering rects to the new x-scale.
+    // When the entering parent rect is done, make it visible!
+    enterTransition.select("rect")
+        .attr("width", function(d) {
+            return x(d.value);
+        })
+        .each("end", function(p) {
+            if (p === d) d3.select(this).style("fill-opacity", null);
+        });
+
+    // Transition exiting bars to the parent's position.
+    var exitTransition = exit.selectAll("g").transition()
+        .duration(duration)
+        .delay(function(d, i) {
+            return i * delay;
+        })
+        .attr("transform", stack(d.index));
+
+    // Transition exiting text to fade out.
+    exitTransition.select("text")
+        .style("fill-opacity", 1e-6);
+
+    // Transition exiting rects to the new scale and fade to parent color.
+    exitTransition.select("rect")
+        .attr("width", function(d) {
+            return x(d.value);
+        })
+        .style("fill", color(true));
+
+    // Remove exiting nodes when the last child has finished transitioning.
+    exit.transition()
+        .duration(end)
+        .remove();
+
+    // Rebind the current parent to the background.
+    svg.select(".background")
+        .datum(d.parent)
+        .transition()
+        .duration(end);
+}
+
+// Creates a set of bars for the given data node, at the specified index.
+function bar(d) {
+    var bar = svg.insert("g", ".y.axis")
+        .attr("class", "enter")
+        .attr("transform", "translate(0,5)")
+        .selectAll("g")
+        .data(d.children)
+        .enter().append("g")
+        .style("cursor", function(d) {
+            return !d.children ? null : "pointer";
+        })
+        .on("click", down);
+
+    bar.append("text")
+        .attr("x", -6)
+        .attr("y", barHeight / 2)
+        .attr("dy", ".35em")
+        .style("text-anchor", "end")
+        .text(function(d) {
+            return d.name;
+        });
+
+    bar.append("rect")
+        .attr("width", function(d) {
+            console.log(d.value);
+            return x(d.value);
+
+        })
+        .attr("height", barHeight);
+
+    bar.append("text")
+        .attr("class", "bar-value")
+        .attr("y", barHeight / 2)
+        .attr("dx", -valueMargin + labelWidth) //margin right
+        .attr("dy", ".35em") //vertical align middle
+        .attr("text-anchor", "end")
+        .text(function(d) {
+            return (d.value);
+        })
+        .attr("x", function(d) {
+            var width = this.getBBox().width;
+            return width + 11 + (x(d.value));
+        });
+    return bar;
+}
+
+
+function configure_partition(year) {
+    var part = d3.layout.partition()
+        .value(function(d) {
+            return parseInt(d[year]);
+        });
+    return part
+}
+
+// A stateful closure for stacking bars horizontally.
+    function stack(i) {
+        var x0 = 0;
+        return function(d) {
+            var tx = "translate(" + x0 + "," + barHeight * i * 1.2 + ")";
+            x0 += x(d.value);
+            return tx;
+        };
+    }
+function populate_selection(root) {
+
+    year_array = get_years(root["children"][0]["children"][0]);
+    console.log(root["children"][0]["children"][0])
+
+    var select = d3.select("div.year-select")
+        .append("select")
+        .attr("class", "form-control")
+        .attr("id", "year-select")
+        .on("change", function() {
+            var year = d3.select("#year-select").property("value");
+            console.log(year);
+            drawviz(root, year)
+        });
+
+    select
+        .selectAll("option")
+        .data(year_array)
+        .enter().append("option")
+        .attr("class", "left-selection")
+        .attr("value", function(d) {
+            return d;
+        })
+        .text(function(d) {
+            return d;
+        })
+        .style("margin", "0px 0px 0px 0px");
+}
+
+
+function get_years(d) {
+
+    key = Object.keys(d)
+    key.sort(function(a, b) {
+        return parseInt(b.substr(0, 4)) - parseInt(a.substr(0, 4)) })
+    for (record in key) {
+        if (isNaN(parseInt(key[record][0]))) {
+            key.splice(record, 1)
+        }
+    }
+    console.log(key)
+    return key;
+}
+
+function toTitleCase(str) {
+        return str.replace(/\w\S*/g, function(txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        });
+    }
+   var addMiscElements = function() {
+        d3.select("#viz-header").text(toTitleCase("Bruhat Bengaluru Mahanagara Palike (BBMP) Municipal Corporation"))
+    }
+
+
+
+    d3.json("result.json", function(error, data) {
+        console.log(data)
+        
+        //Temporary calls. Will be replaced.
+        //mungeddata=getmungeData(data)
+        //selections=getSelections(mungeddata);
+        //addMiscElements();
+        //opulateSelection(mungeddata,selections);
+        //drawchart(getStreamData(mungeddata,selections[0]),selections[0]);
+        console.log(data);
+        populate_selection(data)
+        years=get_years(data["children"][0]["children"][0]);
+
+        drawviz(data,years[0]);
+        addMiscElements();
+    });
+
+
+
+    </script>
+</body>
+
+        
+    </script>
+
+</html>

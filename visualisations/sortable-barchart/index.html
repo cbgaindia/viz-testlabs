@@ -127,7 +127,7 @@ var svg = d3.select(".chart-area").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.csv("../../../test-data/gross_fiscal_deficit.csv", type, function(error, data) {
+d3.csv("gross_fiscal_deficit.csv", type, function(error, data) {
   allstates=data[data.length-1];
   data.pop();
   
