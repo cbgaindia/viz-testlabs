@@ -1,0 +1,434 @@
+[
+    {
+        "name": "OPENING BALANCE",
+        "series": [
+            {
+                "key": "Actuals",
+                "values": [
+                    {
+                        "label": "2012-13",
+                        "value": 0.0
+                    },
+                    {
+                        "label": "2013-14",
+                        "value": 0.0
+                    }
+                ]
+            },
+            {
+                "key": "Budget Estimates",
+                "values": [
+                    {
+                        "label": "2013-14",
+                        "value": 0.0
+                    },
+                    {
+                        "label": "2014-15",
+                        "value": 4809.0
+                    },
+                    {
+                        "label": "2015-16",
+                        "value": 1717.0
+                    }
+                ]
+            },
+            {
+                "key": "Revised Estimates",
+                "values": [
+                    {
+                        "label": "2013-14",
+                        "value": 0.0
+                    },
+                    {
+                        "label": "2014-15",
+                        "value": 0.0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Revenue Receipts",
+        "series": [
+            {
+                "key": "Actuals",
+                "values": [
+                    {
+                        "label": "2012-13",
+                        "value": 256441.28
+                    },
+                    {
+                        "label": "2013-14",
+                        "value": 216512.68
+                    }
+                ]
+            },
+            {
+                "key": "Budget Estimates",
+                "values": [
+                    {
+                        "label": "2013-14",
+                        "value": 611483.5
+                    },
+                    {
+                        "label": "2014-15",
+                        "value": 327564.5
+                    },
+                    {
+                        "label": "2015-16",
+                        "value": 344118.0
+                    }
+                ]
+            },
+            {
+                "key": "Revised Estimates",
+                "values": [
+                    {
+                        "label": "2013-14",
+                        "value": 194414.54
+                    },
+                    {
+                        "label": "2014-15",
+                        "value": 185492.9
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Revenue Payments",
+        "series": [
+            {
+                "key": "Actuals",
+                "values": [
+                    {
+                        "label": "2012-13",
+                        "value": 189427.31
+                    },
+                    {
+                        "label": "2013-14",
+                        "value": 165037.69
+                    }
+                ]
+            },
+            {
+                "key": "Budget Estimates",
+                "values": [
+                    {
+                        "label": "2013-14",
+                        "value": 281101.91
+                    },
+                    {
+                        "label": "2014-15",
+                        "value": 202955.38
+                    },
+                    {
+                        "label": "2015-16",
+                        "value": 222792.46
+                    }
+                ]
+            },
+            {
+                "key": "Revised Estimates",
+                "values": [
+                    {
+                        "label": "2013-14",
+                        "value": 153215.09
+                    },
+                    {
+                        "label": "2014-15",
+                        "value": 131915.09
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Surplus/(Deficit) on Revenue Account",
+        "series": [
+            {
+                "key": "Actuals",
+                "values": [
+                    {
+                        "label": "2012-13",
+                        "value": 67013.97
+                    },
+                    {
+                        "label": "2013-14",
+                        "value": 51474.99
+                    }
+                ]
+            },
+            {
+                "key": "Budget Estimates",
+                "values": [
+                    {
+                        "label": "2013-14",
+                        "value": 330381.59
+                    },
+                    {
+                        "label": "2014-15",
+                        "value": 124609.12
+                    },
+                    {
+                        "label": "2015-16",
+                        "value": 121325.54
+                    }
+                ]
+            },
+            {
+                "key": "Revised Estimates",
+                "values": [
+                    {
+                        "label": "2013-14",
+                        "value": 41199.45
+                    },
+                    {
+                        "label": "2014-15",
+                        "value": 53577.81
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Capital Receipts",
+        "series": [
+            {
+                "key": "Actuals",
+                "values": [
+                    {
+                        "label": "2012-13",
+                        "value": 126590.22
+                    },
+                    {
+                        "label": "2013-14",
+                        "value": 92824.4
+                    }
+                ]
+            },
+            {
+                "key": "Budget Estimates",
+                "values": [
+                    {
+                        "label": "2013-14",
+                        "value": 233043.0
+                    },
+                    {
+                        "label": "2014-15",
+                        "value": 270227.0
+                    },
+                    {
+                        "label": "2015-16",
+                        "value": 195290.0
+                    }
+                ]
+            },
+            {
+                "key": "Revised Estimates",
+                "values": [
+                    {
+                        "label": "2013-14",
+                        "value": 126480.25
+                    },
+                    {
+                        "label": "2014-15",
+                        "value": 103920.07
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Capital Payments",
+        "series": [
+            {
+                "key": "Actuals",
+                "values": [
+                    {
+                        "label": "2012-13",
+                        "value": 246378.47
+                    },
+                    {
+                        "label": "2013-14",
+                        "value": 169301.56
+                    }
+                ]
+            },
+            {
+                "key": "Budget Estimates",
+                "values": [
+                    {
+                        "label": "2013-14",
+                        "value": 568745.47
+                    },
+                    {
+                        "label": "2014-15",
+                        "value": 399497.07
+                    },
+                    {
+                        "label": "2015-16",
+                        "value": 318175.54
+                    }
+                ]
+            },
+            {
+                "key": "Revised Estimates",
+                "values": [
+                    {
+                        "label": "2013-14",
+                        "value": 170400.04
+                    },
+                    {
+                        "label": "2014-15",
+                        "value": 160810.18
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Surplus/(Deficit) on Capital Account",
+        "series": [
+            {
+                "key": "Actuals",
+                "values": [
+                    {
+                        "label": "2012-13",
+                        "value": -119788.25
+                    },
+                    {
+                        "label": "2013-14",
+                        "value": -76477.16
+                    }
+                ]
+            },
+            {
+                "key": "Budget Estimates",
+                "values": [
+                    {
+                        "label": "2013-14",
+                        "value": -335702.47
+                    },
+                    {
+                        "label": "2014-15",
+                        "value": -129270.07
+                    },
+                    {
+                        "label": "2015-16",
+                        "value": -122885.54
+                    }
+                ]
+            },
+            {
+                "key": "Revised Estimates",
+                "values": [
+                    {
+                        "label": "2013-14",
+                        "value": -43919.79
+                    },
+                    {
+                        "label": "2014-15",
+                        "value": -56890.11
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "TOTAL SURPLUS/(DEFICIT) (B+C+D)",
+        "series": [
+            {
+                "key": "Actuals",
+                "values": [
+                    {
+                        "label": "2012-13",
+                        "value": -52774.28
+                    },
+                    {
+                        "label": "2013-14",
+                        "value": -25002.17
+                    }
+                ]
+            },
+            {
+                "key": "Budget Estimates",
+                "values": [
+                    {
+                        "label": "2013-14",
+                        "value": -5320.88
+                    },
+                    {
+                        "label": "2014-15",
+                        "value": -4660.95
+                    },
+                    {
+                        "label": "2015-16",
+                        "value": -1560.0
+                    }
+                ]
+            },
+            {
+                "key": "Revised Estimates",
+                "values": [
+                    {
+                        "label": "2013-14",
+                        "value": -2720.34
+                    },
+                    {
+                        "label": "2014-15",
+                        "value": -3312.3
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "CLOSING BALANCE (A+E)",
+        "series": [
+            {
+                "key": "Actuals",
+                "values": [
+                    {
+                        "label": "2012-13",
+                        "value": -52774.28
+                    },
+                    {
+                        "label": "2013-14",
+                        "value": -25002.17
+                    }
+                ]
+            },
+            {
+                "key": "Budget Estimates",
+                "values": [
+                    {
+                        "label": "2013-14",
+                        "value": -5320.88
+                    },
+                    {
+                        "label": "2014-15",
+                        "value": 148.05
+                    },
+                    {
+                        "label": "2015-16",
+                        "value": 157.0
+                    }
+                ]
+            },
+            {
+                "key": "Revised Estimates",
+                "values": [
+                    {
+                        "label": "2013-14",
+                        "value": -2720.34
+                    },
+                    {
+                        "label": "2014-15",
+                        "value": -3312.3
+                    }
+                ]
+            }
+        ]
+    }
+]
