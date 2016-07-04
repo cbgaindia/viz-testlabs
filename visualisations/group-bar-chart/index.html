@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <link href="nv.d3.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <!--<link rel="stylesheet" type="text/css" href="bootstrap.min.css">-->
+    <script type="text/javascript" src="d3.v3.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="card.css">
+    <script src="nv.d3.js">
+    </script>
+</head>
+
+<body>
+    <style>
+    .nvd3 text,
+    .nv-axislabel {
+        font-family: 'Open Sans', sans-serif;
+    }
+    
+    text {
+        font-size: 12px;
+    }
+    
+    svg {
+        display: block;
+    }
+    
+    body {
+        margin: 0 auto;
+    }
+    
+    #chart,
+    svg {
+        margin: 0 auto;
+        padding: 0px;
+        height: 400px;
+        width: 90%;
+        opacity: 0.95;
+    }
+    
+    .nvd3 .nv-axis.nv-x path.domain {
+        stroke-opacity: 1;
+    }
+    
+    svg,
+    .nv-background rect {}
+    
+    .nvd3 .nv-axis line {
+        stroke: rgba(0, 0, 0, 0.05);
+        opacity: 0.7;
+    }
+    
+    path.domain {
+        opacity: 0.8;
+    }
+    
+    .nvtooltip.with-3d-shadow,
+    .with-3d-shadow .nvtooltip {
+        border-radius: 3px;
+        font-family: 'Open Sans', sans-serif;
+    }
+    
+    .nv-point {
+        stroke-opacity: 1!important;
+        stroke-width: 1px!important;
+        fill-opacity: 0!important;
+    }
+    
+    .nv-point.hover {
+        stroke-width: 9px!important;
+        fill-opacity: .95 !important;
+        stroke-opacity: .95 !important;
+    }
+    
+    .infocard {
+        background-image: url("body-background.png");
+        padding: 20px;
+    }
+    
+    .viz-header {
+        float: left;
+        font-family: 'Gotham Book', serif;
+        font-size: 25px;
+        padding-left: 20px;
+        padding-top: 10px;
+        opacity: 0.8;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+    }
+    
+    .scheme-select {
+        float: right;
+    }
+
+    .tick line{
+    opacity: 1;
+    stroke-width:2;
+  }
+    </style>
+    <style type="text/css">
+    label {
+        display: inline-block;
+        cursor: pointer;
+        position: relative;
+        padding-left: 25px;
+        margin-right: 15px;
+        font-size: 14px;
+    }
+    
+    input[type=radio] {
+        display: none;
+    }
+    
+    label:before {
+        content: "";
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        margin-right: 10px;
+        position: absolute;
+        left: 0;
+        bottom: 1px;
+        background-color: #aaa;
+        box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
+    }
+    
+    .radio label:before {
+        border-radius: 8px;
+    }
+    
+    input[type=radio]:checked + label:before {
+        content: "\2022";
+        color: #f3f3f3;
+        font-size: 30px;
+        text-align: center;
+        line-height: 18px;
+    }
+    </style>
+    <style type="text/css">
+        
+        #options-select{
+            font-size: 15px;
+            font-family: 'Lora', sans-serif;
+        }
+        #select-list{
+            margin-left: 25px;
+            margin-top: 10px;
+        }
+        .radio{
+            margin-bottom: 10px;
+            padding: 3px;
+        }
+    </style>
+    <body>
+        <br>
+        <br>
+        <div class="infocard">
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="viz-header">
+                        <span id="viz-header"></h2>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="scheme-select"></div>
+                
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div id ="options-select" class="col-sm-4">
+                <div id="select-list"></div>
+            </div>
+            <div id="" class="col-sm-8">
+                <div id="chart" class='with-3d-shadow with-transitions'>
+                    <svg></svg>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <!--<script src="custom.js">
+    </script>-->
+   
+
+
+    <script type="text/javascript" src="stream_layers.js"></script>
+    <script type="text/javascript">
+    d3.json('BBMP Budget Summary Statement.json', function(data) {
+        console.log(data)
+
+        var addMiscElements = function() {
+        d3.select("#viz-header").text(("BBMP Budget Summary Statement"))
+    }
+
+        var populateSelection = function(data) {
+        var select = d3.select("#select-list")
+            .append("form")
+            .attr("role","form")
+            .selectAll("div")
+            .data(data)
+            .enter().append("div")
+            .attr("class", "radio")
+            .on("click", function(d) {
+                drawchart(d)
+            })
+            
+
+       var inner_div_select =select.append("div")
+            .attr("class","inner-div")
+
+        inner_div_select    
+       .append("label")
+            .attr("value", function(d) {
+                return d.name;
+            })
+            .attr("for", function(d) {
+                return d.name;
+            })
+            .text(function(d) {
+                return d.name;
+            })
+            .style("margin", "0px 0px 0px 0px");
+        console.log(data);
+
+        inner_div_select
+            .insert("input",":first-child")
+            
+            .attr(
+                {
+                    "name": "radio-button",
+                    "type":"radio"})
+            .attr("value", function(d) {
+                return d.name;
+            })
+            .attr("id", function(d) {
+                return d.name;
+            })
+
+            
+      
+    
+
+    }
+
+// Maintian an instance of the chart 
+var chart; 
+
+// Maintain an Instance of the SVG selection with its data
+var chartData;
+
+        function drawchart(data){
+            console.log(data);
+           
+            nv.addGraph(function() {
+                var chart = nv.models.multiBarChart()
+                .color(["#002A4A", "#FF9311", "#D64700", "#17607D"])
+                    .x(function(d) { return d.label })
+                    .y(function(d) { return d.value })
+                    .reduceXTicks(false) //If 'false', every single x-axis tick label will be rendered.
+
+                    .rotateLabels(0) //Angle to rotate x-axis labels.
+                    .showControls(false) //Allow user to switch between 'Grouped' and 'Stacked' mode.
+                    .groupSpacing(0.2) //Distance between each group of bars.
+                ;
+                chart.yAxis.ticks(10)
+
+                chart.yAxis
+                    .tickFormat(d3.format(',.1f'));
+
+                console.log(data.name)
+                chartdata = d3.select('#chart svg')
+                .datum(data.series)
+                .call(chart);
+
+            
+                chartdata.transition().duration(500).call(chart);
+
+                nv.utils.windowResize(chart.update);
+
+                return chart;
+            });
+
+        }
+
+        addMiscElements();
+        populateSelection(data);
+        drawchart(data[0])
+   });
+    </script>
+</body>
+
+</html>
