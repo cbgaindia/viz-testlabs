@@ -95,7 +95,7 @@
         float: right;
     }
     </style>
-     <style>
+    <style>
     text {
         font: 10px sans-serif;
     }
@@ -254,15 +254,13 @@ function down(d, i) {
             return p === d;
         })
         .style("fill-opacity", 1e-6);
-
-    // Update the x-scale domain.
-    // Update the x-scale domain.
  
     // Enter the new bars for the clicked-on data.
     // Per above, entering bars are immediately visible.
     var enter = bar(d)
         .attr("transform", stack(i))
         .style("opacity", 1);
+
 
     // Have the text fade-in, even though the bars are visible.
     // Color the bars as parents; they will fade to children if appropriate.
@@ -271,6 +269,7 @@ function down(d, i) {
 
      x.domain([0, d3.max(d.children, function(d) { return d.value; })]).nice();
 
+     add_value(enter);
 
     // Update the x-axis.
     svg.selectAll(".x.axis").transition()
@@ -293,7 +292,9 @@ function down(d, i) {
     enterTransition.select("text")
         .style("fill-opacity", 1);
 
-
+     svg.selectAll(".bar-value").style("opacity", 0).transition()
+        .duration(duration*1.5)
+        .style("opacity", 1);
 
     // Transition entering rects to the new x-scale.
     enterTransition.select("rect")
@@ -341,13 +342,14 @@ function up(d) {
         .attr("class", "exit");
 
     svg.selectAll(".bar-value").transition()
-        .duration(duration)
+        .duration(duration*0.5)
         .style("opacity", 0);
 
     // Update the x-scale domain.
     x.domain([0, d3.max(d.parent.children, function(d) {
         return d.value;
     })]).nice();
+
 
 
     // Enter the new bars for the clicked-on data's parent.
@@ -368,7 +370,7 @@ function up(d) {
         })
         .style("fill-opacity", 1e-6);
 
-
+    add_value(enter)
 
 
 
@@ -455,7 +457,13 @@ function bar(d) {
         })
         .attr("height", barHeight);
 
+ 
+    return bar;
+}
+
+function add_value(bar){
     bar.append("text")
+
         .attr("class", "bar-value")
         .attr("y", barHeight / 2)
         .attr("dx", -valueMargin + labelWidth) //margin right
@@ -467,8 +475,8 @@ function bar(d) {
         .attr("x", function(d) {
             var width = this.getBBox().width;
             return width + 11 + (x(d.value));
-        });
-    return bar;
+        })
+        .style("opacity",1);
 }
 
 
