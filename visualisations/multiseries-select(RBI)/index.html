@@ -3,19 +3,20 @@
 <head>
     <meta charset="utf-8">
     <link href="nv.d3.css" rel="stylesheet" type="text/css">
-<script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.min.js'></script>
-    <script src="nv.d3.js"></script>
     <link rel="stylesheet" type="text/css" href="card.css">
-<link href="bootstrap.min.css" rel="stylesheet" type="text/css">
-    <script src="stream_layers.js"></script>
-      <script src="bootstrap.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
- <link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.min.js'></script>
+    <script src="nv.d3.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    
     <style>
     .nvd3 text,.nv-axislabel{
         font-family: 'Open Sans', sans-serif;
     }
+
     text {
         font-size: 12px ;
     }
@@ -28,8 +29,7 @@
         margin: 0 auto;
     }
     
-    #chart,
-    svg {
+    #chart, svg {
         margin: 0 auto;
      
         height: 450px;
@@ -43,9 +43,6 @@
         stroke-opacity: 1;
     }
     
-    svg,
-    .nv-background rect {}
-    
     .nvd3 .nv-axis line {
         stroke: rgba(0, 0, 0, 0.05);
         opacity: 0.7;
@@ -58,7 +55,6 @@
         font-family: 'Open Sans', sans-serif;
     }
    
-    
     .nv-point {
         stroke-opacity: 1!important;
         stroke-width: 1px!important;
@@ -95,9 +91,10 @@
 
     </style>
 </head>
+
 <body>
-<br><br>
- <div class="infocard">
+    <br><br>
+    <div class="infocard">
         <div class="row">
             <div class="col-lg-7">
                 <div class="viz-header">
@@ -105,8 +102,6 @@
                 </div>
             </div>
             <div class="col-lg-5">
-          
-                
             </div>
         </div>
         <hr>
@@ -118,131 +113,84 @@
 
 
 
-<script>
-d3.csv("Table 1 - Gross Fiscal Deficit.csv", function(error,data){
+    <script>
+    d3.csv("Table2 _ Revenue Deficit.csv", function(error,data){
 
-
-    var parseDate = d3.time.format("%Y").parse;
-
-
-    var chdata=[];
-    for(var i=0;i<data.length;i++)
-
-    {   
-        key=Object.keys(data[i])
-        key.shift();
-        var state= new Object();
-        state.key = data[i].States
-        state.disabled = data[i].States=="All States"?false:true
-        var values_arr=[]
-        for(var j =0;j <key.length;j++)
-        {
-            if (data[i][key[j]]=="..."){
-                continue;
-
+    function mungeData(data){
+        var parseDate = d3.time.format("%Y").parse;
+        var chdata=[];
+        for(var i=0;i<data.length;i++)
+        {   
+            key=Object.keys(data[i])
+            key.shift();
+            var state= new Object();
+            state.key = data[i].States
+            state.disabled = data[i].States=="All States"?false:true
+            var values_arr=[]
+            for(var j =0;j <key.length;j++)
+            {
+                if (data[i][key[j]]=="..."){
+                    continue;
+                }
+                else{
+                var temp= new Object();
+                temp.x=parseDate(key[j].substring(0,4));
+                temp.y=parseFloat(data[i][key[j]])
+                values_arr.push(temp);
+                }
             }
-            else{
-              
-            var temp= new Object();
-            temp.x=parseDate(key[j].substring(0,4));
-            temp.y=parseFloat(data[i][key[j]])
-            values_arr.push(temp);
-            }
-           
-        }
-        state.values=values_arr
-     
-        chdata.push(state);
-   }
-   var legendSpace = 450 / 30;
+            state.values=values_arr
+            chdata.push(state);
+       }
+        return chdata;  
+    }   
 
-   var types= new Set()
-   for( var i =0;i<chdata.length;i++){
-    
-        types.add(chdata[i].type);
-   }
-   selection=chdata[0].type;
-   selected_data=[]
-   function getdata(selection){
-    selected_data=[]
-    
-    for(var j=0;j<chdata.length;j++)
-    {
-        if (chdata[j].type==selection){
-           
-            selected_data.push(chdata[j])
-        }
-        
-    }
-    
-    return selected_data;
-   }
-       function toTitleCase(str) {
+    function toTitleCase(str) {
         return str.replace(/\w\S*/g, function(txt) {
             return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
         });
     }
 
-   
+       
     var addMiscElements = function() {
         d3.select("#viz-header").text(toTitleCase("Gross Fiscal Deficit"))
     }
 
-addMiscElements();
-     
+    function drawChart(data){
+        nv.addGraph(function() {
+            chart = nv.models.lineWithFocusChart();
+            chart.showLegend(true);
+            var xScale = d3.time.scale();
+            var mini, max ,minmax;
+            
+            chart.xAxis.tickFormat(function(d) { return d3.time.format('%Y')(new Date(d)) }).axisLabel("Year");
+            chart.x2Axis.height("200px").tickFormat(function(d) { return d3.time.format('%Y')(new Date(d)) });
+            
+            chart.yAxis.axisLabel("Gross Fiscal Deficit (Rs. Crore)")
+            chart.focusHeight(100)
+            chart.pointSize(10)
+            chart.width(750)
+            chart.legendPosition("right");
 
-var chart;
-var chartData;
- 
-    
-    nv.addGraph(function() {
-        chart = nv.models.lineWithFocusChart();
-        
-         chart.showLegend(true)
-         var xScale = d3.time.scale();
-        var mini, max;
-        var minmax;
-        chart.xScale;
+            chart.useInteractiveGuideline(true);
+            chartdata=d3.select('#chart svg')
+                .datum(data)
+                .call(chart);
 
-        chart.xAxis
-     .tickFormat(function(d) { return d3.time.format('%Y')(new Date(d)) }).axisLabel("Year");
-     chart.x2Axis.height("200px")
-     .tickFormat(function(d) { return d3.time.format('%Y')(new Date(d)) });
-        
-        chart.yAxis.axisLabel("Gross Fiscal Deficit (Rs. Crore)")
-        chart.focusHeight(100)
-        chart.pointSize(10)
-        chart.width(750)
-        chart.legendPosition("right");
+            chartdata.transition().duration(500).call(chart);
+            nv.utils.windowResize(chart.update);
 
-        chart.useInteractiveGuideline(true);
-        chartdata=d3.select('#chart svg')
-            .datum(chdata)
-            .call(chart);
+            d3.select(".nv-legendWrap").attr("transform","translate("  + 350 + ',' + 0 +')')
 
+            return chart;
+        }); 
+    }           
 
-        console.log(chart.legend)
-        chartdata.transition().duration(500).call(chart);
-        nv.utils.windowResize(chart.update);
+    addMiscElements();
+    drawChart(mungeData(data));
 
-        d3.select(".nv-legendWrap")
-        .attr("transform","translate("  + 350 + ',' + 0 +')')
-
-       /* d3.selectAll(".nv-series")
-            .attr("transform", null)
-            .attr("x", 700 + (200/3) - 15) 
-      .attr("y", function (d, i) { return (legendSpace)+i*(legendSpace) - 8; })  //
-        */
-
-        return chart;
     });
 
-       
-            
-
-});
-
-   
-</script>
+    </script>
 </body>
 </html>
