@@ -449,12 +449,18 @@ function up(d) {
         .datum(d.parent)
         .transition()
         .duration(end);
+
 }
 function setDelay() {
   setTimeout(function(){
     console.log("sadsad")
   }, 1000);
 }
+
+function doSetTimeout(last_node) {
+  setTimeout(function() { up(last_node); }(last_node), 750);
+}
+
 
 function navigate_level(element, d){
    
@@ -470,16 +476,22 @@ function navigate_level(element, d){
         console.log("in", last_node,last_node.parent)
         temp[0][temp[0].length-1].remove()
         temp[0].pop();
-        currentTime = Date.now()
-        console.log(currentTime);
         up(last_node);
-        while(Date.now() <currentTime + 750){}
         
         
+        function timeout() {
+            setTimeout(function () {
+                // Do Something Here
+                // Then recall the parent function to
+                // create a recursive loop.
+                timeout();
+            }, 1000);
+        }
         last_node=last_node.parent
   
         
         }
+        
 
 
 }
