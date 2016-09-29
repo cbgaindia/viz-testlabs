@@ -390,12 +390,13 @@ function up(d) {
             return color(!!d.children);
         })
         .filter(function(p) {
-            return p === d;
+            return false;
+
         })
         .style("fill-opacity", 1e-6);
 
     add_value(enter)
-
+    console.log(1e-6);
 
 
     // Update the x-axis.
@@ -405,9 +406,9 @@ function up(d) {
 
     // Transition entering bars to fade in over the full duration.
     var enterTransition = enter.transition()
-        .duration(end)
+        .duration(1200)
         .style("opacity", 1);
-
+        console.log(end, delay, duration)
 
 
     // Transition entering rects to the new x-scale.
@@ -415,18 +416,20 @@ function up(d) {
     enterTransition.select("rect")
         .attr("width", function(d) {
             return x(d.value);
-        })
-        .each("end", function(p) {
-            if (p === d) d3.select(this).style("fill-opacity", null);
         });
+        /*.each("end", function(p) {
+            if (p === d) {console.log(p,d);d3.select(this).style("fill-opacity", 1);}
+        });*/
 
     // Transition exiting bars to the parent's position.
     var exitTransition = exit.selectAll("g").transition()
         .duration(duration)
         .delay(function(d, i) {
-            return i * delay;
+            console.log(delay);
+            return delay/100;
         })
-        .attr("transform", stack(d.index));
+        .attr("transform", stack(d.index))
+        ;
 
     // Transition exiting text to fade out.
     exitTransition.select("text")
@@ -437,11 +440,12 @@ function up(d) {
         .attr("width", function(d) {
             return x(d.value);
         })
+        .attr("fill-opacity", 1e-6)
         .style("fill", color(true));
 
     // Remove exiting nodes when the last child has finished transitioning.
     exit.transition()
-        .duration(end)
+        .duration(delay/10)
         .remove();
 
     // Rebind the current parent to the background.
