@@ -116,10 +116,8 @@
     </div>
 
 
-<script src="timeseries_rbi-view.js"></script>
-<script src="timeseries_rbi-main.js"></script>
 
-<!--
+
 <script>
 d3.csv("Table 1 - Gross Fiscal Deficit.csv", function(error,data){
 
@@ -217,6 +215,8 @@ var chartData;
         chart.width(750)
         chart.legendPosition("right");
 
+        
+
         chart.useInteractiveGuideline(true);
         chartdata=d3.select('#chart svg')
             .datum(chdata)
@@ -228,7 +228,10 @@ var chartData;
         nv.utils.windowResize(chart.update);
 
         d3.select(".nv-legendWrap")
-        .attr("transform","translate("  + 350 + ',' + 0 +')')
+        .attr("transform","translate("  + 366.67 + ',' + 0 +')');
+
+        d3.select(".nv-legendWrap")
+        .attr("transform","translate("  + 366.67 + ',' + 0 +')');
 
        /* d3.selectAll(".nv-series")
             .attr("transform", null)
@@ -246,6 +249,5 @@ var chartData;
 
    
 </script>
--->
 </body>
 </html>

@@ -37,10 +37,13 @@ var addMiscElements = function() {
 
 function drawChart(data) {
     nv.addGraph(function() {
-        chart = nv.models.lineWithFocusChart();
+        chart = nv.models.lineWithFocusChart()
+            ;
         chart.showLegend(true);
         var xScale = d3.time.scale();
         var mini, max, minmax;
+
+        console.log(chart,nv.models.lineWithFocusChart())
 
         chart.xAxis.tickFormat(function(d) {
             return d3.time.format('%Y')(new Date(d)) }).axisLabel("Year");
@@ -50,8 +53,9 @@ function drawChart(data) {
         chart.yAxis.axisLabel(toTitleCase("Revenue Receipts"))
         chart.focusHeight(100)
         chart.pointSize(10)
-        chart.width(650)
-        chart.legendPosition("right");
+        //chart.width(650)
+            //chart.legend.vers('furious');
+        chart.legendPosition("top");
 
         chart.useInteractiveGuideline(true);
         chartdata = d3.select('#chart svg')
@@ -62,7 +66,7 @@ function drawChart(data) {
         nv.utils.windowResize(chart.update);
 
         //d3.select(".nv-legendWrap").attr("transform", "translate(" + 200 + ',' + 0 + ')')
-        legendwrap = d3.select("nv-legendWrap nvd3-svg").remove()
+        //legendwrap = d3.select("nv-legendWrap nvd3-svg").remove()
 
         return chart;
 

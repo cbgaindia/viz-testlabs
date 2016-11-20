@@ -92,6 +92,8 @@
             chart.focusHeight(100)
             chart.pointSize(10)
 
+            console.log(data)
+            
             chart.useInteractiveGuideline(true);
             chartdata = d3.select('#chart svg')
                 .datum(data)
