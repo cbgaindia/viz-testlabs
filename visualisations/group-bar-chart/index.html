@@ -267,10 +267,11 @@
                     .showControls(false) //Allow user to switch between 'Grouped' and 'Stacked' mode.
                     .groupSpacing(0.2) //Distance between each group of bars.
                 ;
-                chart.yAxis.ticks(10)
-
                 chart.yAxis
-                    .tickFormat(d3.format(',.1f'));
+                .axisLabel(data.name)
+                .axisLabelDistance(10)
+                .ticks(10)
+                .tickFormat(d3.format(',.1f'));
 
                 console.log(data.name)
                 chartdata = d3.select('#chart svg')

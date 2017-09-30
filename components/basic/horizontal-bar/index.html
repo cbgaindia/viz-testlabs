@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.5/nv.d3.css">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</script>
+<style>
+.bar--positive {
+    fill: steelblue;
+}
+
+.bar--negative {
+    fill: darkorange;
+}
+
+.axis text {
+    font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+body {
+    margin: 0px auto;
+    width: 70%;
+}
+</style>
+
+<body>
+    <div class="container-fluid">
+        
+        <div class="row-fluid chartarea">
+            <div id="options-select" class="col-lg-3">
+                <div id="select-list"></div>
+            </div>
+            <div class="col-lg-9">
+                <div id="chart" class='chart-container'>
+                    <svg></svg>
+                </div>
+            </div>
+        </div>
+        <div class="row-fluid notes">
+            <div class="notes-container">
+                <span class="notes-heading"></span>
+                <span class="notes-content"></span>
+            </div>
+            <div class="unit-note">
+                <span class="unit-note-heading"></span>
+                <span class="unit-note-content"></span>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="//d3js.org/d3.v3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.5/nv.d3.js"></script>
+    <!--
+    <script>
+    var margin = {
+            top: 20,
+            right: 30,
+            bottom: 40,
+            left: 150
+        },
+        width = 1000 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom;
+
+    var year = "Corporation Tax (0020)";
+
+
+    var x = d3.scale.linear()
+        .range([0, width]);
+
+    var y = d3.scale.ordinal()
+        .rangeRoundBands([0, height], 0.1);
+
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom");
+
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left")
+        .tickSize(0)
+        .tickPadding(6);
+
+    var svg = d3.select("body").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    d3.csv("./data.csv", type, function(error, data) {
+        console.log(data)
+        x.domain(d3.extent(data, function(d) {
+            return d[year];
+        })).nice();
+        y.domain(data.map(function(d) {
+            return d.State;
+        }));
+
+
+        var states = data.map(function(d) {
+            return d.State;
+        })
+
+        var bar = svg.selectAll(".bar")
+            .data(data)
+            .enter().append("rect")
+            .attr("class", function(d) {
+                return "bar bar--" + (d[year] < 0 ? "negative" : "positive");
+            })
+            .attr("x", function(d) {
+                console.log(d.State, d[year]);
+                return x(Math.min(0, d[year]));
+            })
+            .attr("y", function(d) {
+                return y(d.State);
+            })
+            .attr("width", function(d) {
+                console.log(Math.abs(x(0)));
+                return Math.abs(x(d[year]) - x(0));
+            })
+
+        .attr("height", y.rangeBand());
+
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis);
+
+        svg.append("g")
+            .attr("class", "y axis")
+            .attr("transform", "translate(" + x(0) + ",0)")
+            .call(yAxis);
+    });
+
+
+
+    function type(d) {
+        d[year] = +d[year];
+
+        return d;
+    }
+    </script>
+    -->
+    <script>
+    var addMiscElements = function() {
+        d3.select("#viz-header").text(resource.name)
+    }
+
+    function populateSelection(data, column_list) {
+        var select = d3.select("#select-list")
+            .append("ul")
+            .attr("class", "nav nav-tabs nav-stacked")
+            .selectAll("li")
+            .data(column_list)
+            .enter().append("li")
+            .attr("class", function(d, i) {
+                if (i == 0) {
+                    return "active";
+                }
+            })
+            .classed("elem", true)
+
+        .on("click", function(d) {
+            console.log(d)
+            drawchart(data, d);
+        })
+
+        select.append("a")
+            .attr({
+                onclick: "return false;",
+                href: "#"
+            })
+            .text(function(d) {
+                return d
+            })
+
+        $(".nav a").on("click", function() {
+            $(".nav").find(".active").removeClass("active");
+            $(this).parent().addClass("active");
+        });
+    }
+
+    function find_columns(data) {
+
+        key = Object.keys(data[0]);
+        key.shift();
+
+        return key
+    }
+
+    function drawchart(data, record) {
+      
+        d3.select("#chart svg").selectAll("*").remove();
+        console.log(parseFloat(data[0][record]), record)
+
+
+        var margin = {
+                top: 20,
+                right: 30,
+                bottom: 40,
+                left: 150
+            },
+            width = 600 - margin.left - margin.right,
+            height = 500 - margin.top - margin.bottom;
+
+
+
+
+        var x = d3.scale.linear()
+            .range([0, width]);
+
+        var y = d3.scale.ordinal()
+            .rangeRoundBands([0, height], 0.1);
+
+        var xAxis = d3.svg.axis()
+            .scale(x)
+            .orient("bottom");
+
+        var yAxis = d3.svg.axis()
+            .scale(y)
+            .orient("left")
+            .tickSize(0)
+            .tickPadding(6);
+
+        var svg = d3.select("#chart").select("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+        x.domain(d3.extent(data, function(d) {
+            return +d[record];
+        })).nice();
+        y.domain(data.map(function(d) {
+            return d.State;
+        }));
+
+
+        var states = data.map(function(d) {
+            return d.State;
+        })
+
+        var bar = svg.selectAll(".bar")
+            .data(data)
+            .enter().append("rect")
+            .attr("class", function(d) {
+                return "bar bar--" + (d[record] < 0 ? "negative" : "positive");
+            })
+            .attr("x", function(d) {
+                console.log(d.State, d[record]);
+                return x(Math.min(0, d[record]));
+            })
+            .attr("y", function(d) {
+                return y(d.State);
+            })
+            .attr("width", function(d) {
+                console.log(Math.abs(x(0)));
+                return Math.abs(x(d[record]) - x(0));
+            })
+
+        .attr("height", y.rangeBand());
+
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis);
+
+        svg.append("g")
+            .attr("class", "y axis")
+            .attr("transform", "translate(" + x(0) + ",0)")
+            .call(yAxis);
+
+    }
+
+    function add_notes() {
+        try {
+
+            var extra_fields = package_details.extras
+            var unit, note;
+            for (var i in extra_fields) {
+                console.log(extra_fields[i]);
+                if (extra_fields[i].key == "Unit") {
+                    unit = extra_fields[i].value;
+                }
+                if (extra_fields[i].key == "Note") {
+                    note = extra_fields[i].value;
+                }
+            }
+            if (unit) {
+                d3.select(".notes-content")
+                    .text(function(d) {
+                        return unit;
+                    })
+                d3.select(".notes-heading")
+                    .text(function(d) {
+                        return "Unit :";
+                    })
+            }
+            if (note) {
+                d3.select(".unit-note-content")
+                    .text(function(d) {
+                        return note;
+                    })
+                d3.select(".unit-note-heading")
+                    .text(function(d) {
+                        return "Note :";
+                    })
+            }
+
+        } catch (err) {}
+
+    }
+
+    d3.csv("./data.csv", function(data) {
+        console.log(data)
+            //addMiscElements();
+        add_notes();
+        populateSelection(data, find_columns(data));
+        drawchart(data, find_columns(data)[0])
+    });
+    </script>

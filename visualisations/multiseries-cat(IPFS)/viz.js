@@ -98,9 +98,7 @@
             chartdata = d3.select('#chart svg')
                 .datum(data)
                 .call(chart);
-            chart.dispatch.on("stateChange", function(e) {
-
-            });
+           
 
             chartdata.transition().duration(500).call(chart);
             nv.utils.windowResize(chart.update);

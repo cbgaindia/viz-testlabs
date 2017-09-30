@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="bootstrap.js"></script>
+    <link href="bootstrap.min.css" rel="stylesheet" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="bootstrap-responsive.css" rel="stylesheet">
+    <!--<script src="https://d3js.org/d3.v4.min.js"></script>-->
+    <script type="text/javascript" src="d3.v3.min.js"></script>
+    <link href="nv.d3.css" rel="stylesheet" type="text/css">
+    <script src="nv.d3.js">
+    </script>
+    <link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+    .outer-container {
+        margin: 0px auto;
+        width: 1029px;
+        padding: 20px 20px;
+        border: 1px solid black;
+        height: 570px
+    }
+
+    rect.nv-bar {
+        fill-opacity: 1;
+    }
+
+    #select-list {
+
+        overflow-y: auto;
+        font-family: 'Lato', sans-serif;
+        overflow-x: hidden;
+        height: 515px;
+    }
+
+    #chart-area {
+        height: 340px;
+    }
+
+    .records .no-series {
+        /*color: rgba(64, 64, 64, 0.68);*/
+    }
+
+    .records li {
+        padding: 1px 0px;
+    }
+
+    .groupbarchart {
+        padding: 0px 0px 0px 25px;
+    }
+
+    .records .series:hover {
+        border-radius: 3px;
+        background-color: rgba(64, 64, 64, 0.18);
+        cursor: pointer;
+    }
+
+    ul {
+        list-style-position: outside;
+    }
+    </style>
+    <style type="text/css">
+    .panel {
+        margin-bottom: 20px;
+        background-color: #fff;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+        box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    }
+
+    .panel-default {
+        border-color: #ddd;
+    }
+
+    .panel-default>.panel-heading {
+        color: #333;
+        background-color: #f5f5f5;
+        border-color: #ddd;
+    }
+
+    .panel-heading {
+        padding: 10px 15px;
+        font-weight: 700;
+        border-bottom: 1px solid transparent;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+    }
+
+    .panel-body {
+        padding: 15px 15px 0px 15px;
+    }
+
+    .chart-hr {
+        margin: 4px;
+    }
+
+    .table th,
+    .table td {
+        padding: 5px;
+    }
+
+    .fig-num {
+        float: right;
+    }
+
+    .fig-per {
+        margin-right: 10px;
+    }
+
+    table#per-table {
+        font-size: 12px;
+    }
+
+    .table th,
+    .table td {
+        padding: 5px 15px;
+        text-align: center;
+    }
+
+    tr>td:first-child {
+        padding: 5px;
+        text-align: left;
+    }
+
+    li.list.active.series {
+        background-color: rgba(64, 64, 64, 0.33);
+    }
+
+    i.fa {
+        font-size: 11px;
+        margin-right: 9px;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="outer-container">
+        <div class="row-fluid">
+            <div class="span5">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Particulars</div>
+                    <div class="panel-body" id="select-list"></div>
+                </div>
+            </div>
+            <div class="span7 groupbarchart">
+                <div class="row">
+                    <div class="span12 " id="per-change">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" id="viz-header"></div>
+                            <div class="panel-body" id="table-body">
+                                <div class="" id="chart-area">
+                                    <svg></svg>
+                                </div>
+                                <div class="row">
+                                    <table class="table" id="per-table">
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    function populate_records(data) {
+
+        font_weigt_key = {
+            "1": 900,
+            "2": 700,
+            "3": 700,
+            "4": 400,
+            "5": 400
+        }
+
+        font_size_key = {
+            "1": "17px",
+            "2": "17px",
+            "3": "15px",
+            "4": "15px",
+            "5": "15px"
+        }
+        padding_key = {
+            "1": "4px",
+            "2": "4px",
+            "3": "16px",
+            "4": "32px",
+            "5": "78px",
+            "6": "136px"
+        }
+
+        flag = 0
+
+        var select = d3.select("#select-list")
+            .append("ul")
+            .attr("class", "records unstyled")
+            .selectAll("li")
+            .data(data)
+            .enter()
+            .append("li")
+            .html(function(d) {
+                if (d.hasOwnProperty('series')) {
+                    if (d.hasOwnProperty('key_index')) {
+                        return "<i class='fa fa-square-o' aria-hidden='true'></i> " + "<span class='record-name'>" + d.key_index + " . " + d.key + "</span>"
+                    } else {
+                        return "<i class='fa fa-square-o' aria-hidden='true'></i> " + d.key
+                    }
+                } else {
+                    if (d.hasOwnProperty('key_index')) {
+                        return d.key_index + " . " + d.key
+                    } else {
+                        return d.key
+                    }
+                }
+            })
+
+            .attr("class", "list")
+            .attr("class", function(d, i) {
+
+                class_str = "list "
+                if (d.hasOwnProperty("series") && flag == 0) {
+                    flag = 1
+                    class_str = class_str.concat("active ");
+                    drawchart(d)
+                    generate_table(d)
+                    d3.select("#viz-header").text(d.key)
+                }
+
+                if (d.hasOwnProperty('series')) {
+                    class_str = class_str.concat("series ")
+                } else {
+                    class_str = class_str.concat("no-series ")
+                }
+                return class_str
+            })
+
+            .style("font-weight", function(d) {
+                return font_weigt_key[d.key_lvl]
+            })
+            .style("padding-left", function(d) {
+                return padding_key[d.key_lvl]
+            })
+            .style("font-size", function(d) {
+                return font_size_key[d.key_lvl]
+            })
+
+            .on("click", function(d) {
+                if (d.hasOwnProperty('series')) {
+                    generate_table(d)
+                    drawchart(d)
+                    d3.select("#viz-header").text(d.key)
+                } else {
+                    event.preventDefault();
+                }
+            })
+
+        $(".records").find(".active").children("i").addClass("fa-check-square");
+
+
+
+        $(".records li").on("click", function(d) {
+
+            $(".records").find(".active").children("i").removeClass("fa-check-square");
+            $(".records").find(".active").children("i").addClass("fa-square-o");
+
+            $(".records").find(".active").removeClass("active");
+            $(this).addClass("active");
+            $(this).children("i").removeClass("fa-square-o");
+            $(this).children("i").addClass("fa-check-square");
+
+        });
+    }
+
+    function generate_table(data) {
+        d3.select("#per-table").remove()
+
+        var table = d3.select("#table-body")
+            .append("table")
+            .attr("id", "per-table")
+            .attr("class", "table")
+
+        var thead = table.append("thead")
+
+        var header_rw = thead.append("tr")
+
+        header_rw.selectAll("th")
+            .data(data["series"])
+            .enter()
+            .append("th")
+            .text(function(d) {
+                return d.key
+            })
+            .attr("text-align", "center")
+
+        header_rw.insert("th", ":first-child");
+
+        label_set = new Set()
+        for (i in data["series"]) {
+            obj_series = data["series"][i]["values"];
+            keys = Object.keys(obj_series)
+
+            for (j in obj_series) {
+                label_set.add(obj_series[j].label)
+            }
+        }
+        var label_set = Array.from(label_set);
+
+        var tbody = table.append('tbody')
+
+        var tabel_rows = tbody.selectAll("tr")
+            .data(label_set)
+            .enter()
+            .append("tr")
+
+
+
+        tabel_rows.append("td")
+            .text(function(d, i) {
+                return d
+            })
+
+        for (j in data["series"]) {
+            tabel_rows.append("td")
+               
+                .html(function(d, i) {
+                    current_record = data["series"][j]["values"].find(function(x) {
+                        if (x["label"] == d) {
+                            return true
+                        }
+                    })
+
+
+                    if (typeof current_record != "undefined") {
+
+                        if (i != 0) {
+                            //
+                            previous_record = data["series"][j]["values"].find(function(x) {
+                                // 
+                                if (x["label"] == label_set[i - 1]) {
+                                    return true
+                                }
+                            })
+                            if (typeof previous_record != "undefined") {
+                                //
+                                percent_figure = ((current_record["value"] - previous_record["value"]) / previous_record["value"] * 100)
+                                return "<span class='fig-per' >" + percent_figure.toFixed(2) + "% " + "</span>" + "<span class='fig-num' >" + current_record["value"].toFixed(2) + " Cr." + "</span>"
+
+                            } else {
+                                return "<span class='fig-num' >" + current_record["value"].toFixed(2) + " Cr." + "</span>"
+                            }
+                        } else {
+                            return "<span class='fig-num' >" + current_record["value"].toFixed(2) + " Cr." + "</span>"
+                        }
+                    } else {
+                        return "..."
+                    }
+                })
+
+
+                .style("color", function(d, i) {
+                    var percent_figure;
+                    current_record = data["series"][j]["values"].find(function(x) {
+                        if (x["label"] == d) {
+                            return true
+                        }
+                    })
+
+
+                    if (typeof current_record != "undefined") {
+
+                        if (i != 0) {
+                            //
+                            previous_record = data["series"][j]["values"].find(function(x) {
+                                // 
+                                if (x["label"] == label_set[i - 1]) {
+                                    return true
+                                }
+                            })
+                            if (typeof previous_record != "undefined") {
+                                //
+                                percent_figure = ((current_record["value"] - previous_record["value"]) / previous_record["value"] * 100)
+                            }
+                        }
+                    }
+
+                    if (percent_figure > 0) {
+                        return "#007622"
+                    } else if (percent_figure < 0) {
+                        return "#990000"
+                    }
+
+                })
+        }
+
+
+
+    }
+
+    function drawchart(data) {
+
+        nv.addGraph(function() {
+            var chart = nv.models.multiBarChart()
+                .color(["#002A4A", "#FF9311", "#D64700", "#17607D"])
+                .x(function(d) { return d.label })
+                .y(function(d) { return d.value })
+                .height(350)
+                .width(550)
+                .margin({ top: 5, right: 10, bottom: 50, left: 80 })
+                .reduceXTicks(false) //If 'false', every single x-axis tick label will be rendered.
+                .rotateLabels(0) //Angle to rotate x-axis labels.
+                .showControls(false) //Allow user to switch between 'Grouped' and 'Stacked' mode.
+                .groupSpacing(0.1) //Distance between each group of bars.
+            ;
+
+
+            chart.yAxis.axisLabel("Rs. Crore")
+                .axisLabelDistance(10)
+                .ticks(10)
+                .tickFormat(d3.format(',.1f'));
+
+            chartdata = d3.select("#chart-area svg")
+                .datum(data.series)
+                .call(chart);
+
+            chartdata.transition().duration(500).call(chart);
+            nv.utils.windowResize(chart.update);
+            return chart;
+        });
+
+    }
+
+    d3.json("dataset.json", function(data) {
+
+        populate_records(data)
+    })
+    </script>
+</body>
+
+</html>
