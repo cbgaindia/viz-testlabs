@@ -17,6 +17,9 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="FileSaver.min.js"></script>
+    <script type="text/javascript" src="dom-to-image.min.js"></script>
+
     <style>
     .outer-container {
         margin: 0px auto;
@@ -124,7 +127,7 @@
     }
 
     tr>td:first-child {
-        padding: 5px;
+        padding: 3px 0px 3px 6px;
         text-align: left;
     }
 
@@ -136,6 +139,13 @@
         font-size: 11px;
         margin-right: 9px;
     }
+    button#download_vis {
+    float: right;
+    /* text-align: -webkit-left; */
+    /* margin-bottom: 16px; */
+    padding: 2px 10px;
+    margin-top: -3px;
+}
     </style>
 </head>
 
@@ -148,11 +158,14 @@
                     <div class="panel-body" id="select-list"></div>
                 </div>
             </div>
-            <div class="span7 groupbarchart">
+            <div class="span7 groupbarchart" id="visualization-area">
                 <div class="row">
                     <div class="span12 " id="per-change">
                         <div class="panel panel-default">
-                            <div class="panel-heading" id="viz-header"></div>
+                            <div class="panel-heading" >
+                                <span id="viz-header"></span>
+                                <button type="button" value="download" class="btn btn-default" id="download_vis" onClick ="downloadImage"> <i className="fa fa-download  fa-lg" aria-hidden="false"></i> Download </button>
+                            </div>
                             <div class="panel-body" id="table-body">
                                 <div class="" id="chart-area">
                                     <svg></svg>
@@ -219,7 +232,6 @@
                     }
                 }
             })
-
             .attr("class", "list")
             .attr("class", function(d, i) {
 
@@ -262,9 +274,7 @@
 
         $(".records").find(".active").children("i").addClass("fa-check-square");
 
-
-
-        $(".records li").on("click", function(d) {
+        $(".records li.series").on("click", function(d) {
 
             $(".records").find(".active").children("i").removeClass("fa-check-square");
             $(".records").find(".active").children("i").addClass("fa-square-o");
@@ -276,7 +286,33 @@
 
         });
     }
+    function add_actions(){
+        document.getElementById("download_vis").addEventListener("click", downloadImage, true);
+    }
 
+    function filter (node) {
+        try {
+            return (node.getAttribute("id") !== 'download_vis');
+        }
+        catch(err) {
+            return true;
+        }       
+    }
+
+    /*function downloadImage(){
+        domtoimage.toBlob(document.getElementById('visualization-area'), {filter: filter})
+        .then(blob => {
+
+        window.saveAs(blob, 'Visualization Report.png');
+        }).catch(function (error) {
+        });
+    }*/
+    function downloadImage(){
+    domtoimage.toBlob(document.getElementById('per-change'),  {filter: filter} )
+    .then(function (blob) {
+        window.saveAs(blob, 'Visualization Report.png');
+    });
+}
     function generate_table(data) {
         d3.select("#per-table").remove()
 
@@ -309,6 +345,7 @@
                 label_set.add(obj_series[j].label)
             }
         }
+
         var label_set = Array.from(label_set);
 
         var tbody = table.append('tbody')
@@ -318,16 +355,13 @@
             .enter()
             .append("tr")
 
-
-
         tabel_rows.append("td")
             .text(function(d, i) {
                 return d
             })
 
         for (j in data["series"]) {
-            tabel_rows.append("td")
-               
+            tabel_rows.append("td")               
                 .html(function(d, i) {
                     current_record = data["series"][j]["values"].find(function(x) {
                         if (x["label"] == d) {
@@ -335,19 +369,14 @@
                         }
                     })
 
-
                     if (typeof current_record != "undefined") {
-
                         if (i != 0) {
-                            //
                             previous_record = data["series"][j]["values"].find(function(x) {
-                                // 
                                 if (x["label"] == label_set[i - 1]) {
                                     return true
                                 }
                             })
                             if (typeof previous_record != "undefined") {
-                                //
                                 percent_figure = ((current_record["value"] - previous_record["value"]) / previous_record["value"] * 100)
                                 return "<span class='fig-per' >" + percent_figure.toFixed(2) + "% " + "</span>" + "<span class='fig-num' >" + current_record["value"].toFixed(2) + " Cr." + "</span>"
 
@@ -371,19 +400,14 @@
                         }
                     })
 
-
                     if (typeof current_record != "undefined") {
-
                         if (i != 0) {
-                            //
                             previous_record = data["series"][j]["values"].find(function(x) {
-                                // 
                                 if (x["label"] == label_set[i - 1]) {
                                     return true
                                 }
                             })
                             if (typeof previous_record != "undefined") {
-                                //
                                 percent_figure = ((current_record["value"] - previous_record["value"]) / previous_record["value"] * 100)
                             }
                         }
@@ -394,12 +418,8 @@
                     } else if (percent_figure < 0) {
                         return "#990000"
                     }
-
                 })
         }
-
-
-
     }
 
     function drawchart(data) {
@@ -415,8 +435,8 @@
                 .reduceXTicks(false) //If 'false', every single x-axis tick label will be rendered.
                 .rotateLabels(0) //Angle to rotate x-axis labels.
                 .showControls(false) //Allow user to switch between 'Grouped' and 'Stacked' mode.
-                .groupSpacing(0.1) //Distance between each group of bars.
-            ;
+                .groupSpacing(0.1); //Distance between each group of bars.
+            
 
 
             chart.yAxis.axisLabel("Rs. Crore")
@@ -436,8 +456,8 @@
     }
 
     d3.json("dataset.json", function(data) {
-
         populate_records(data)
+        add_actions()
     })
     </script>
 </body>
