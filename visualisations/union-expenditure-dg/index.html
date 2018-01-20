@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script type="text/javascript" src="FileSaver.min.js"></script>
     <script type="text/javascript" src="dom-to-image.min.js"></script>
+    <script src="mousetrap.min.js"></script>
     <style>
     .outer-container {
         margin: 0px auto;
@@ -134,9 +135,15 @@
         background-color: rgba(64, 64, 64, 0.33);
     }
 
+    li div {
+        overflow: hidden;
+    }
+
     i.fa {
         font-size: 11px;
         margin-right: 9px;
+        float: left;
+        margin-top: 5px;
     }
 
     button#download_vis {
@@ -191,6 +198,14 @@
             "4": 400,
             "5": 400
         }
+        margin_top_key = {
+            "1": "25",
+            "2": "10",
+            "3": "0",
+            "4": "0",
+            "5": "0",
+            "6": "0"
+        }
 
         font_size_key = {
             "1": "17px",
@@ -200,10 +215,10 @@
             "5": "15px"
         }
         padding_key = {
-            "1": "4px",
-            "2": "4px",
-            "3": "16px",
-            "4": "32px",
+            "1": "0px",
+            "2": "10px",
+            "3": "25px",
+            "4": "50px",
             "5": "78px",
             "6": "136px"
         }
@@ -220,9 +235,9 @@
             .html(function(d) {
                 if (d.hasOwnProperty('series')) {
                     if (d.hasOwnProperty('key_index')) {
-                        return "<i class='fa fa-square-o' aria-hidden='true'></i> " + "<span class='record-name'>" + d.key_index + " . " + d.key + "</span>"
+                        return "<i class='fa fa-square-o' aria-hidden='true'></i> " + "<div class='record-name'>" + d.key_index + " . " + d.key + "</div>"
                     } else {
-                        return "<i class='fa fa-square-o' aria-hidden='true'></i> " + d.key
+                        return "<i class='fa fa-square-o' aria-hidden='true'></i> " + "<div class='record-name'>" + d.key + "</div>"
                     }
                 } else {
                     if (d.hasOwnProperty('key_index')) {
@@ -260,6 +275,24 @@
             .style("font-size", function(d) {
                 return font_size_key[d.key_lvl]
             })
+            .style("margin-top", function(d) {
+                if (d["key"].substr(0, 5) == "Total") {
+                    return margin_top_key[d.key_lvl] + "px"
+                }
+            })
+            .style("margin-bottom", function(d) {
+                if (d["key"].substr(0, 5) == "Total") {
+
+                    console.log(d["key"])
+                    return " 20px"
+                }
+            })
+            /*.style("margin-bottom", function(d){
+                if(d["key_attr"] != "aggregate"){
+                    return "20px"
+                }
+            })*/
+
 
             .on("click", function(d) {
                 if (d.hasOwnProperty('series')) {
@@ -270,7 +303,7 @@
                     event.preventDefault();
                 }
             })
-
+            
         $(".records").find(".active").children("i").addClass("fa-check-square");
 
         $(".records li.series").on("click", function(d) {
@@ -288,6 +321,10 @@
 
     function add_actions() {
         document.getElementById("download_vis").addEventListener("click", downloadImage, true);
+        Mousetrap.bind('alt+p', function() {
+            downloadImage();
+        });
+
     }
 
     function filter(node) {
