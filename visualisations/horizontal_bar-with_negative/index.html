@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+.bar--positive {
+    fill: steelblue;
+}
+
+.bar--negative {
+    fill: darkorange;
+}
+
+.axis text {
+    font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+body {
+    margin: 0px auto;
+    width: 70%;
+}
+</style>
+
+<body>
+    <!--<script src="//d3js.org/d3.v3.min.js"></script>
+    <script>
+    var margin = { top: 20, right: 30, bottom: 40, left: 30 },
+        width = 760 - margin.left - margin.right,
+        height = 1500 - margin.top - margin.bottom;
+
+    var year = "Total Budget Estimates 2017-2018";
+
+    var yaxis_parameter = "Department"
+    var previous_year = "Total Budget Estimates 2016-2017";
+
+    var nodes = []
+
+    var x = d3.scale.linear()
+        .range([0, width]);
+
+    var y = d3.scale.ordinal()
+        .rangeRoundBands([0, height], 0.1);
+
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom");
+
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left")
+        .tickSize(0)
+        .tickPadding(6);
+
+    function set_orientation(d) {
+        return d > 0 ? "left" : "right";
+    }
+
+    var svg = d3.select("body").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    d3.csv("ministry-wise-expenditure.csv", type, function(error, data) {
+        data.forEach(function(d) {
+            var node = {
+                id: d["Department"],
+                value: d[year],
+                percent_change: ((d[year] - d[previous_year]) / d[previous_year] * 100),
+            };
+            nodes.push(node);
+        });
+
+        nodes.sort(function(a, b) { return b.percent_change - a.percent_change; });
+        console.log(nodes)
+
+        x.domain(d3.extent(nodes, function(d) { return d.percent_change; })).nice();
+        y.domain(nodes.map(function(d) { return d.id; }));
+
+
+
+        console.log(d3.extent(nodes, function(d) { return d.percent_change; }))
+
+        var states = nodes.map(function(d) { return d.id; })
+
+        var bar = svg.selectAll(".bar")
+            .data(nodes)
+            .enter().append("rect")
+            .attr("class", function(d) { return "bar bar--" + (d.percent_change < 0 ? "negative" : "positive"); })
+            .attr("x", function(d) { /*console.log(x(Math.min(0, d.percent_change)));*/ return x(Math.min(0, d.percent_change)); })
+            .attr("y", function(d) { return y(d.id); })
+            .attr("width", function(d) { return Math.abs(x(d.percent_change) - x(0)); })
+            .attr("height", y.rangeBand());
+
+        /*var text = svg.selectAll(".bartext")
+            .data(nodes)
+            .enter().append("text")
+            .attr("class", function(d) { return "bartext bartext--" + (d.percent_change < 0 ? "negative" : "positive"); })
+            .attr("x", function(d) { return x(0) + nodes[nodes.length-1].percent_change; })
+            .attr("y", function(d) { return y(d.id); })
+            .text(function(d) {
+                return d.id;
+            });
+      */
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis);
+
+        var yAxisGroup = svg.append("g")
+            .attr("class", "y axis")
+            .attr("transform", "translate(" + x(0) + ",0)")
+            .call(yAxis);
+
+        yAxisGroup.selectAll('.tick')
+            .data(nodes)
+            .select('text')
+            .attr('x', function(d, i) {console.log(d); return d.percent_change > 0 ? -9 : x(0) })
+            .style('text-anchor', function(d, i) { return d.percent_change < 0 ? 'start' : 'end' })
+    });
+
+
+
+    function type(d) {
+        d.percent_change = +d.percent_change;
+
+        return d;
+    }
+    </script>
+    
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script>
+    var margin = { top: 20, right: 30, bottom: 40, left: 30 },
+        width = 760 - margin.left - margin.right,
+        height = 1500 - margin.top - margin.bottom;
+
+    var year = "Total Budget Estimates 2017-2018";
+
+    var yaxis_parameter = "Department"
+    var previous_year = "Total Budget Estimates 2016-2017";
+
+    var nodes = []
+
+    var x = d3.scaleLinear()
+        .range([0, width]);
+
+    var y = d3.scaleOrdinal()
+        .range([0, height])
+    // .round(0.1);
+
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom");
+
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("right")
+        .tickSize(0)
+        .tickPadding(6);
+
+    var svg = d3.select("body").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    d3.csv("ministry-wise-expenditure.csv", type, function(error, data) {
+        data.forEach(function(d) {
+            var node = {
+                id: d["Department"],
+                value: d[year],
+                percent_change: ((d[year] - d[previous_year]) / d[previous_year] * 100),
+            };
+            nodes.push(node);
+        });
+
+        nodes.sort(function(a, b) { return b.percent_change - a.percent_change; });
+        console.log(nodes)
+
+        x.domain(d3.extent(nodes, function(d) { return d.percent_change; })).nice();
+        y.domain(nodes.map(function(d) { return d.id; }));
+
+
+
+        console.log(d3.extent(nodes, function(d) { return d.percent_change; }))
+
+        var states = nodes.map(function(d) { return d.id; })
+
+        var bar = svg.selectAll(".bar")
+            .data(nodes)
+            .enter().append("rect")
+            .attr("class", function(d) { return "bar bar--" + (d.percent_change < 0 ? "negative" : "positive"); })
+            .attr("x", function(d) { /*console.log(x(Math.min(0, d.percent_change)));*/ return x(Math.min(0, d.percent_change)); })
+            .attr("y", function(d) { return y(d.id); })
+            .attr("width", function(d) { return Math.abs(x(d.percent_change) - x(0)); })
+            .attr("height", y.rangeBand());
+
+        var text = svg.selectAll(".bartext")
+            .data(nodes)
+            .enter().append("text")
+            .attr("class", function(d) { return "bartext bartext--" + (d.percent_change < 0 ? "negative" : "positive"); })
+            .attr("x", function(d) { return x(0); })
+            .attr("y", function(d) { return y(d.id); })
+            .text(function(d) {
+                return d.id;
+            });
+
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis);
+
+        svg.append("g")
+            .attr("class", "y axis")
+            .attr("transform", "translate(" + x(0) + ",0)")
+            .call(yAxis);
+    });
+
+
+
+    function type(d) {
+        d.percent_change = +d.percent_change;
+
+        return d;
+    }
+    </script>-->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script type="text/javascript">
+    var margin = { top: 30, right: 10, bottom: 50, left: 130 },
+        width = 900,
+        height = 1500;
+
+
+    // Add svg to
+    var svg = d3.select('body').append('svg')
+    .attr('width', width + margin.left + margin.right)
+    .attr('height', height + margin.top + margin.bottom)
+    .append('g')
+    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+    var year = "Total Budget Estimates 2017-2018";
+
+    var yaxis_parameter = "Department"
+    var previous_year = "Total Budget Estimates 2016-2017";
+
+
+    // set the ranges
+    var y = d3.scaleBand()
+        .range([height, 0])
+        .padding(0.1);
+
+    var x = d3.scaleLinear()
+        .range([0, width]);
+
+        var nodes = []
+    d3.csv("ministry-wise-expenditure.csv",type,  function(error, data) {
+
+      data.forEach(function(d) {
+            var node = {
+                id: d["Department"],
+                value: d[year],
+                percent_change: ((d[year] - d[previous_year]) / d[previous_year] * 100),
+            };
+            nodes.push(node);
+        });
+
+        nodes.sort(function(a, b) { return a.percent_change - b.percent_change  ; });
+
+                // Scale the range of the data in the domains
+                x.domain(d3.extent(nodes, function(d) {
+                  console.log(d);
+                    return d.percent_change;
+                }));
+                y.domain(nodes.map(function(d) {
+                    return d.id;
+                }));
+
+                // append the rectangles for the bar chart
+                svg.selectAll(".bar")
+                    .data(nodes)
+                    .enter().append("rect")
+                    .attr("class", function(d) {
+                        return "bar bar--" + (d.percent_change < 0 ? "negative" : "positive");
+                    })
+                    .attr("x", function(d) {
+                        return x(Math.min(0, d.percent_change));
+                    })
+                    .attr("y", function(d) {
+                        return y(d.id);
+                    })
+                    .attr("width", function(d) {
+                        return Math.abs(x(d.percent_change) - x(0));
+                    })
+                    .attr("height", y.bandwidth());
+
+                // add the x Axis
+                svg.append("g")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(d3.axisBottom(x));
+
+                // add the y Axis
+                let yAxisGroup = svg.append("g")
+                    .attr("class", "y axis")
+                    .attr("transform", "translate(" + x(0) + ",0)")
+                    .call(d3.axisRight(y));
+                yAxisGroup.selectAll('.tick')
+                    .data(nodes)
+                    .select('text')
+                    .attr('x', function(d, i) { return d.percent_change < 0 ? 9 : -9 })
+                    .style('text-anchor', function(d, i) { return d.percent_change < 0 ? 'start' : 'end' })
+            })
+
+    function type(d) {
+        d.percent_change = +d.percent_change;
+
+        return d;
+    }
+    </script>
