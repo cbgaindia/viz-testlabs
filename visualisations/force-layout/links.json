@@ -1,0 +1,15 @@
+{
+    "links": [
+    {
+        "source": 30,
+        "target": 31,
+        "value": 1,
+        "type":"reverse"
+    },
+    {
+        "source": 30,
+        "target": 3,
+        "value": 1,
+        "type":"reverse"
+    }]
+}

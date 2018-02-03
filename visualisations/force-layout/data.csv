@@ -1,0 +1,41 @@
+no.,Type,Category,Sub-category,Particular,Notes,Actuals 2016-2017,Budget Estimates 2017-2018,Revised Estimates 2017-2018,Budget Estimates 2018-2019
+0,Receipts,...,...,Total Receipts,...,1984088.84,2133890.58,2257129.06,2399147.3
+1,Receipts,Revenue Receipts,...,Total Revenue Receipts,...,1374202.98,1515771.08,1505427.5,1725737.79
+2,Receipts,Revenue Receipts,Tax Revenue,Tax Revenue,...,1101372.09,1227014.01,1269453.86,1480649.04
+3,Receipts,Revenue Receipts,Tax Revenue,Gross Tax Revenue,...,1715822.4,1911579.46,1946119.15,2271241.56
+4,Receipts,Revenue Receipts,Tax Revenue,Corporation Tax,...,484923.86,538744.73,563744.73,621000
+5,Receipts,Revenue Receipts,Tax Revenue,Taxes on Income,...,364604.38,441255.27,441255.27,529000
+6,Receipts,Revenue Receipts,Tax Revenue,Customs,...,225370.34,245000,135242,112500
+7,Receipts,Revenue Receipts,Tax Revenue,Union Excise Duties,...,382094.41,406900,276995,259600
+8,Receipts,Revenue Receipts,Tax Revenue,Goods and Services Tax (GST),Includes GST compensation cess,...,...,444631,743900
+9,Receipts,Revenue Receipts,Tax Revenue,Taxes of Union Territories,...,4145.53,4679.46,4744.15,5241.56
+10,Receipts,Revenue Receipts,Tax Revenue,Less - NCCD transferred to the National Calamity Contigency Fund/National Disaster Response Fund,...,6450,10000,3660,2500
+11,Receipts,Revenue Receipts,Tax Revenue,Less - State's share,...,608000.31,674565.45,673005.29,788092.52
+12,Receipts,Revenue Receipts,Non-Tax Revenue,Total Non-Tax Revenue,...,272830.89,288757.07,235973.64,245088.75
+13,Receipts,Revenue Receipts,Non-Tax Revenue,Interest receipts,...,16228.98,19020.73,13550.66,15162.05
+14,Receipts,Revenue Receipts,Non-Tax Revenue,Dividends and Profits,...,123016.55,142430.49,106433.24,107311.96
+15,Receipts,Revenue Receipts,Non-Tax Revenue,Other Non Tax Revenue,...,131781.33,125788.2,114113.31,120552.64
+16,Receipts,Revenue Receipts,Non-Tax Revenue,Receipts of Union Territories,...,1804.03,1517.65,1876.43,2062.1
+17,Receipts,Capital Receipts,,Total Capital Receipts,...,609885.86,618119.5,751701.56,673409.51
+18,Receipts,Capital Receipts,Non-debt Receipts,Total Non-debt Receipts,...,65372.11,84432.25,117473.33,92199.08
+19,Receipts,Capital Receipts,Non-debt Receipts,Recoveries of loans and advances,"Excludes recoveries of short-term loans and advances from States, loans to Government servants, etc.",17629.56,11932.25,17473.33,12199.08
+20,Receipts,Capital Receipts,Non-debt Receipts,Miscellaneous Capital Receipts,...,47742.55,72500,100000,80000
+21,Receipts,Capital Receipts,Debt Receipts,Total Debt Receipts,The receipts are net of payment,544513.75,533687.25,634228.23,581210.43
+22,Receipts,Capital Receipts,Debt Receipts,Market Loans (Gross),...,349656.57,348226.4,402393.72,390120.49
+23,Receipts,Capital Receipts,Debt Receipts,Short term/T-Bill Borrowings,...,5549.66,2002,77469.9,17000
+24,Receipts,Capital Receipts,Debt Receipts,External Loan (Net),...,17996.6,15789,2417.79,-2588.61
+25,Receipts,Capital Receipts,Debt Receipts,Securities issued against Small Savings,...,67435.14,100157.16,102628,75000
+26,Receipts,Capital Receipts,Debt Receipts,State Provident Fund (Net),...,17745.42,14000,15000,17000
+27,Receipts,Capital Receipts,Debt Receipts,Other Receipts (Net),"Includes receipts from reserve funds, deposits and advances, etc.",86130.36,53512.69,34318.82,84678.55
+28,Receipts,Draw-Down of Cash Balance,Draw-Down of Cash Balance,Total Draw-Down of Cash Balance,...,-8895.13,12844.2,-39379,43066
+29,Expenditure,...,...,Total Expenditure,...,2313290.63,2531762.15,2694608.63,2920484.37
+30,Expenditure,Total Expenditure through Budget,...,Total Expenditure through Budget,...,1975193.71,2146734.78,2217750.06,2442213.3
+31,Expenditure,Total Expenditure through Budget,Central Expenditure ,Total Central Expenditure ,...,1583698.1,1723406.77,1741241.52,1895350.02
+32,Expenditure,Total Expenditure through Budget,Central Expenditure ,Establishment,...,423850.62,437537.6,468914.03,508399.6
+33,Expenditure,Total Expenditure through Budget,Central Expenditure ,Central Sector Schemes,...,589470.61,663663.02,634318.08,708933.67
+34,Expenditure,Total Expenditure through Budget,Central Expenditure ,Other Central Expenditure,...,570376.87,622206.15,638009.41,678016.75
+35,Expenditure,Total Expenditure through Budget,Transfers,Transfers,...,391495.61,423328.01,476508.54,546863.28
+36,Expenditure,Total Expenditure through Budget,Transfers,Centrally Sponsored Schemes,...,241295.55,278433.23,285581.44,305517.12
+37,Expenditure,Total Expenditure through Budget,Transfers,Finance Commission Transfers,...,95550.3,103101.38,101490.18,109373.5
+38,Expenditure,Total Expenditure through Budget,Transfers,Other Transfers,...,54649.76,41793.4,89436.92,131972.66
+39,Expenditure,Resources of Public Enterprises,...,Resources of Public Enterprises,,338096.92,385027.37,476858.57,478271.07

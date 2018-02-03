@@ -1,134 +1,410 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <title>Force-Directed Graph</title>
-<style>
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+<style>
 .node {
-  cursor: pointer;
-  stroke: #3182bd;
-  stroke-width: 1.5px;
+    cursor: pointer;
+    /*stroke: #3182bd;*/
+    stroke-width: 1px;
 }
 
 .link {
-  fill: none;
-  stroke: #9ecae1;
-  stroke-width: 1.5px;
+    fill: none;
+    stroke: #9ecae1;
+    stroke-width: 1.5px;
 }
+
+
+.tooltip {
+        position: absolute;
+        top: 100px;
+        left: 100px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        border: 1px solid grey;
+        /* background: #222222; */
+        background: #fff;
+        opacity: 1;
+        /* color: #eeeeee; */
+        color: black;
+        padding: 10px;
+        text-align: center;
+        width: 400px;
+        font-size: 14px;
+        z-index: 10;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.19), 0 1px 3px rgba(0, 0, 0, 0.23);
+    }
+
+    .tooltip .dept-name {
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .tooltip .name {
+        font-weight: bold;
+    }
+
+    .tooltip-hr {
+        margin: 5px 0px;
+        border-top: 1px solid rgba(128, 128, 128, 0.64);
+    }
+
+    .tooltip-hr-sec {
+        border-top: 1px solid rgba(128, 128, 128, 0.54);
+    }
+
+    .tooltipcurrent-year {
+        margin-right: 10px;
+        font-weight: 600;
+        font-size: 17px;
+    }
+
+    #tooltip-percent {
+        font-weight: 600;
+        font-size: 17px;
+    }
+
+    .tooltip .positive {
+        color: green;
+    }
+
+    .tooltip .negative {
+        color: red;
+    }
+
 
 </style>
+
+
 <body>
-<script src="//d3js.org/d3.v3.min.js"></script>
-<script>
 
-var width = 960,
-    height = 500,
-    root;
+      <div class="container-fluid">
+        <div class="row text-center vis-title">
+            <h1> Budget at a Glance</h1>
+        </div>
 
-var force = d3.layout.force()
-    .size([width, height])
-    .charge(-200)
-.linkDistance(50)
+      </div>
 
-    .on("tick", tick);
 
-var svg = d3.select("body").append("svg")
-    .attr("width", width)
-    .attr("height", height);
 
-var link = svg.selectAll(".link"),
-    node = svg.selectAll(".node");
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    integrity = "sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin = "anonymous" ></script>
+    <script src="//d3js.org/d3.v3.min.js"></script>
+    <script src="http://d3js.org/queue.v1.min.js"></script>
+    <script type="text/javascript" src="CustomTooltip.js"></script>
+    <script>
+    var width = 960,
+        height = 600,
+        root;
 
-d3.json("graph.json", function(error, json) {
-  if (error) throw error;
+    var force = d3.layout.force()
+        .size([width, height])
+        .charge(-200)
+        .linkDistance(70)
+        .on("tick", tick)
+        .on("end", function() {
 
-  root = json;
-  update();
-});
+            rendercircle();
+        });
 
-function update() {
-  var nodes = flatten(root),
-      links = d3.layout.tree().links(nodes);
+    var tooltip = CustomTooltip("obi_tooltip", 260)
 
-  // Restart the force layout.
-  force
-      .nodes(nodes)
-      .links(links)
-      .start();
+    var svg = d3.select("body").append("svg")
+        .attr("width", width)
+        .attr("height", height);
 
-  // Update the links…
-  link = link.data(links, function(d) { return d.target.id; });
+    var link = svg.selectAll(".link"),
+        node = svg.selectAll(".node"),
+        mov_circles = svg.selectAll('.moving-circles'),
+        node_labels = svg.selectAll(".node-label")
 
-  // Exit any old links.
-  link.exit().remove();
 
-  // Enter any new links.
-  link.enter().insert("line", ".node")
-      .attr("class", "link")
-      .attr("x1", function(d) { return d.source.x; })
-      .attr("y1", function(d) { return d.source.y; })
-      .attr("x2", function(d) { return d.target.x; })
-      .attr("y2", function(d) { return d.target.y; });
+    var app_config = {
+        selected_year: "Budget Estimates 2018-2019"
+    };
 
-  // Update the nodes…
-  node = node.data(nodes, function(d) { return d.id; }).style("fill", color);
+    queue()
+        .defer(d3.csv, 'data.csv')
+        .defer(d3.json, 'links.json')
+        .await(update);
 
-  // Exit any old nodes.
-  node.exit().remove();
+var gb_data ;
+    function update(error, nodes_data, links_data) {
 
-  // Enter any new nodes.
-  node.enter().append("circle")
-      .attr("class", "node")
-      .attr("cx", function(d) { return d.x; })
-      .attr("cy", function(d) { return d.y; })
-      .attr("r", function(d) { return Math.sqrt(d.size) / 10 || 4.5; })
-      .style("fill", color)
-      .on("click", function(d){
-        console.log(d)
-      })
-    //  .call(force.drag);
-}
+      gd_data = nodes_data;
 
-function tick() {
-  link.attr("x1", function(d) { return d.source.x; })
-      .attr("y1", function(d) { return d.source.y; })
-      .attr("x2", function(d) { return d.target.x; })
-      .attr("y2", function(d) { return d.target.y; });
+        // Restart the force layout.
+        var nodes = []
 
-  node.attr("cx", function(d) { return d.x; })
-      .attr("cy", function(d) { return d.y; });
-}
 
-// Color leaf nodes orange, and packages white or blue.
-function color(d) {
-  return d._children ? "#3182bd" : d.children ? "#c6dbef" : "#fd8d3c";
-}
+        nodes_data.forEach(function(d) {
+            var node = {
+                id: d["Particular"],
+                value: d[app_config["selected_year"]],
+                radius_value: +(d[app_config["selected_year"]] > 0 ? d[app_config["selected_year"]] : (-1 * d[app_config["selected_year"]]))
+            };
 
-// Toggle children on click.
-function click(d) {
-  if (!d3.event.defaultPrevented) {
-    if (d.children) {
-      d._children = d.children;
-      d.children = null;
-    } else {
-      d.children = d._children;
-      d._children = null;
+            if (node.value != "...") {
+
+                nodes.push(node);
+            }
+        });
+
+
+        var links = links_data.links;
+
+        force
+            .nodes(nodes)
+            .links(links)
+            .start();
+
+
+
+
+        // Update the links…
+        link = link.data(links, function(d) {  return d.target.id; });
+
+        // Exit any old links.
+        link.exit().remove();
+
+        // Enter any new links.
+        link.enter().insert("line", ".node")
+            .attr("class", "link")
+            .attr("x1", function(d) { return d.source.x; })
+            .attr("y1", function(d) { return d.source.y; })
+            .attr("x2", function(d) { return d.target.x; })
+            .attr("y2", function(d) { return d.target.y; });
+
+        mov_circles = mov_circles.data(links, function(d) { return d.target.id; });
+
+        // Exit any old links.
+        mov_circles.exit().remove();
+
+        mov_circles
+            .enter()
+            .append("circle")
+            .attr("class", "moving-circles")
+            .attr("cx", function(d){
+              if(d.type == "reverse"){
+              return d.target.x;
+            }
+            else{
+              return d.source.x
+            }
+            })
+            .attr("cy", function(d){
+              if(d.type == "reverse"){
+                console.log(d.target.y)
+              return d.target.y;
+            }
+            else{
+              return d.source.y
+            }
+            })
+            .attr("r", function(d) { return 1.5; })
+            .style("fill", "black");
+
+        // Update the nodes…
+        node = node.data(nodes, function(d) { return d.id; }).style("fill", color);
+
+        // Exit any old nodes.
+        node.exit().remove();
+
+        // Enter any new nodes.
+        node.enter().append("circle")
+            .attr("id", function(d) {
+                return d.id
+            })
+            .attr("class", "node")
+            .attr("cx", function(d) { return d.x; })
+            .attr("cy", function(d) { return d.y; })
+            .attr("r", function(d) { return Math.sqrt(d.radius_value) / 80 || 4.5; })
+            .style("fill", color)
+            .on("mouseover", function(d, i) { show_details(d, i, this); })
+            .on("mouseout", function(d, i) { hide_details(d, i, this); });
+
+        node_labels = node_labels.data(nodes, function(d) { return d.id; });
+
+        node_labels.enter().append("text")
+            .attr("x", function(d) { return d.x; })
+            .attr("y", function(d) { return d.y; })
+            .text(function(d) {
+
+    
+                return d.id
+            })
+            .attr("text-anchor", "middle")
+            .style("font-size", "6px")
+            .style("opacity", 0)
+
+
+
     }
-    update();
-  }
-}
 
-// Returns a list of all nodes under the root.
-function flatten(root) {
-  var nodes = [], i = 0;
+    function tick() {
 
-  function recurse(node) {
-    if (node.children) node.children.forEach(recurse);
-    if (!node.id) node.id = ++i;
-    nodes.push(node);
-  }
+        node.attr("cx", function(d) { return d.x = Math.max((Math.sqrt(d.radius_value) / 80 + 5), Math.min(width - (Math.sqrt(d.radius_value) / 80 + 5), d.x)); })
+            .attr("cy", function(d) { return d.y = Math.max((Math.sqrt(d.radius_value) / 80 + 5), Math.min(height - (Math.sqrt(d.radius_value) / 80), d.y)); });
 
-  recurse(root);
-  return nodes;
-}
+        node_labels.attr("x", function(d) { return d.x = Math.max((Math.sqrt(d.radius_value) / 80), Math.min(width - (Math.sqrt(d.radius_value) / 80), d.x)); })
+            .attr("y", function(d) {
+                d.y = Math.max((Math.sqrt(d.radius_value) / 80), Math.min(height - (Math.sqrt(d.radius_value) / 80), d.y));
+                return d.y + (Math.sqrt(d.radius_value) / 80) + 10
+            });
 
-</script>
+        link.attr("x1", function(d) { return d.source.x; })
+            .attr("y1", function(d) { return d.source.y; })
+            .attr("x2", function(d) { return d.target.x; })
+            .attr("y2", function(d) { return d.target.y; });
+
+        /*node.attr("cx", function(d) { return 1.5 * d.x - 250; })
+            .attr("cy", function(d) { return 0.5 * d.y + 60; });
+        */
+
+        mov_circles.attr("cx", function(d) { return d.source.x; })
+            .attr("cy", function(d) { return d.source.y; })
+    }
+
+    function rendercircle(data) {
+        node_labels.transition().style("opacity", 1).duration(2000)
+
+        window.setInterval(function(d) {
+            
+
+            mov_circles.transition()
+                .attr("cx", function(d) { if(d.type == "reverse"){
+              return d.source.x;
+            }
+            else{
+              return d.target.x
+            } })
+            .attr("cy", function(d) { if(d.type == "reverse"){
+              return d.source.y;
+            }
+            else{
+              return d.target.y
+            } })
+                .duration(2000);
+
+
+            mov_circles.attr("cx", function(d){
+              if(d.type == "reverse"){
+              return d.target.x;
+            }
+            else{
+              return d.source.x
+            }
+            })
+            .attr("cy", function(d){
+              if(d.type == "reverse"){
+              return d.target.y;
+            }
+            else{
+              return d.source.y
+            }
+            })
+
+            /*mov_circles.attr("cx", function(d) { return d.source.x; })
+                .attr("cy", function(d) { return d.source.y; })*/
+        }, 4000);
+
+    }
+
+    var formatComma = d3.format(",")
+
+    function show_details(data, i, element) {
+
+
+        d3.select(element).attr("stroke-width", 3).attr("z-index", 10000).attr("stroke", "black");
+        var content = "<span class='dept-name'>  " + data.id + "  </span><hr class='tooltip-hr' />";
+        content += "<span class='tooltipcurrent-year'> <span class=\"value\">  &#8377; " + formatComma(data.value) + " Cr.</span></span>";
+   
+        tooltip.showTooltip(content, d3.event);
+    }
+
+    function hide_details(data, i, element) {
+        d3.select(element).attr("stroke-width", 1)
+            .attr("z-index", 1000)
+            .attr("stroke", function(d) { return "grey" });
+        tooltip.hideTooltip();
+    }
+
+
+
+
+
+    // Color leaf nodes orange, and packages white or blue.
+    function color(d) {
+        return d._children ? "#3182bd" : d.children ? "#c6dbef" : "#fd8d3c";
+    }
+
+
+    // Returns a list of all nodes under the root.
+    function flatten(root) {
+        var nodes = [],
+            i = 0;
+
+        function recurse(node) {
+            if (node.children) node.children.forEach(recurse);
+            if (!node.id) node.id = ++i;
+            nodes.push(node);
+        }
+
+        recurse(root);
+        return nodes;
+    }
+
+
+    /*
+    var width = 960,
+        height = 500;
+
+    var svg = d3.select("body").append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+    var app_config = {
+      selected_year : "Budget Estimates 2018-2019"
+    };
+
+    queue()
+      .defer(d3.csv, 'data.csv')
+      .defer(d3.json, 'links.json')
+      .await(create_chart);
+
+    function create_chart(){
+    var force = d3.layout.force()
+        .nodes(graph.nodes)
+        .links(graph.links)
+        .size([width, height])
+        .charge(-200)
+        .on("tick", tick)
+        .start();
+
+    var link = svg.selectAll(".link")
+       .data(graph.links)
+     .enter().append("line")
+       .attr("class", "link");
+
+    var node = svg.selectAll(".node")
+       .data(graph.nodes)
+     .enter().append("circle")
+       .attr("class", "node")
+       .attr("r", 4.5);
+    }
+    function tick() {
+      link.attr("x1", function(d) { return d.source.x; })
+          .attr("y1", function(d) { return d.source.y; })
+          .attr("x2", function(d) { return d.target.x; })
+          .attr("y2", function(d) { return d.target.y; });
+
+      node.attr("cx", function(d) { return d.x; })
+          .attr("cy", function(d) { return d.y; });
+    }
+    */
+    </script>
