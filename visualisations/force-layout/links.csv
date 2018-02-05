@@ -24,7 +24,7 @@ source,source_name,target,destination_name,value,type
 20,Debt Receipts,22,Short term/T-Bill Borrowings,1,reverse
 20,Debt Receipts,23,External Loan (Net),1,
 20,Debt Receipts,24,Securities issued against Small Savings,1,reverse
-20,Debt Receipts,25,State Provident Fund (Net),8,reverse
+20,Debt Receipts,25,State Provident Fund (Net),1,reverse
 20,Debt Receipts,26,Other Receipts (Net),1,reverse
 28,Total Expenditure,29,Total Budgetary Expenditure,8,
 28,Total Expenditure,38,Resources of Public Enterprises,2,
