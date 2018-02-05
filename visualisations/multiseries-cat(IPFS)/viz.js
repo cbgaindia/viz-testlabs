@@ -92,13 +92,13 @@
             chart.focusHeight(100)
             chart.pointSize(10)
 
+            console.log(data)
+            
             chart.useInteractiveGuideline(true);
             chartdata = d3.select('#chart svg')
                 .datum(data)
                 .call(chart);
-            chart.dispatch.on("stateChange", function(e) {
-
-            });
+           
 
             chartdata.transition().duration(500).call(chart);
             nv.utils.windowResize(chart.update);

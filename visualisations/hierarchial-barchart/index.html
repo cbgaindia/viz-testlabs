@@ -158,28 +158,29 @@
     <br>
     <div class="infocard">
         <div class="row">
-            <div class="col-lg-7">
+            <div class="col-lg-9">
                 <div class="viz-header">
-                    <span id="viz-header"></h2>
+                    <span id="viz-header"></span>
                 </div>
             </div>
-            <div class="col-lg-5">
+            <div class="col-lg-3">
                 <div class="year-select"></div>
                 
             </div>
         </div>
         <hr>
         <div class="row">
-                    <div class="col-lg-9">
-                <div id="chart" class='with-3d-shadow with-transitions'>
-                </div>
-            </div>
             <div class="col-lg-3">
                 <div id="selection-list" >
                 </div>
             </div>
-
+            <div class="col-lg-9">
+                 <div id="chart" class='with-3d-shadow with-transitions'>
+                </div>
+            </div>
+        </div>
     </div>
+
     <!--<script src="custom.js">
     </script>-->
 
@@ -390,12 +391,13 @@ function up(d) {
             return color(!!d.children);
         })
         .filter(function(p) {
-            return p === d;
+            return false;
+
         })
         .style("fill-opacity", 1e-6);
 
     add_value(enter)
-
+    console.log(1e-6);
 
 
     // Update the x-axis.
@@ -405,9 +407,9 @@ function up(d) {
 
     // Transition entering bars to fade in over the full duration.
     var enterTransition = enter.transition()
-        .duration(end)
+        .duration(1200)
         .style("opacity", 1);
-
+        console.log(end, delay, duration)
 
 
     // Transition entering rects to the new x-scale.
@@ -415,18 +417,20 @@ function up(d) {
     enterTransition.select("rect")
         .attr("width", function(d) {
             return x(d.value);
-        })
-        .each("end", function(p) {
-            if (p === d) d3.select(this).style("fill-opacity", null);
         });
+        /*.each("end", function(p) {
+            if (p === d) {console.log(p,d);d3.select(this).style("fill-opacity", 1);}
+        });*/
 
     // Transition exiting bars to the parent's position.
     var exitTransition = exit.selectAll("g").transition()
         .duration(duration)
         .delay(function(d, i) {
-            return i * delay;
+            console.log(delay);
+            return delay/100;
         })
-        .attr("transform", stack(d.index));
+        .attr("transform", stack(d.index))
+        ;
 
     // Transition exiting text to fade out.
     exitTransition.select("text")
@@ -437,11 +441,12 @@ function up(d) {
         .attr("width", function(d) {
             return x(d.value);
         })
+        .attr("fill-opacity", 1e-6)
         .style("fill", color(true));
 
     // Remove exiting nodes when the last child has finished transitioning.
     exit.transition()
-        .duration(end)
+        .duration(delay/10)
         .remove();
 
     // Rebind the current parent to the background.
@@ -449,12 +454,18 @@ function up(d) {
         .datum(d.parent)
         .transition()
         .duration(end);
+
 }
 function setDelay() {
   setTimeout(function(){
     console.log("sadsad")
   }, 1000);
 }
+
+function doSetTimeout(last_node) {
+  setTimeout(function() { up(last_node); }(last_node), 750);
+}
+
 
 function navigate_level(element, d){
    
@@ -470,16 +481,22 @@ function navigate_level(element, d){
         console.log("in", last_node,last_node.parent)
         temp[0][temp[0].length-1].remove()
         temp[0].pop();
-        currentTime = Date.now()
-        console.log(currentTime);
         up(last_node);
-        while(Date.now() <currentTime + 750){}
         
         
+        function timeout() {
+            setTimeout(function () {
+                // Do Something Here
+                // Then recall the parent function to
+                // create a recursive loop.
+                timeout();
+            }, 1000);
+        }
         last_node=last_node.parent
   
         
         }
+        
 
 
 }
