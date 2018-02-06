@@ -19,6 +19,7 @@
 
     body {
         background-color: transparent;
+        font-family: Open Sans, sans-serif;
     }
 
     .tooltip {
@@ -226,6 +227,17 @@
     .left-panel-text {
         padding: 20px;
     }
+
+    p.help-text-1,
+    p.help-text-2 {
+        font-weight: 100;
+    }
+
+    p.help-text-2 {
+        font-size: 12px;
+        margin-top: 15px;
+        margin-bottom: 8px;
+    }
     </style>
 </head>
 
@@ -247,12 +259,12 @@
                 </div>
                 <div class="row">
                     <div class="left-panel-text">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                        This section presents the ministry-wise allocations presented in the Union Budget 2018-19. In this year's budget there are 99 Demands in total.
                     </div>
                 </div>
                 <div class="row">
                     <div id="obi-colorKey">
-                        <p>Color represents increase and cut in allocation in comparision with 2017-2018 </p>
+                        <p class="help-text-1">Color represents increase and cut in allocation in comparision with 2017-2018 </p>
                         <ul class="obi-colorSwatches">
                             <li class="change-decrease3"></li>
                             <li class="change-decrease2"></li>
@@ -275,6 +287,7 @@
                             <li>+10%</li>
                             <li>+25%</li>
                         </ul>
+                        <p class="help-text-2">The size of the bubble represents the extent of allocations relative to other departments/ministry. </p>
                     </div>
                 </div>
             </div>
@@ -295,255 +308,248 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="jquery-1.6.2.min.js"></script>
-    <script type="text/javascript" src="CustomTooltip.js">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="CustomTooltip.js"></script>
     <!-- Latest compiled and minified JavaScript -->
-    <
-    script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-    integrity = "sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-    crossorigin = "anonymous" >
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous">
     </script>
     </script>
     <script type="text/javascript">
+    "use strict";
 
-        "use strict";
+    var width = 430,
+        height = 450,
+        tooltip = CustomTooltip("obi_tooltip", 260),
+        layout_gravity = -0.01,
+        selected_year = "Budget Estimates 2018-2019 Total",
+        previous_year = "Budget Estimates 2017-2018 Total",
+        damper = 0.1,
+        nodes = [],
+        defaultGravity = 0.1,
+        totalValue = 37000000,
+        vis, force, circles, radius_scale;
 
-        var width = 400,
-            height = 450,
-            tooltip = CustomTooltip("obi_tooltip", 260),
-            layout_gravity = -0.01,
-            selected_year = "Budget Estimates 2018-2019 Total",
-            previous_year = "Budget Estimates 2017-2018 Total",
-            damper = 0.1,
-            nodes = [],
-            defaultGravity = 0.1,
-            totalValue = 370000000,
-            vis, force, circles, radius_scale;
+    var center = { x: width / 2, y: (height * 5.5 / 10) };
 
-        var center = { x: width / 2, y: (height / 2) };
-
-        var fillColor = d3.scale.ordinal().domain([-3, -2, -1, 0, 1, 2, 3]).range(['#d73027', '#f46d43', '#fdae61', '#fdae61', '#abd9e9', '#74add1', '#4575b4'])
-        var strokeColor = d3.scale.ordinal().domain([-3, -2, -1, 0, 1, 2, 3]).range(['#d73027', '#f46d43', '#fdae61', '#fdae61', '#abd9e9', '#74add1', '#4575b4'])
-
-        var fill_color = d3.scale.ordinal()
-            .domain(["low", "medium", "high"])
-            .range(["#d84b2a", "#beccae", "#7aa25c"]);
+    var fillColor = d3.scale.ordinal().domain([-3, -2, -1, 0, 1, 2, 3]).range(['#d73027', '#f46d43', '#fdae61', '#fdae61', '#abd9e9', '#74add1', '#4575b4'])
+    var strokeColor = d3.scale.ordinal().domain([-3, -2, -1, 0, 1, 2, 3]).range(['#d73027', '#f46d43', '#fdae61', '#fdae61', '#abd9e9', '#74add1', '#4575b4'])
 
 
-        function categorizeChange(c, p) {
-            // console.log(c, p)
-            if (isNaN(c) || c == 0) {
-                return 0;
-            } else if (c < -0.25) {
-                return -3;
-            } else if (c < -0.10) {
-                return -2;
-            } else if (c < -0.001) {
-                return -1;
-            } else if (c <= 0.001) {
-                return 0;
-            } else if (c <= 0.10) {
-                return 1;
-            } else if (c <= 0.25) {
-                return 2;
-            } else { return 3; }
-        }
+    function categorizeChange(c, p) {
 
-        function custom_chart(data) {
+        if (isNaN(c) || c == 0) {
+            return 0;
+        } else if (c < -0.25) {
+            return -3;
+        } else if (c < -0.10) {
+            return -2;
+        } else if (c < -0.001) {
+            return -1;
+        } else if (c <= 0.001) {
+            return 0;
+        } else if (c <= 0.10) {
+            return 1;
+        } else if (c <= 0.25) {
+            return 2;
+        } else { return 3; }
+    }
 
-            var grand_total = data.pop()
-            var max_amount = d3.max(data, function(d) { return parseInt(d[selected_year], 10); });
+    function custom_chart(data) {
 
-            radius_scale = d3.scale.pow().exponent(0.5).domain([0, max_amount]).range([2, 60]);
+        var grand_total = data.pop()
+        var max_amount = d3.max(data, function(d) { return parseInt(d[selected_year], 10); });
+
+        radius_scale = d3.scale.pow().exponent(0.5).domain([0, max_amount]).range([2, 60]);
 
 
 
-            //create node objects from original data
-            //that will serve as the data behind each
-            //bubble in the vis, then add each node
-            //to nodes to be used later
-            data.forEach(function(d) {
-                // console.log(d)
-                var node = {
-                    id: d["Particulars"],
-                    radius: radius_scale(parseInt(d[selected_year], 12)),
-                    value: d[selected_year],
-                    name: d["Particulars"],
-                    previous_value: d[previous_year],
-                    percent_change: ((d[selected_year] - d[previous_year]) / d[previous_year] * 100),
-                    change: categorizeChange(((d[selected_year] - d[previous_year]) / d[previous_year]), d["Particulars"]),
-                    total_share: (d[selected_year] / grand_total[selected_year] * 100),
-                    x: Math.random() * 900,
-                    y: Math.random() * 800
-                };
-                nodes.push(node);
-            });
+        //create node objects from original data
+        //that will serve as the data behind each
+        //bubble in the vis, then add each node
+        //to nodes to be used later
+        data.forEach(function(d) {
+
+            var node = {
+                id: d["Particulars"],
+                radius: radius_scale(parseInt(d[selected_year], 12)),
+                value: d[selected_year],
+                name: d["Particulars"],
+                previous_value: d[previous_year],
+                percent_change: ((d[selected_year] - d[previous_year]) / d[previous_year] * 100),
+                change: categorizeChange(((d[selected_year] - d[previous_year]) / d[previous_year]), d["Particulars"]),
+                total_share: (d[selected_year] / grand_total[selected_year] * 100),
+                x: Math.random() * 900,
+                y: Math.random() * 800
+            };
+            nodes.push(node);
+        });
 
 
-            nodes.sort(function(a, b) { return b.value - a.value; });
+        nodes.sort(function(a, b) { return b.value - a.value; });
 
-            vis = d3.select("#vis").append("svg")
-                .attr("width", width)
-                .attr("height", height)
-                .attr("id", "svg_vis");
+        vis = d3.select("#vis").append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .attr("id", "svg_vis");
 
-            circles = vis.selectAll("circle")
-                .data(nodes, function(d) { return d.id; });
+        circles = vis.selectAll("circle")
+            .data(nodes, function(d) { return d.id; });
 
-            var color = d3.scale.category20();
-            circles.enter().append("circle")
-                .attr("r", 0)
-                .attr("fill", function(d, i) { return fillColor(d.change); })
-                .attr("stroke-width", 1)
-                .attr("stroke", function(d) { return /*strokeColor(d.change)*/ "grey" })
-                .attr("id", function(d) { return "bubble_" + d.id; })
-                .on("mouseover", function(d, i) { show_details(d, i, this); })
-                .on("mouseout", function(d, i) { hide_details(d, i, this); });
+        var color = d3.scale.category20();
+        circles.enter().append("circle")
+            .attr("r", 0)
+            .attr("fill", function(d, i) { return fillColor(d.change); })
+            .attr("stroke-width", 1)
+            .attr("stroke", function(d) { return /*strokeColor(d.change)*/ "grey" })
+            .attr("id", function(d) { return "bubble_" + d.id; })
+            .on("mouseover", function(d, i) { show_details(d, i, this); })
+            .on("mouseout", function(d, i) { hide_details(d, i, this); });
 
-            circles.transition().duration(2000).attr("r", function(d) { return d.radius; });
+        circles.transition().duration(2000).attr("r", function(d) { return d.radius; });
 
-            function tabulate(data, columns, table_selector) {
-                var table_div = d3.select(table_selector)
+        function tabulate(data, columns, table_selector) {
+            var table_div = d3.select(table_selector)
 
-                var table = table_div.append("table")
-                    .attr("class", "table ")
+            var table = table_div.append("table")
+                .attr("class", "table ")
 
-                var table_body = table.append("tbody")
-
-
-                var table_row = table_body.selectAll("tr")
-                    .data(data).enter()
-                    .append("tr");
-
-                var cells = table_row.selectAll('td')
-                    .data(function(row) {
-                        return columns.map(function(column) {
-                            return { column: column, value: row[column] };
-                        });
-                    })
-                    .enter()
-                    .append('td')
-                    .text(function(d, i) {
-                        if (i == 1) {
-                            return d.value.toFixed(2);
-                        } else {
-                            return d.value;
-                        }
-                    })
-                    .style("font-weight", function(d, i, j) {
-                        if (j == 0) {
-                            return 600;
-                        } else {
-                            return 300;
-                        }
-                    })
-                    .style("color", function(d, i, j) {
-                        if (j == 0) {
-                            return "#000";
-                        } else {
-                            return "rgba( 0, 0, 0 , 0.7 )";
-                        }
-
-                    })
-                    .style("font-size", function(d, i, j) {
-                        if (j == 0) {
-                            return "14px";
-                        } else {
-                            return "12px";
-                        }
-
-                    })
-                return table;
-            }
+            var table_body = table.append("tbody")
 
 
-            tabulate(nodes.slice(0, 4), ['id', 'total_share'], ".table-max-share");
-            tabulate(nodes.sort(function(b, a) { return b.value - a.value; }).slice(0, 4), ['id', 'total_share'], ".table-min-share");
-            tabulate(nodes.sort(function(a, b) { return b.percent_change - a.percent_change; }).slice(0, 4), ['id', 'percent_change'], ".table-max-increase");
-            tabulate(nodes.sort(function(b, a) { return b.percent_change - a.percent_change; }).slice(0, 4), ['id', 'percent_change'], ".table-max-decrease");
+            var table_row = table_body.selectAll("tr")
+                .data(data).enter()
+                .append("tr");
 
-            d3.select(".total-exp-num")
-                .html(function(d) {
-                    return "&#8377; " + grand_total[selected_year] + " Cr.";
+            var cells = table_row.selectAll('td')
+                .data(function(row) {
+                    return columns.map(function(column) {
+                        return { column: column, value: row[column] };
+                    });
                 })
-
-            d3.select(".total-exp-per-change")
-                .html(function(d) {
-                    var value = (((grand_total[selected_year] - grand_total[previous_year]) / grand_total[previous_year]) * 100).toFixed(2)
-                    if (value > 0) {
-                        return "+" + value + " %";
+                .enter()
+                .append('td')
+                .text(function(d, i) {
+                    if (i == 1) {
+                        return d.value.toFixed(2);
                     } else {
-                        return value;
+                        return d.value;
                     }
                 })
-                .style("color", "rgb(10, 128, 10)")
+                .style("font-weight", function(d, i, j) {
+                    if (j == 0) {
+                        return 600;
+                    } else {
+                        return 300;
+                    }
+                })
+                .style("color", function(d, i, j) {
+                    if (j == 0) {
+                        return "#000";
+                    } else {
+                        return "rgba( 0, 0, 0 , 0.7 )";
+                    }
+
+                })
+                .style("font-size", function(d, i, j) {
+                    if (j == 0) {
+                        return "14px";
+                    } else {
+                        return "12px";
+                    }
+
+                })
+            return table;
         }
 
-        function charge(d) {
-            return -Math.pow(d.radius, 2.0) / 8;
-        }
 
-        function start() {
-            force = d3.layout.force()
-                .nodes(nodes)
-                .size([width, height]);
-        }
+        tabulate(nodes.slice(0, 4), ['id', 'total_share'], ".table-max-share");
+        tabulate(nodes.sort(function(b, a) { return b.value - a.value; }).slice(0, 4), ['id', 'total_share'], ".table-min-share");
+        tabulate(nodes.sort(function(a, b) { return b.percent_change - a.percent_change; }).slice(0, 4), ['id', 'percent_change'], ".table-max-increase");
+        tabulate(nodes.sort(function(b, a) { return b.percent_change - a.percent_change; }).slice(0, 4), ['id', 'percent_change'], ".table-max-decrease");
 
-        function display_group_all() {
-            force.gravity(layout_gravity)
-                .charge(charge)
-                .friction(0.9)
-                .on("tick", function(e) {
-                    circles.each(move_towards_center(e.alpha))
-                        .each(buoyancy(e.alpha))
-                        .attr("cx", function(d) { return d.x; })
-                        .attr("cy", function(d) { return d.y; });
-                });
-            force.start();
-        }
+        d3.select(".total-exp-num")
+            .html(function(d) {
+                return "&#8377; " + grand_total[selected_year] + " Cr.";
+            })
+
+        d3.select(".total-exp-per-change")
+            .html(function(d) {
+                var value = (((grand_total[selected_year] - grand_total[previous_year]) / grand_total[previous_year]) * 100).toFixed(2)
+                if (value > 0) {
+                    return value + " %";
+                } else {
+                    return value;
+                }
+            })
+            .style("color", "rgb(10, 128, 10)")
+    }
+
+    function charge(d) {
+        return -Math.pow(d.radius, 2.0) / 8;
+    }
+
+    function start() {
+        force = d3.layout.force()
+            .nodes(nodes)
+            .size([width, height]);
+    }
+
+    function display_group_all() {
+        force.gravity(layout_gravity)
+            .charge(charge)
+            .friction(0.9)
+            .on("tick", function(e) {
+                circles.each(move_towards_center(e.alpha))
+                    .each(buoyancy(e.alpha))
+                    .attr("cx", function(d) { return d.x; })
+                    .attr("cy", function(d) { return d.y; });
+            });
+        force.start();
+    }
 
 
-        function buoyancy(alpha) {
-            var that = this;
-            var boundingRadius = radius_scale(totalValue);
-            return function(d) {
-                var targetY = center.y - (d.change / 3) * boundingRadius
-                d.y = d.y + (targetY - d.y) * (defaultGravity) * alpha * alpha * alpha * 100
-            };
-        }
+    function buoyancy(alpha) {
+        var that = this;
+        var boundingRadius = radius_scale(totalValue);
+        return function(d) {
+            var targetY = center.y - (d.change / 3) * boundingRadius
+            d.y = d.y + (targetY - d.y) * (defaultGravity) * alpha * alpha * alpha * 100
+        };
+    }
 
-        function move_towards_center(alpha) {
-            return function(d) {
-                d.x = d.x + (center.x - d.x) * (damper + 0.02) * alpha;
-                d.y = d.y + (center.y - d.y) * (damper + 0.02) * alpha;
-            };
-        }
-      
-        var formatComma = d3.format(",")
+    function move_towards_center(alpha) {
+        return function(d) {
+            d.x = d.x + (center.x - d.x) * (damper + 0.02) * alpha;
+            d.y = d.y + (center.y - d.y) * (damper + 0.02) * alpha;
+        };
+    }
 
-        function show_details(data, i, element) {
+    var formatComma = d3.format(",")
 
-            d3.select(element).attr("stroke-width", 3).attr("z-index", 10000).attr("stroke", "black");
-            var content = "<span class='dept-name'>  " + data.id + "  </span><hr class='tooltip-hr' />";
-            content += "<span class='tooltipcurrent-year'> <span class=\"value\">  &#8377; " + formatComma(data.value) + " Cr.</span></span>";
-            var percent_class = data.percent_change > 0 ? 'positive ' : 'negative'
-            content += "<span id ='tooltip-percent'  class=" + percent_class + ">" + (data.percent_change > 0 ? "+" : " ") + data.percent_change.toFixed(2) + " %</span>";
-            tooltip.showTooltip(content, d3.event);
-        }
+    function show_details(data, i, element) {
 
-        function hide_details(data, i, element) {
-            d3.select(element).attr("stroke-width", 1)
-                .attr("z-index", 1000)
-                .attr("stroke", function(d) { return "grey" });
-            tooltip.hideTooltip();
-        }
+        d3.select(element).attr("stroke-width", 3).attr("z-index", 10000).attr("stroke", "black");
+        var content = "<span class='dept-name'>  " + data.id + "  </span><hr class='tooltip-hr' />";
+        content += "<span class='tooltipcurrent-year'> <span class=\"value\">  &#8377; " + formatComma(data.value) + " Cr.</span></span>";
+        var percent_class = data.percent_change > 0 ? 'positive ' : 'negative'
+        content += "<span id ='tooltip-percent'  class=" + percent_class + ">" + (isNaN(data.percent_change) ? "N.A." : (data.percent_change.toFixed(2) < 0 ? -1 * data.percent_change.toFixed(2) : data.percent_change.toFixed(2)) + " %") + "</span>";
+        tooltip.showTooltip(content, d3.event);
+    }
 
-    d3.csv("stat3a_processed (1).csv", function(data) {
-        
+    function hide_details(data, i, element) {
+        d3.select(element).attr("stroke-width", 1)
+            .attr("z-index", 1000)
+            .attr("stroke", function(d) { return "grey" });
+        tooltip.hideTooltip();
+    }
+
+    d3.csv("data.csv", function(data) {
+
         custom_chart(data)
         start()
         display_group_all();
     });
     </script>
 </body>
+
 </html>
