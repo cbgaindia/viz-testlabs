@@ -26,14 +26,12 @@ source,source_name,target,destination_name,value,type
 20,Debt Receipts,24,Securities issued against Small Savings,1,reverse
 20,Debt Receipts,25,State Provident Fund (Net),1,reverse
 20,Debt Receipts,26,Other Receipts (Net),1,reverse
-28,Total Expenditure,29,Total Budgetary Expenditure,8,
-28,Total Expenditure,38,Resources of Public Enterprises,2,
-29,Total Budgetary Expenditure,30,Central Expenditure ,5,
-29,Total Budgetary Expenditure,34,Transfers,5,
-30,Central Expenditure ,31,Establishment,1,
-30,Central Expenditure ,32,Central Sector Schemes,1,
-30,Central Expenditure ,33,Other Central Expenditure,1,
-34,Transfers,35,Centrally Sponsored Schemes,1,
-34,Transfers,36,Finance Commission Transfers,1,
-34,Transfers,37,Other Transfers,1,
-28,Total Expenditure,0,Total Reciepts,8,reverse
+0,Total Receipts,28,Total Budgetary Expenditure,8,
+28,Total Budgetary Expenditure,29,Central Expenditure ,5,
+28,Total Budgetary Expenditure,33,Transfers,5,
+29,Central Expenditure ,30,Establishment,1,
+29,Central Expenditure ,31,Central Sector Schemes,1,
+29,Central Expenditure ,32,Other Central Expenditure,1,
+33,Transfers,34,Centrally Sponsored Schemes,1,
+33,Transfers,35,Finance Commission Transfers,1,
+33,Transfers,36,Other Transfers,1,
