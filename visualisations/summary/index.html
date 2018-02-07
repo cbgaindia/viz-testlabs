@@ -35,6 +35,14 @@
 
     .container.section-3col-box-wrapper {
         margin-top: -300px;
+        top: -300px;
+    }
+
+    @-moz-document url-prefix() {
+        .container.section-3col-box-wrapper {
+            position: relative;
+            overflow: hidden;
+        }
     }
 
     .col-lg-12.bg-container {
@@ -165,10 +173,10 @@
     }
 
     .help-text {
-    text-align: left;
-    margin-left: 20px;
-    font-size: 11px;
-}
+        text-align: left;
+        margin-left: 20px;
+        font-size: 11px;
+    }
     </style>
 </head>
 
@@ -260,7 +268,7 @@
         })
         d3.select(".receipt-summary-num").html("&#8377; " + receipt_fig[current_year] + " Cr.")
         d3.select(".receipt-summary-per-change").html(function(d) {
-            return  ((receipt_fig[current_year] - receipt_fig[previous_year]) / receipt_fig[previous_year] * 100).toFixed(2) + " %"
+            return ((receipt_fig[current_year] - receipt_fig[previous_year]) / receipt_fig[previous_year] * 100).toFixed(2) + " %"
         })
 
         var capital_receipts = data.find(function(d) {
@@ -271,8 +279,8 @@
         var expenditure_fig = data.find(function(d) {
             return d["Particular"] == "Total Budgetary Expenditure"
         })
-        d3.select(".exp-summary-num").html(expenditure_fig[current_year] + " Cr.")
-        d3.select(".exp-summary-per-change").html( ((expenditure_fig[current_year] - expenditure_fig[previous_year]) / expenditure_fig[previous_year] * 100).toFixed(2) + " %")
+        d3.select(".exp-summary-num").html("&#8377; " +expenditure_fig[current_year] + " Cr.")
+        d3.select(".exp-summary-per-change").html(((expenditure_fig[current_year] - expenditure_fig[previous_year]) / expenditure_fig[previous_year] * 100).toFixed(2) + " %")
 
         var node = {}
         node.key = "Captial Receipts"
