@@ -96,8 +96,8 @@
 
     img.obi-logo {
         text-align: center;
-        margin-top: 20px;
-        width: 85%;
+        margin-top: 30px;
+        width: 90%;
     }
 
     p.obi-aim {
@@ -207,7 +207,7 @@
                                         <div class="receipt-vis-capital"></div>
                                     </div>
                                 </div>
-                                <div class="help-text">Note : Figures are in &#8377; Cr.</div>
+                                <div class="help-text">Note : Figures are in &#8377; Crores</div>
                             </div>
                         </div>
                     </div>
@@ -215,7 +215,7 @@
                         <div class="white-box">
                             <h2>Union Budget 2018</h2>
                             <hr class="hr-style-1" />
-                            <p class="obi-aim">At Open Budgets India it is our endevour to make union budget data accessible in the best possible way. Explore Expendiutre Data, Receipt Data, Budget at Glance and other amazing datasets related to Union Budget at
+                            <p class="obi-aim">At Open Budgets India it is our endeavour to make India's Budgets open, usable and easy to comprehend. Explore Expenditure Budget, Receipts Budget, Budget at a Glance and other key datasets related to Union Budget 2018-19 at:
                                 <a href="https://openbudgetsindia.org/" target="_blank"><img class="obi-logo" src="https://raw.githubusercontent.com/cbgaindia/design/master/logo_OBI/logo_types/light_bg_logo/draft_final/logo_with_text/draft_final.png" /></a> </p>
                             <div class="btn-group" role="group" aria-label="...">
                                 <a href="https://openbudgetsindia.org/dataset?tags=union+budget+2018" target="_blank">
@@ -242,7 +242,7 @@
                                         <div class="exp-vis-transfers"></div>
                                     </div>
                                 </div>
-                                <div class="help-text">Note : Figures are in &#8377; Cr.</div>
+                                <div class="help-text">Note : Figures are in &#8377; Crores</div>
                             </div>
                         </div>
                     </div>
@@ -266,11 +266,12 @@
         var receipt_fig = data.find(function(d) {
             return d["Particular"] == "Total Receipts"
         })
+        /* Total Figures
         d3.select(".receipt-summary-num").html("&#8377; " + receipt_fig[current_year] + " Cr.")
         d3.select(".receipt-summary-per-change").html(function(d) {
             return ((receipt_fig[current_year] - receipt_fig[previous_year]) / receipt_fig[previous_year] * 100).toFixed(2) + " %"
         })
-
+        */
         var capital_receipts = data.find(function(d) {
             return d["Particular"] == "Total Capital Receipts"
         })
@@ -279,8 +280,10 @@
         var expenditure_fig = data.find(function(d) {
             return d["Particular"] == "Total Budgetary Expenditure"
         })
+        /* Total Figures
         d3.select(".exp-summary-num").html("&#8377; " +expenditure_fig[current_year] + " Cr.")
         d3.select(".exp-summary-per-change").html(((expenditure_fig[current_year] - expenditure_fig[previous_year]) / expenditure_fig[previous_year] * 100).toFixed(2) + " %")
+        */
 
         var node = {}
         node.key = "Captial Receipts"
@@ -297,7 +300,7 @@
         var revenue_receipts = data.find(function(d) {
             return d["Particular"] == "Total Revenue Receipts"
         })
-        revenue_receipts_arr = [] // Object.keys(capital_receipts)
+        revenue_receipts_arr = [] 
 
         var node = {}
         node.key = "Revenue Receipts"
@@ -313,14 +316,14 @@
         var expenditure_central = data.find(function(d) {
             return d["Particular"] == "Total Central Expenditure"
         })
-        expenditure_central_arr = [] // Object.keys(capital_receipts)
+        expenditure_central_arr = [] 
 
         var node = {}
         node.key = "Total Central Expenditure"
         node["values"] = []
         years.forEach(function(d) {
 
-            node["values"].push({ "label": d, "value": +revenue_receipts[d] })
+            node["values"].push({ "label": d, "value": +expenditure_central[d] })
         })
         expenditure_central_arr.push(node);
 
@@ -328,14 +331,14 @@
         var transfers = data.find(function(d) {
             return d["Particular"] == "Transfers"
         })
-        transfers_arr = [] // Object.keys(capital_receipts)
+        transfers_arr = []
 
         var node = {}
         node.key = "Transfers"
         node["values"] = []
         years.forEach(function(d) {
 
-            node["values"].push({ "label": d, "value": +revenue_receipts[d] })
+            node["values"].push({ "label": d, "value": +transfers[d] })
         })
         transfers_arr.push(node);
 
@@ -346,7 +349,7 @@
         d3.select(".exp-title-transfers").text(transfers_arr[0].key)
         drawbarchart(revenue_receipts_arr, ".receipt-vis-revenue")
         drawbarchart(capital_receipts_arr, ".receipt-vis-capital")
-        drawbarchart(transfers_arr, ".exp-vis-central_tot")
+        drawbarchart(expenditure_central_arr, ".exp-vis-central_tot")
         drawbarchart(transfers_arr, ".exp-vis-transfers")
 
         function drawbarchart(data, selection) {
