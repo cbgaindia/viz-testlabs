@@ -100,12 +100,10 @@ body {
     font-weight: 400;
     margin-top: 10px;
     margin-bottom: 20px;
-
-
 }
 
 .left-panel {
-    margin-left:60px ;
+    margin-left: 60px;
 }
 
 .visualization-container {
@@ -146,7 +144,7 @@ h4.total-exp {
         <div class="row text-center vis-title">
             <h1>Budget Profile</h1>
         </div>
-        <div class="row">
+        <div class="row text-center">
             <div class="col-lg-3 left-panel">
                 <div class="row">
                     <div class="total-exp text-center">
@@ -192,7 +190,6 @@ h4.total-exp {
     var force = d3.layout.force()
         .size([width, height])
         .charge(-700)
-        .on("tick", tick)
         .on("end", function() {
 
             rendercircle();
@@ -530,7 +527,7 @@ h4.total-exp {
             .attr("cy", function(d) { return d.y; })
             .attr("r", function(d, i) { return d.r })
             .style("fill", function(d) { return fillColor(d.color_group) })
-            .style("opacity", 0.2)
+            .style("opacity", 0)
             .on("mouseover", function(d, i) { show_details(d, i, this); })
             .on("mouseout", function(d, i) { hide_details(d, i, this); });
 
@@ -549,14 +546,20 @@ h4.total-exp {
             .style("opacity", 0)
     }
 
-    var tick_counter = 0
 
-    function tick() {
-        tick_counter = tick_counter + 1
 
-        node.style("opacity", function(d) {
-            return 0.2 + tick_counter / 300
-        })
+    setTimeout(function() {
+
+        // Run the layout a fixed number of times.
+        // The ideal number of times scales with graph complexity.
+        // Of course, don't run too long—you'll hang the page!
+        force.start();
+        for (var i = 100; i > 0; --i) force.tick();
+        force.stop();
+    }, 10);
+
+    function rendercircle(data) {
+
         node.attr("cx", function(d) { return d.x = Math.max(d.r, Math.min(width - d.r, d.x)); })
             .attr("cy", function(d) { return d.y = Math.max(d.r, Math.min(height - d.r, d.y)); })
 
@@ -578,9 +581,7 @@ h4.total-exp {
 
         mov_circles.attr("cx", function(d) { return d.source.x; })
             .attr("cy", function(d) { return d.source.y; })
-    }
 
-    function rendercircle(data) {
 
         node.transition()
             .style("opacity", 1).duration(2000);
@@ -609,7 +610,7 @@ h4.total-exp {
                         return d.target.y
                     }
                 })
-                .duration(4000);
+                .duration(3700);
 
 
             mov_circles.attr("cx", function(d) {
@@ -626,7 +627,7 @@ h4.total-exp {
                         return d.source.y
                     }
                 })
-        }, 4500);
+        }, 4000);
 
     }
 
