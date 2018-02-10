@@ -396,7 +396,6 @@ h4.total-exp {
                 x: width * 26 / 50,
                 y: height * 9 / 50
             },
-
         }
 
         // Restart the force layout.
@@ -413,7 +412,6 @@ h4.total-exp {
                 label_pos: d["label_pos"],
                 color_group: +d["color_group"],
                 change: ((d[app_config["selected_year"]] - d[app_config["previous_year"]]) / d[app_config["previous_year"]] * 100)
-
             };
 
             if (fixed_notes[d["Particular"]]) {
@@ -423,17 +421,15 @@ h4.total-exp {
 
             if (node.value != "...") {
                 nodes.push(node);
-
             }
         });
 
         var expenditure_figures = nodes.find(function(element) {
             return element.id == "Total Budgetary Expenditure"
-
         })
+
         var receipt_figures = nodes.find(function(element) {
             return element.id == "Total Receipts"
-
         })
 
         d3.select(".total-exp-num").html("&#8377; " + expenditure_figures.value + " Cr.")
@@ -442,10 +438,8 @@ h4.total-exp {
         d3.select(".total-receipt-num").html("&#8377; " + receipt_figures.value + " Cr.")
         d3.select(".total-receipt-per-change").html(receipt_figures.change.toFixed(2) + "%")
 
-
         var max_amount = d3.max(nodes, function(d) { return parseInt(d.radius_value, 10); });
         var radius_scale = d3.scale.pow().exponent(0.5).domain([0, max_amount]).range([2, 35]);
-
 
         var links = [];
         links_data.forEach(function(d) {
@@ -521,7 +515,6 @@ h4.total-exp {
 
         var fillColor = d3.scale.ordinal().domain([1, 2, 3, 4, 5, 6, 7]).range(['#d73027', '#f46d43', '#fdae61', '#fdae61', '#abd9e9', '#74add1', '#4575b4'])
 
-
         node.enter().append("circle")
             .attr("id", function(d, i) {
                 return d.id.split(' ').join('-');
@@ -533,7 +526,6 @@ h4.total-exp {
             .attr("stroke", "grey")
             .style("fill", function(d) { return fillColor(d.color_group) })
             .style("opacity", 0)
-
             .on("mouseover", function(d, i) { show_details(d, i, this); })
             .on("mouseout", function(d, i) { hide_details(d, i, this); });
 
@@ -541,7 +533,6 @@ h4.total-exp {
 
         node_labels.enter().append("text")
             .filter(function(d) { return d.label_display == 1 })
-
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; })
             .text(function(d) {
@@ -558,9 +549,6 @@ h4.total-exp {
         force.start();
         for (var i = 10; i > 0; --i) force.tick();
         force.stop();
-    }, 10);
-
-    function rendercircle(data) {
 
         node.attr("cx", function(d) { return d.x = Math.max(d.r, Math.min(width - d.r, d.x)); })
             .attr("cy", function(d) { return d.y = Math.max(d.r, Math.min(height - d.r, d.y)); })
@@ -583,20 +571,19 @@ h4.total-exp {
 
         mov_circles.attr("cx", function(d) { return d.source.x; })
             .attr("cy", function(d) { return d.source.y; })
+    }, 10);
 
-
+    function rendercircle(data) {
         node.transition()
             .style("opacity", 1).duration(2000);
         link.transition()
             .style("opacity", 1).duration(2000);
-
         mov_circles.transition()
             .style("opacity", 1).duration(2000);
-        node_labels.transition().style("opacity", 1).duration(2000)
+        node_labels.transition()
+            .style("opacity", 1).duration(2000)
 
         window.setInterval(function(d) {
-
-
             mov_circles.transition()
                 .attr("cx", function(d) {
                     if (d.type == "reverse") {
@@ -614,7 +601,6 @@ h4.total-exp {
                 })
                 .duration(3700);
 
-
             mov_circles.attr("cx", function(d) {
                     if (d.type == "reverse") {
                         return d.target.x;
@@ -630,13 +616,11 @@ h4.total-exp {
                     }
                 })
         }, 4000);
-
     }
 
     var formatComma = d3.format(",")
 
     function show_details(data, i, element) {
-
 
         d3.select(element).attr("stroke-width", 3).attr("z-index", 10000).attr("stroke", "black");
         var content = "<span class='dept-name'>  " + data.id + "  </span><hr class='tooltip-hr' />";
