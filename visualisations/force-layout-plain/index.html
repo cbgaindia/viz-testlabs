@@ -154,8 +154,6 @@ h4.total-exp {
 
     var force = d3.layout.force()
         .size([width, height])
-        .charge(-700)
-        //.on("tick", tick)
         .on("end", function() {
 
             rendercircle();
@@ -510,23 +508,6 @@ h4.total-exp {
             .attr("text-anchor", "middle")
             .style("font-size", "10px")
             .style("opacity", 0)
-    }
-
-    setTimeout(function() {
-        force.start();
-        for (var i = 10; i > 0; --i) force.tick();
-        force.stop();
-
-        node.attr("cx", function(d) { return d.x = Math.max(d.r, Math.min(width - d.r, d.x)); })
-            .attr("cy", function(d) { return d.y = Math.max(d.r, Math.min(height - d.r, d.y)); })
-
-        link.attr("x1", function(d) { return d.source.x; })
-            .attr("y1", function(d) { return d.source.y; })
-            .attr("x2", function(d) { return d.target.x; })
-            .attr("y2", function(d) { return d.target.y; });
-
-        mov_circles.attr("cx", function(d) { return d.source.x; })
-            .attr("cy", function(d) { return d.source.y; })
 
         node_labels.attr("x", function(d) { return d.x = Math.max(d.r, Math.min(width - d.r, d.x)); })
             .attr("y", function(d) {
@@ -538,20 +519,52 @@ h4.total-exp {
                     return d.y + d.r + 12
                 }
             });
-    }, 10);
+
+        node.transition()
+            .style("opacity", 1).duration(2000);
+        link.transition()
+            .style("opacity", 1).duration(2000);
+        mov_circles.transition()
+            .style("opacity", 1).duration(4000);
+        node_labels.transition()
+            .style("opacity", 1).duration(2000)
+    }
 
     function rendercircle(data) {
-        node.transition()
-            .style("opacity", 1).duration(3000);
-        link.transition()
-            .style("opacity", 1).duration(3000);
+
         mov_circles.transition()
-            .style("opacity", 1).duration(3000);
-        node_labels.transition()
-            .style("opacity", 1).duration(3000);
+            .attr("cx", function(d) {
+                if (d.type == "reverse") {
+                    return d.source.x;
+                } else {
+                    return d.target.x
+                }
+            })
+            .attr("cy", function(d) {
+                if (d.type == "reverse") {
+                    return d.source.y;
+                } else {
+                    return d.target.y
+                }
+            })
+            .duration(3700);
+
+        mov_circles.attr("cx", function(d) {
+                if (d.type == "reverse") {
+                    return d.target.x;
+                } else {
+                    return d.source.x
+                }
+            })
+            .attr("cy", function(d) {
+                if (d.type == "reverse") {
+                    return d.target.y;
+                } else {
+                    return d.source.y
+                }
+            })
 
         window.setInterval(function(d) {
-
             mov_circles.transition()
                 .attr("cx", function(d) {
                     if (d.type == "reverse") {
@@ -567,7 +580,7 @@ h4.total-exp {
                         return d.target.y
                     }
                 })
-                .duration(4000);
+                .duration(3700);
 
             mov_circles.attr("cx", function(d) {
                     if (d.type == "reverse") {
@@ -583,8 +596,8 @@ h4.total-exp {
                         return d.source.y
                     }
                 })
-        }, 4100);
 
+        }, 4000);
     }
 
     var formatComma = d3.format(",")
