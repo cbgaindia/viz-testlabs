@@ -1,7 +1,16 @@
-[{
-	"title" : "Static Force Layout(With Network FLow)",
-	"subtitle" : "Union Expenditure - Scheme",
-	"img_src" : "assets/vis-img/trends_in_receipt.png",
-	"link" : "",
-	"description" : "Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo."
+[
+    {
+        "title": "Static Force Direct(With Network Flow)",
+        "subtitle": "Budget Profile - Union Budget",
+        "img_src": "assets/vis-img/Network.gif",
+        "link": "../visualisations/force-layout/index.html",
+        "description": "A culmination of different types of visualizations. Aimed at showing an abstract view of how money flows across different heads of accounts. At the core of the visualization is the static force layout graph. Circles as elements added to aid the flow effect. The aim of the visualization to help general audience gain interest in how budgets work.",
+        "inspiration": [
+        {
+            "name": "Mike Bostock",
+            "link": "http://bl.ocks.org/mbostock/1667139/4837e76e497bbc54ee0a7fc99ded9cfad4fd1f23"
+        }],
+    	"status": "Production"
+
+
 }]
