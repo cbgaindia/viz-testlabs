@@ -16,13 +16,13 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro|Ubuntu" rel="stylesheet">
     <style type="text/css">
     body {
-        font-family: 'Ubuntu', sans-serif;
-        
+        /*font-family: 'Ubuntu', sans-serif;*/
+        font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     }
 
     h3.feature-sub-heading {
         color: grey;
-        font-size: 22px;
+        font-size: 17px;
         font-weight: 200;
     }
 
@@ -45,18 +45,13 @@
 
     img.featurette-image.img-fluid.mx-auto {
         border-radius: 10px;
-        margin-top: 30px;
+
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.19), 0 1px 3px rgba(0, 0, 0, 0.23);
     }
 
     .row.featurette {
-        padding: 10px 20px;
-        padding-bottom: 50px;
+        padding: 50px;
         border-bottom: 1px solid rgba(0, 0, 0, 0.17);
-    }
-
-    .visualizations-list {
-        margin-top: 40px;
     }
 
     h4.feature-credits {
@@ -69,7 +64,7 @@
     }
 
     .site-header {
-        background-color: rgba(0, 0, 0, .85);
+        background-color: #292b2c;
     }
 
     .site-header .container.d-flex.flex-column.flex-md-row.justify-content-between {
@@ -95,31 +90,107 @@
     a:active {
         text-decoration: none;
     }
+
+    img.brand-icon {
+        width: 17px;
+        margin-right: 10px;
+        margin-top: -5px;
+    }
+
+    a.py-2.logo {
+        font-size: 21px;
+        font-weight: 700;
+        color: rgb(235, 235, 235);
+    }
+
+    .sidebar {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 75px;
+        bottom: 0;
+        left: 0;
+        z-index: 1000;
+        padding: 20px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        border-right: 1px solid #eee;
+    }
+
+    .nav-pills .nav-item.active a {
+        color: #000;
+        border-bottom: 1px #000 dashed;
+        background-color: inherit;
+        /* text-decoration: underline; */
+    }
+
+    .sidebar a {
+        color: #000;
+    }
+
+    .visualizations-list h2::before {
+        display: block;
+        content: " ";
+        margin-top: -100px;
+        height: 100px;
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    .production {
+        color: "#5C832F";
+    }
+
+    .deprecated {
+        color: red;
+    }
+
+    .dicey {
+        color: #D0A825;
+    }
+
+    h4.feature-status {
+        font-size: 20px;
+    }
     </style>
 </head>
 
 <body data-gr-c-s-loaded="true">
     <nav class="site-header sticky-top py-1">
         <div class="container d-flex flex-column flex-md-row justify-content-between">
-            <a class="py-2" href="#">
-                DataViz Lab
+            <a class="py-2 logo" href="#">
+                <img class="brand-icon" src="assets/icon.png">DataViz Lab
             </a>
-            <a class="py-2 d-none d-md-inline-block" href="#">Tour</a>
-            <a class="py-2 d-none d-md-inline-block" href="#">Product</a>
-            <a class="py-2 d-none d-md-inline-block" href="#">Features</a>
-            <a class="py-2 d-none d-md-inline-block" href="#">Enterprise</a>
-            <a class="py-2 d-none d-md-inline-block" href="#">Support</a>
-            <a class="py-2 d-none d-md-inline-block" href="#">Pricing</a>
-            <a class="py-2 d-none d-md-inline-block" href="#">Cart</a>
         </div>
     </nav>
     <!-- Marketing messaging and featurettes
     ================================================== -->
     <!-- Wrap the rest of the page in another container to center all the content. -->
-    <div class="container marketing">
-        <div class="visualizations-list">
+    <div class="container-fluid marketing">
+        <div class="row">
+            <nav class="col-sm-4 col-md-3 hidden-xs-down bg-faded sidebar">
+                <ul class="nav nav-pills flex-column sidebar-list">
+                    <!--<li class="nav-item">
+                        <a class="nav-link active" href="#">Overview <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Reports</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Analytics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Export</a>
+                    </li>-->
+                </ul>
+            </nav>
+            <div class="visualizations-list col-sm-8 offset-sm-4 col-md-9 offset-md-3 pt-3">
+            </div>
+            <!-- /END THE FEATURETTES -->
         </div>
-        <!-- /END THE FEATURETTES -->
         <!-- FOOTER -->
         <footer>
             <p class="text-center">All work under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">Creative Commons Attribution 4.0 (CC-BY)</a></p>
@@ -142,7 +213,7 @@
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script type="text/javascript">
     d3.json("assets/records.json", function(data) {
-        console.log(data)
+
 
         var list_item = d3.select(".visualizations-list")
             .selectAll("div")
@@ -150,7 +221,37 @@
             .enter()
             .append("div")
             .attr("class", "row featurette")
-        console.log(list_item)
+
+
+
+        var sidebar_list = d3.select(".sidebar-list")
+            .selectAll("li")
+            .data(data)
+            .enter()
+            .append("li")
+
+            .attr("class", function(d, i) {
+                if (i != 0) {
+                    return "nav-item";
+                } else {
+                    return "nav-item active";
+                }
+            })
+            //.attr("data-toggle","pill" )
+            .append("a")
+            .attr("class", "nav-link")
+            .attr("href", function(d) {
+                return "#" + d.title.split(' ').join('-');
+            })
+            .text(function(d) {
+
+                return d.title;
+            })
+            .on("click", function(d) {
+                $(".sidebar").find(".active").removeClass("active");
+                $(this).parent().addClass("active");
+
+            })
 
         var item_text = list_item.append("div")
             .attr("class", "col-md-7")
@@ -158,31 +259,46 @@
 
         var item_descrp_heading = item_text.append("h2")
             .attr("class", "featurette-heading")
+            .attr("id", function(d) {
+                return d.title.split(' ').join('-');
+            })
             .text(function(d) {
-                console.log(d)
+
                 return d.title;
             })
 
-        var item_descrp_subheading = item_text.append("h3")
-            .attr("class", "feature-sub-heading")
-            .text(function(d) {
-                console.log(d)
-                return "Used for - " + d.subtitle;
+        var item_status = item_text.append("h4")
+            .attr("class", function(d) {
+                if (d.status == "Production") {
+                    return "feature-status production"
+                } else if (d.status == "Deprecated") {
+                    return "feature-status deprecated"
+                } else {
+                    return "feature-status dicey"
+                }
             })
 
-        var item_status = item_text.append("h4")
-            .attr("class", "feature-status")
             .html(function(d) {
                 return "Status : " + d.status
             })
             .style("color", function(d) {
-                console.log(d.status == "Production")
+
                 if (d.status == "Production") {
                     return "#5C832F"
                 }
             })
 
+        var item_descrp_subheading = item_text.append("a")
+            .attr("class", "prod-link")
+            .attr("target", "_blank")
+            .attr("href", function(d) {
+                return d.prod_link
+            }).append("h3")
+            .attr("class", "feature-sub-heading")
+            .text(function(d) {
 
+                return "Suitable for - " + d.prod_example;
+            })
 
         var item_descrp = item_text.append("p")
             .attr("class", "item-description")
@@ -193,11 +309,17 @@
         var item_credits = item_text.append("h4")
             .attr("class", "feature-credits")
             .html(function(d) {
+                console.log(d.inspiration.length == 0)
                 var credit_list = "";
                 for (var e in d.inspiration) {
-                    credit_list += "<a href=" + d.inspiration[e].link + ">" + d.inspiration[e].name + "</a>"
+                    credit_list += "<a href=" + d.inspiration[e].link + ">" + d.inspiration[e].name + "</a>, "
                 }
-                return "Credits : " + credit_list
+                credit_list = credit_list.slice(0, credit_list.length - 2)
+                if (d.inspiration.length == 0) {
+                    return ""
+                } else {
+                    return "Credits/Inspiration : " + credit_list + "."
+                }
             })
             .style("color", function(d) {
                 if (d.status == "") {
