@@ -1,7 +1,7 @@
 [
     {
         "title": "Static Force Directed Graph",
-        "prod_example": "Budget Profile - Union Budget",
+        "suitable_for": "showing flow in a network graph.",
         "prod_link" : "https://union2018.openbudgetsindia.org/en/",
         "img_src": "assets/vis-img/network.gif",
         "link": "../visualisations/force-layout/index.html",
@@ -11,11 +11,19 @@
             "name": "Mike Bostock",
             "link": "http://bl.ocks.org/mbostock/1667139/4837e76e497bbc54ee0a7fc99ded9cfad4fd1f23"
         }],
-    	"status": "Production"
+    	"status": "Production",
+        "version" : [{
+            "name" : "Budget Profile",
+            "link" : "https://union2018.openbudgetsindia.org/en/"
+        },
+        {
+            "name" : "Budget Profile - Small",
+            "link" : "../visualisations/force-layout-plain/index.html"
+        }]
     },
     {
         "title": "Animated Bubble Chart",
-        "prod_example": "Outlay on Major Schemes, Union Expenditure Profile",
+        "suitable_for": "showing clusters with comparitive nodes.",
         "prod_link" : "https://union2018.openbudgetsindia.org/en/schemes/",
         "img_src": "assets/vis-img/bubble.png",
         "link": "../visualisations/union-budget-scheme/index.html",
@@ -29,31 +37,51 @@
             "name": "Shan Carter",
             "link": "http://www.nytimes.com/interactive/2012/02/13/us/politics/2013-budget-proposal-graphic.html"
         }],
-        "status": "Production"
+        "status": "Production",
+        "version" : [{
+            "name" : "Expenditure Budget of Ministries and Departments",
+            "link" : "https://union2018.openbudgetsindia.org/en/expenditure-budget/expenditure-ministries-2018-19/"
+        },
+        {
+            "name" : "Major Schemes",
+            "link" : "https://union2018.openbudgetsindia.org/en/schemes/"
+        }]
     },
     {
         "title": "3 Column Balance",
-        "prod_example": "Budget Summary",
+        "suitable_for": "showing aspects of an object.",
         "prod_link" : "https://union2018.openbudgetsindia.org/en/",
         "img_src": "assets/vis-img/summary.png",
         "link": "../visualisations/summary/index.html",
         "description": "3 Column layout to display information. This layout symbolises the balance aspect. This is not a visualisation but a layout to present sub-visualisations.",
         "inspiration": [],
-        "status": "Production"
+        "status": "Production",
+        "version" : [{
+            "name" : "Budget Summary",
+            "link" : "https://union2018.openbudgetsindia.org/en/"
+        }]
     },
     {
         "title": "Group Bar Chart",
-        "prod_example": "Municipal Dataset Visualisations",
+        "suitable_for": "simple magnitude comparisions.",
         "prod_link" : "https://openbudgetsindia.org/dataset/bruhat-bengaluru-mahanagara-palike-budget-summary-statement",
         "img_src": "assets/vis-img/municipal.png",
         "link": "../visualisations/group-bar-chart/index.html",
         "description": "Group Bar Chart with Sidebar. The visualizations offers feature to select and deselect series. Tooltip is also provided to provide extra information. ",
         "inspiration": [],
-        "status": "Production"
+        "status": "Production",
+        "version" : [{
+            "name" : "Municipal Dataset Visualisations",
+            "link" : "https://openbudgetsindia.org/dataset/bruhat-bengaluru-mahanagara-palike-budget-summary-statement"
+        },
+        {
+            "name" : "Union Budget DGs",
+            "link" : "../visualisations/union-expenditure-dg/index.html"
+        }]
     },
     {
         "title": "Hierarchial Bar Chart",
-        "prod_example": "Hierarchial Datasets",
+        "suitable_for": "visualizing hierarchies with magnitude comparisions.",
         "prod_link" : "",
         "img_src": "assets/vis-img/hierarchial.png",
         "link": "../visualisations/hierarchial-barchart/index.html",
@@ -63,11 +91,15 @@
             "name": "Mike Bostock",
             "link": "https://bl.ocks.org/mbostock/1283663"
         }],
-        "status": "Dormant. Potential Candidate. "
+        "status": "Dormant. Potential Candidate. ",
+        "version" : [{
+            "name" : "Prototype",
+            "link" : "../visualisations/hierarchial-barchart/index.html"
+        }]
     },
     {
         "title": "Bar Chart with Negative Values",
-        "prod_example": "visualizing Comparisions, Ranking, Deviations ",
+        "suitable_for": "visualizing Comparisions, Ranking, Deviations ",
         "prod_link" : "",
         "img_src": "assets/vis-img/bar-negative.png",
         "link": "../visualisations/horizontal_bar-with_negative/index.html",
@@ -77,11 +109,15 @@
             "name": "Mike Bostock",
             "link": "https://bl.ocks.org/mbostock/2368837"
         }],
-        "status": "Active Development"
+        "status": "Active Development",
+        "version" : [{
+            "name" : "Prototype",
+            "link" : "../visualisations/horizontal_bar-with_negative/index.html"
+        }]
     },
     {
         "title": "Sunburst",
-        "prod_example": "Hierarchial Datasets",
+        "suitable_for": "Hierarchial Datasets",
         "prod_link" : "",
         "img_src": "assets/vis-img/sunburst.png",
         "link": "../visualisations/sunburst/index.html",
@@ -91,18 +127,36 @@
             "name": "Kerry Rodden",
             "link": "https://bl.ocks.org/kerryrodden/7090426"
         }],
-        "status": "Deprecated"
+        "status": "Deprecated",
+        "version" : [{
+            "name" : "Hierarchial Datasets",
+            "link" : "../visualisations/sunburst/index.html"
+        }]
     },
     {
         "title": "Mutliseries Line Chart",
-        "prod_example": "Trends and Magnitude Comparisions",
+        "suitable_for": "Trends and Magnitude Comparisions",
         "prod_link" : "",
         "img_src": "assets/vis-img/multiseries.png",
         "link": "../visualisations/multiseries-select(RBI)/index.html",
         "description": "Mutliseries Line Chart with option to select and deselect series. The visualisations also offers a sub scale to select an interval.",
         "inspiration": [],
-        "status": "Production"
+        "status": "Production",
+        "version" : [{
+            "name" : "Union Budget at a Glance",
+            "link" : "https://openbudgetsindia.org/dataset/union-budget-at-a-glance-timeseries"
+        },
+        {
+            "name" : "RBI Datasets",
+            "link" : "https://openbudgetsindia.org/dataset/primary-deficit"
+        },
+        {
+            "name" : "IPFS Datasets",
+            "link" : "https://openbudgetsindia.org/dataset/revenue-surplus-deficit-of-the-centre-and-the-states"
+        },
+        {
+            "name" : "First dataviz-lab protoype",
+            "link" : "../visualisations/mutliseries-select/index.html"
+        }]
     }
-
-
 ]

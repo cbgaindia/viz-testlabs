@@ -5,8 +5,19 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Repository for different visualizations prototypes for the OpenBudgetsIndia. Listing of all the visualization prototypes which can be used for different tools and platform of OBI initiative.">
+        <meta name="author" content="OpenBudgetsIndia">
+    <meta name="keywords" content=" Visualization List. Data Visualization ,Open Budgets India, Data Science,OBI , R&D, Prototypes , D3, CSV, Budget Data, Analysis" />
+    <meta name="application-name" content="cbgaindia.github.io/dataviz-lab/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@OpenBudgetsIn">
+    <meta name="twitter:title" content="Dataviz Lab">
+    <meta name="twitter:description" content="Repository for different visualizations prototypes for the OpenBudgetsIndia">
+    <meta name="twitter:url" content="http://cbgaindia.github.io/dataviz-lab/">
+    <meta name="twitter:image:src" content="assets/meta/dataviz-lab.png">
+    <meta property="og:image" content="assets/meta/dataviz-lab.png">
+    <meta property="og:site_name" content="Dataviz Lab">
+    <meta name="apple-mobile-web-app-title" content="Dataviz Lab">
     <link rel="shortcut icon" type="image/png" href="https://raw.githubusercontent.com/cbgaindia/design/master/logo_OBI/favicon/draft_final.ico/favicon.ico" />
     <title>DataViz Lab</title>
     <!-- Bootstrap core CSS -->
@@ -75,6 +86,10 @@
         color: white;
     }
 
+    a {
+        color: black;
+    }
+
     a:link {
         text-decoration: none;
     }
@@ -90,7 +105,9 @@
     a:active {
         text-decoration: none;
     }
-
+    nav a {
+    padding: 10px;
+}
     img.brand-icon {
         width: 17px;
         margin-right: 10px;
@@ -155,60 +172,57 @@
     h4.feature-status {
         font-size: 20px;
     }
+
+    a.prod-link {
+        color: grey;
+    }
+
+    .feature-credits a {
+        color: #0056b3;
+    }
+
+    h4.feature-versions {
+        font-size: 17px;
+    }
+
+    .feature-versions a {
+        font-size: 15px;
+        color: rgba(0, 0, 0, 0.78);
+    }
     </style>
 </head>
 
 <body data-gr-c-s-loaded="true">
     <nav class="site-header sticky-top py-1">
         <div class="container d-flex flex-column flex-md-row justify-content-between">
-            <a class="py-2 logo" href="#">
+            <a class="py-2 logo" href="index.html">
                 <img class="brand-icon" src="assets/icon.png">DataViz Lab
+            </a>
+            <a class="my-2 my-lg-0" target="_blank" href="https://github.com/cbgaindia/dataviz-lab/wiki/How-to-Contribute">
+                How to Contribute?
             </a>
         </div>
     </nav>
-    <!-- Marketing messaging and featurettes
-    ================================================== -->
-    <!-- Wrap the rest of the page in another container to center all the content. -->
     <div class="container-fluid marketing">
         <div class="row">
-            <nav class="col-sm-4 col-md-3 hidden-xs-down bg-faded sidebar">
+            <nav class="col-sm-4 col-md-3 hidden-xs-down d-none d-sm-block bg-faded sidebar">
                 <ul class="nav nav-pills flex-column sidebar-list">
-                    <!--<li class="nav-item">
-                        <a class="nav-link active" href="#">Overview <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Reports</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Analytics</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Export</a>
-                    </li>-->
                 </ul>
             </nav>
             <div class="visualizations-list col-sm-8 offset-sm-4 col-md-9 offset-md-3 pt-3">
             </div>
-            <!-- /END THE FEATURETTES -->
         </div>
-        <!-- FOOTER -->
         <footer>
             <p class="text-center">All work under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">Creative Commons Attribution 4.0 (CC-BY)</a></p>
         </footer>
     </div>
-    <!-- /.container -->
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
     <script src="./assets/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
     <script>
     window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')
     </script>
     <script src="./assets/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="./assets/bootstrap.min.js"></script>
-    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
     <script src="./assets/holder.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="./assets/ie10-viewport-bug-workaround.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script type="text/javascript">
@@ -288,16 +302,28 @@
                 }
             })
 
-        var item_descrp_subheading = item_text.append("a")
-            .attr("class", "prod-link")
-            .attr("target", "_blank")
-            .attr("href", function(d) {
-                return d.prod_link
-            }).append("h3")
+        var item_descrp_subheading = item_text
+            .append("h3")
             .attr("class", "feature-sub-heading")
+            .append("a")
+            .attr("class", "prod-link")
+            .attr("target", function(d) {
+                if (d.prod_link == "") {
+                    return "_self"
+                } else {
+                    return "_blank"
+                }
+            })
+            .attr("href", function(d) {
+                if (d.prod_link == "") {
+                    return "javascript: void(0)"
+                } else {
+                    return d.prod_link
+                }
+            })
             .text(function(d) {
 
-                return "Suitable for - " + d.prod_example;
+                return "Suitable for " + d.suitable_for;
             })
 
         var item_descrp = item_text.append("p")
@@ -306,13 +332,34 @@
                 return d.description
             })
 
+        var item_versions = item_text.append("h4")
+            .attr("class", "feature-versions")
+            .html(function(d) {
+
+                var version_list = "";
+                for (var e in d.version) {
+                    version_list += "<a href=" + d.version[e].link + " target='_blank'>" + d.version[e].name + "</a>, "
+                }
+                version_list = version_list.slice(0, version_list.length - 2)
+                if (d.version.length == 0) {
+                    return ""
+                } else {
+                    return "Examples : " + version_list + "."
+                }
+            })
+            .style("color", function(d) {
+                if (d.status == "") {
+                    return "#5C832F"
+                }
+            })
+
         var item_credits = item_text.append("h4")
             .attr("class", "feature-credits")
             .html(function(d) {
                 console.log(d.inspiration.length == 0)
                 var credit_list = "";
                 for (var e in d.inspiration) {
-                    credit_list += "<a href=" + d.inspiration[e].link + ">" + d.inspiration[e].name + "</a>, "
+                    credit_list += "<a href=" + d.inspiration[e].link + "target='_blank'>" + d.inspiration[e].name + "</a>, "
                 }
                 credit_list = credit_list.slice(0, credit_list.length - 2)
                 if (d.inspiration.length == 0) {
@@ -357,12 +404,6 @@
 
     })
     </script>
-    <svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500" preserveAspectRatio="none" style="display: none; visibility: hidden; position: absolute; top: -100%; left: -100%;">
-        <defs>
-            <style type="text/css"></style>
-        </defs>
-        <text x="0" y="25" style="font-weight:bold;font-size:25pt;font-family:Arial, Helvetica, Open Sans, sans-serif">500x500</text>
-    </svg>
 </body>
 
 </html>
