@@ -3,10 +3,12 @@
 <html lang="en" class="gr__v4-alpha_getbootstrap_com">
 
 <head>
+    <title>Prototypes - Dataviz Lab - OpenBudgetsIndia</title>
+
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Repository for different visualizations prototypes for the OpenBudgetsIndia. Listing of all the visualization prototypes which can be used for different tools and platform of OBI initiative.">
-        <meta name="author" content="OpenBudgetsIndia">
+    <meta name="author" content="OpenBudgetsIndia">
     <meta name="keywords" content=" Visualization List. Data Visualization ,Open Budgets India, Data Science,OBI , R&D, Prototypes , D3, CSV, Budget Data, Analysis" />
     <meta name="application-name" content="cbgaindia.github.io/dataviz-lab/">
     <meta name="twitter:card" content="summary_large_image">
@@ -15,17 +17,29 @@
     <meta name="twitter:description" content="Repository for different visualizations prototypes for the OpenBudgetsIndia">
     <meta name="twitter:url" content="http://cbgaindia.github.io/dataviz-lab/">
     <meta name="twitter:image:src" content="assets/meta/dataviz-lab.png">
+    <meta property="og:title" content=" Prototypes - Dataviz Lab - OpenBudgetsIndia" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://cbgaindia.github.io/dataviz-lab/prototypes.html" />
     <meta property="og:image" content="assets/meta/dataviz-lab.png">
     <meta property="og:site_name" content="Dataviz Lab">
+    <meta property="og:description" content="Prototypes page of Dataviz Lab. Repository for different visualizations prototypes for the OpenBudgetsIndia">
+    <meta property="og:locale" content="en_US" />
     <meta name="apple-mobile-web-app-title" content="Dataviz Lab">
+
     <link rel="shortcut icon" type="image/png" href="https://raw.githubusercontent.com/cbgaindia/design/master/logo_OBI/favicon/draft_final.ico/favicon.ico" />
-    <title>DataViz Lab</title>
+    
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- Custom styles for this template -->
     <link href="./assets/carousel.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro|Ubuntu" rel="stylesheet">
     <style type="text/css">
+    html,
+    body {
+        margin: 0;
+        height: 100%;
+    }
+
     body {
         /*font-family: 'Ubuntu', sans-serif;*/
         font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -40,10 +54,10 @@
     h2.featurette-heading {
         font-size: 28px;
         font-weight: 900;
+        color: rgba(41, 43, 44, 0.91);
     }
 
     @media (min-width: 62em) {
-
         .featurette-heading {
             margin-top: 0rem;
         }
@@ -55,8 +69,7 @@
     }
 
     img.featurette-image.img-fluid.mx-auto {
-        border-radius: 10px;
-
+        border-radius: 5px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.19), 0 1px 3px rgba(0, 0, 0, 0.23);
     }
 
@@ -65,8 +78,13 @@
         border-bottom: 1px solid rgba(0, 0, 0, 0.17);
     }
 
-    h4.feature-credits {
+    h4.feature-credits,
+    h4.feature-developers {
         font-size: 15px;
+    }
+
+    .feature-developers a {
+        color: #0056b3;
     }
 
     .vis-link button {
@@ -76,10 +94,11 @@
 
     .site-header {
         background-color: #292b2c;
+        height: 60px;
     }
 
     .site-header .container.d-flex.flex-column.flex-md-row.justify-content-between {
-        padding: 10px;
+        padding: 5px;
     }
 
     .site-header a {
@@ -105,9 +124,11 @@
     a:active {
         text-decoration: none;
     }
+
     nav a {
-    padding: 10px;
-}
+        padding: 10px;
+    }
+
     img.brand-icon {
         width: 17px;
         margin-right: 10px;
@@ -127,21 +148,27 @@
 
     .sidebar {
         position: fixed;
-        top: 75px;
+        top: 141px;
         bottom: 0;
         left: 0;
-        z-index: 1000;
         padding: 20px;
         overflow-x: hidden;
         overflow-y: auto;
-        border-right: 1px solid #eee;
+        border-right: 1px solid #ddd;
+    }
+
+    .visualizations-list {
+        position: absolute;
+        background: #FAF9F9;
+        bottom: 0;
+        top: 141px;
+        right: 0;
+        overflow-y: auto;
     }
 
     .nav-pills .nav-item.active a {
         color: #000;
-        border-bottom: 1px #000 dashed;
         background-color: inherit;
-        /* text-decoration: underline; */
     }
 
     .sidebar a {
@@ -151,8 +178,8 @@
     .visualizations-list h2::before {
         display: block;
         content: " ";
-        margin-top: -100px;
-        height: 100px;
+        margin-top: -50px;
+        height: 50px;
         visibility: hidden;
         pointer-events: none;
     }
@@ -178,7 +205,7 @@
     }
 
     .feature-credits a {
-        color: #0056b3;
+        color: #0074D9;
     }
 
     h4.feature-versions {
@@ -189,11 +216,64 @@
         font-size: 15px;
         color: rgba(0, 0, 0, 0.78);
     }
+
+    footer {
+        position: fixed;
+        bottom: 0;
+        font-size: 13px;
+        height: 40px;
+        padding: 10px;
+        background: #292b2c;
+        width: 100%;
+    }
+
+    footer p {
+        color: rgba(255, 255, 255, 0.61);
+    }
+
+    footer a {
+        color: white;
+    }
+
+    .search-section {
+        height: 80px;
+    }
+
+    .search-row {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.2784313725490196);
+    }
+
+    .row.featurette:last-child {
+        padding-bottom: 80px;
+    }
+
+    .nav-item.active a span {
+        padding-bottom: 4px;
+        font-weight: 600;
+        border-bottom: 1px dashed;
+    }
+
+    .sidebar .nav-pills .nav-link {
+        font-weight: 300;
+        color: #6c757d;
+    }
+
+    input#input-text {
+        margin-top: 20px;
+        font-weight: 300;
+        border: 1px solid rgba(0, 0, 0, 0.13);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    }
+
+    .no-results {
+        margin-left: 30px;
+        margin-top: 20px;
+    }
     </style>
 </head>
 
 <body data-gr-c-s-loaded="true">
-    <nav class="site-header sticky-top py-1">
+    <nav class="site-header sticky-top">
         <div class="container d-flex flex-column flex-md-row justify-content-between">
             <a class="py-2 logo" href="index.html">
                 <img class="brand-icon" src="assets/icon.png">DataViz Lab
@@ -203,18 +283,27 @@
             </a>
         </div>
     </nav>
-    <div class="container-fluid marketing">
+    <div class="container-fluid main-container">
+        <div class="row search-row">
+            <div class="col-sm-6 offset-sm-3  position-static search-section">
+                <div class="input-group ">
+                    <input type="search" class="form-control" id="input-text" placeholder="Search. Filter based on Title, Status, Developers and much more..." aria-label="Filter By Search" aria-describedby="basic-addon1">
+                </div>
+            </div>
+        </div>
         <div class="row">
             <nav class="col-sm-4 col-md-3 hidden-xs-down d-none d-sm-block bg-faded sidebar">
                 <ul class="nav nav-pills flex-column sidebar-list">
                 </ul>
             </nav>
-            <div class="visualizations-list col-sm-8 offset-sm-4 col-md-9 offset-md-3 pt-3">
+            <div class="visualizations-list col-sm-8 offset-sm-4 col-md-9 offset-md-3">
             </div>
         </div>
-        <footer>
-            <p class="text-center">All work under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">Creative Commons Attribution 4.0 (CC-BY)</a></p>
-        </footer>
+        <div class="row">
+            <footer>
+                <p class="text-center">All work under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">Creative Commons Attribution 4.0 (CC-BY)</a></p>
+            </footer>
+        </div>
     </div>
     <script src="./assets/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
     <script>
@@ -225,25 +314,24 @@
     <script src="./assets/holder.min.js"></script>
     <script src="./assets/ie10-viewport-bug-workaround.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.0.4/fuse.min.js"></script>
     <script type="text/javascript">
-    d3.json("assets/records.json", function(data) {
-
+    function populate_list(data) {
+        d3.select(".visualizations-list").selectAll("div").remove();
+        d3.select(".sidebar-list").selectAll("li").remove();
 
         var list_item = d3.select(".visualizations-list")
             .selectAll("div")
             .data(data)
             .enter()
             .append("div")
-            .attr("class", "row featurette")
-
-
+            .attr("class", "row featurette");
 
         var sidebar_list = d3.select(".sidebar-list")
             .selectAll("li")
             .data(data)
             .enter()
             .append("li")
-
             .attr("class", function(d, i) {
                 if (i != 0) {
                     return "nav-item";
@@ -251,24 +339,23 @@
                     return "nav-item active";
                 }
             })
-            //.attr("data-toggle","pill" )
             .append("a")
             .attr("class", "nav-link")
             .attr("href", function(d) {
                 return "#" + d.title.split(' ').join('-');
             })
-            .text(function(d) {
-
-                return d.title;
-            })
             .on("click", function(d) {
                 $(".sidebar").find(".active").removeClass("active");
                 $(this).parent().addClass("active");
-
             })
+            .append("span")
+            .text(function(d) {
+                return d.title;
+            });
+
 
         var item_text = list_item.append("div")
-            .attr("class", "col-md-7")
+            .attr("class", "col-md-7");
 
 
         var item_descrp_heading = item_text.append("h2")
@@ -277,9 +364,8 @@
                 return d.title.split(' ').join('-');
             })
             .text(function(d) {
-
                 return d.title;
-            })
+            });
 
         var item_status = item_text.append("h4")
             .attr("class", function(d) {
@@ -296,11 +382,10 @@
                 return "Status : " + d.status
             })
             .style("color", function(d) {
-
                 if (d.status == "Production") {
                     return "#5C832F"
                 }
-            })
+            });
 
         var item_descrp_subheading = item_text
             .append("h3")
@@ -322,20 +407,18 @@
                 }
             })
             .text(function(d) {
-
                 return "Suitable for " + d.suitable_for;
-            })
+            });
 
         var item_descrp = item_text.append("p")
             .attr("class", "item-description")
             .text(function(d) {
                 return d.description
-            })
+            });
 
         var item_versions = item_text.append("h4")
             .attr("class", "feature-versions")
             .html(function(d) {
-
                 var version_list = "";
                 for (var e in d.version) {
                     version_list += "<a href=" + d.version[e].link + " target='_blank'>" + d.version[e].name + "</a>, "
@@ -351,15 +434,34 @@
                 if (d.status == "") {
                     return "#5C832F"
                 }
+            });
+
+        var item_developers = item_text.append("h4")
+            .attr("class", "feature-developers")
+            .html(function(d) {
+                var developers_list = "";
+                for (var e in d.developers) {
+                    developers_list += "<a href='" + d.developers[e].link + "'" + "target='_blank'>" + d.developers[e].name + "</a>, "
+                }
+                developers_list = developers_list.slice(0, developers_list.length - 2)
+                if (d.developers.length == 0) {
+                    return ""
+                } else {
+                    return "Developer(s) : " + developers_list + "."
+                }
             })
+            .style("color", function(d) {
+                if (d.status == "") {
+                    return "#5C832F"
+                }
+            });
 
         var item_credits = item_text.append("h4")
             .attr("class", "feature-credits")
             .html(function(d) {
-                console.log(d.inspiration.length == 0)
                 var credit_list = "";
                 for (var e in d.inspiration) {
-                    credit_list += "<a href=" + d.inspiration[e].link + "target='_blank'>" + d.inspiration[e].name + "</a>, "
+                    credit_list += "<a href='" + d.inspiration[e].link + "'" + "target='_blank'>" + d.inspiration[e].name + "</a>, "
                 }
                 credit_list = credit_list.slice(0, credit_list.length - 2)
                 if (d.inspiration.length == 0) {
@@ -372,11 +474,11 @@
                 if (d.status == "") {
                     return "#5C832F"
                 }
-            })
+            });
 
 
         var item_img_col = list_item.append("div")
-            .attr("class", "col-md-5 text-center")
+            .attr("class", "col-md-5 text-center");
 
         item_img = item_img_col.append("a")
             .attr("class", "vis-link")
@@ -390,7 +492,8 @@
             })
             .attr("alt", function(d) {
                 return d.title + "- Image"
-            })
+            });
+
         item_img_col.append("a")
             .attr("class", "vis-link")
             .attr("target", "_blank")
@@ -400,8 +503,43 @@
             .append("button")
             .attr("type", "button")
             .attr("class", "btn btn-secondary btn-lg")
-            .text("Explore")
+            .text("Explore");
+    }
 
+    function prepare_set(data) {
+        var options = {
+            shouldSort: true,
+            threshold: 0.4,
+            location: 0,
+            distance: 500,
+            maxPatternLength: 32,
+            minMatchCharLength: 2,
+            keys: [
+                "title", "description", "status", "version.name", "suitable_for", "developers.name"
+            ]
+        };
+
+        $("#input-text").keyup(function() {
+            var dInput = this.value;
+            var result = fuse.search(dInput);;
+            if (dInput == "") {
+                populate_list(data);
+            } else {
+                populate_list(result);
+            }
+            if (result.length == 0) {
+                d3.select(".visualizations-list").append("div")
+                    .attr("class", "no-results")
+                    .text("No Results. Try something else! ");
+            }
+        });
+
+        var fuse = new Fuse(data, options);
+    }
+
+    d3.json("assets/records.json", function(data) {
+        prepare_set(data);
+        populate_list(data);
     })
     </script>
 </body>
