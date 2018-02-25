@@ -1,7 +1,7 @@
 [
     {
         "title": "Static Force Directed Graph",
-        "suitable_for": "showing flow in a network graph.",
+        "suitable_for": "Flow, Magnitude Comparisions",
         "prod_link" : "https://union2018.openbudgetsindia.org/en/",
         "img_src": "assets/vis-img/network.gif",
         "link": "../visualisations/force-layout/index.html",
@@ -19,11 +19,17 @@
         {
             "name" : "Budget Profile - Small",
             "link" : "../visualisations/force-layout-plain/index.html"
-        }]
+        }],
+        "developers" : [
+            {
+                "name":"Akshay Verma",
+                "link" : "http://akshay2905.github.io/"
+            }]
+
     },
     {
         "title": "Animated Bubble Chart",
-        "suitable_for": "showing clusters with comparitive nodes.",
+        "suitable_for": "Clustering, Ranking, Magnitude Comparisions",
         "prod_link" : "https://union2018.openbudgetsindia.org/en/schemes/",
         "img_src": "assets/vis-img/bubble.png",
         "link": "../visualisations/union-budget-scheme/index.html",
@@ -45,11 +51,16 @@
         {
             "name" : "Major Schemes",
             "link" : "https://union2018.openbudgetsindia.org/en/schemes/"
-        }]
+        }],
+        "developers" : [
+            {
+                "name":"Akshay Verma",
+                "link" : "http://akshay2905.github.io/"
+            }]
     },
     {
         "title": "3 Column Balance",
-        "suitable_for": "showing aspects of an object.",
+        "suitable_for": "Balance Comparisions",
         "prod_link" : "https://union2018.openbudgetsindia.org/en/",
         "img_src": "assets/vis-img/summary.png",
         "link": "../visualisations/summary/index.html",
@@ -59,11 +70,16 @@
         "version" : [{
             "name" : "Budget Summary",
             "link" : "https://union2018.openbudgetsindia.org/en/"
-        }]
+        }],
+        "developers" : [
+            {
+                "name":"Akshay Verma",
+                "link" : "http://akshay2905.github.io/"
+            }]
     },
     {
         "title": "Group Bar Chart",
-        "suitable_for": "simple magnitude comparisions.",
+        "suitable_for": "Trends, Magnitude comparisions.",
         "prod_link" : "https://openbudgetsindia.org/dataset/bruhat-bengaluru-mahanagara-palike-budget-summary-statement",
         "img_src": "assets/vis-img/municipal.png",
         "link": "../visualisations/group-bar-chart/index.html",
@@ -77,11 +93,16 @@
         {
             "name" : "Union Budget DGs",
             "link" : "../visualisations/union-expenditure-dg/index.html"
-        }]
+        }],
+        "developers" : [
+            {
+                "name":"Akshay Verma",
+                "link" : "http://akshay2905.github.io/"
+            }]
     },
     {
         "title": "Hierarchial Bar Chart",
-        "suitable_for": "visualizing hierarchies with magnitude comparisions.",
+        "suitable_for": "Hierarchial Visualization, Ranking, Proportions, Distribution, Flow, Magnitude comparisions.",
         "prod_link" : "",
         "img_src": "assets/vis-img/hierarchial.png",
         "link": "../visualisations/hierarchial-barchart/index.html",
@@ -95,11 +116,16 @@
         "version" : [{
             "name" : "Prototype",
             "link" : "../visualisations/hierarchial-barchart/index.html"
-        }]
+        }],
+        "developers" : [
+            {
+                "name":"Akshay Verma",
+                "link" : "http://akshay2905.github.io/"
+            }]
     },
     {
         "title": "Bar Chart with Negative Values",
-        "suitable_for": "visualizing Comparisions, Ranking, Deviations ",
+        "suitable_for": "Magnitude Comparisions, Ranking, Deviations, Distribution. ",
         "prod_link" : "",
         "img_src": "assets/vis-img/bar-negative.png",
         "link": "../visualisations/horizontal_bar-with_negative/index.html",
@@ -113,11 +139,16 @@
         "version" : [{
             "name" : "Prototype",
             "link" : "../visualisations/horizontal_bar-with_negative/index.html"
-        }]
+        }],
+        "developers" : [
+            {
+                "name":"Akshay Verma",
+                "link" : "http://akshay2905.github.io/"
+            }]
     },
     {
         "title": "Sunburst",
-        "suitable_for": "Hierarchial Datasets",
+        "suitable_for": "Hierarchies, Proportions, Magnitude, Flow",
         "prod_link" : "",
         "img_src": "assets/vis-img/sunburst.png",
         "link": "../visualisations/sunburst/index.html",
@@ -131,11 +162,16 @@
         "version" : [{
             "name" : "Hierarchial Datasets",
             "link" : "../visualisations/sunburst/index.html"
-        }]
+        }],
+        "developers" : [
+            {
+                "name":"Akshay Verma",
+                "link" : "http://akshay2905.github.io/"
+            }]
     },
     {
         "title": "Mutliseries Line Chart",
-        "suitable_for": "Trends and Magnitude Comparisions",
+        "suitable_for": "Trends, Magnitude Comparisions",
         "prod_link" : "",
         "img_src": "assets/vis-img/multiseries.png",
         "link": "../visualisations/multiseries-select(RBI)/index.html",
@@ -157,6 +193,11 @@
         {
             "name" : "First dataviz-lab protoype",
             "link" : "../visualisations/mutliseries-select/index.html"
-        }]
+        }],
+        "developers" : [
+            {
+                "name":"Akshay Verma",
+                "link" : "http://akshay2905.github.io/"
+            }]
     }
 ]
