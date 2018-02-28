@@ -31,9 +31,10 @@
         max-height: 450px;
     }
 
-    svg.nvd3-svg {
-        background: #FFF;
+    .nvd3 .nv-background {
+        fill: transparent;
     }
+
 
     .caret-up {
         width: 0;
@@ -96,15 +97,15 @@
         filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffeaeaea', GradientType=0);
         border-color: #eaeaea #eaeaea #c4c4c4;
         border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-        filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+        filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
         border: 1px solid #cccccc;
         border-bottom-color: #b3b3b3;
         -webkit-border-radius: 4px;
         -moz-border-radius: 4px;
         border-radius: 4px;
-        -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
-        -moz-box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
-        box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
+        -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
+        -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
     }
 
     .btn-blue {
@@ -123,10 +124,10 @@
         border-color: #ccc;
     }
 
-   .btn:focus {
- outline-color: #DDD;
-  outline: 0;
-} 
+    .btn:focus {
+        outline-color: #DDD;
+        outline: 0;
+    }
 
     button,
     input,
@@ -147,12 +148,12 @@
     }
 
     .btn:active {
-    background-image: none;
-    outline: 0;
+        background-image: none;
+        outline: 0;
         background-color: #dad6d6;
-    -webkit-box-shadow: inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05);
-    -moz-box-shadow: inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05);
-    box-shadow: inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05);
+        -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, .15), 0 1px 2px rgba(0, 0, 0, .05);
+        -moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, .15), 0 1px 2px rgba(0, 0, 0, .05);
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, .15), 0 1px 2px rgba(0, 0, 0, .05);
     }
 
 
@@ -417,6 +418,7 @@
                 .attr("x", 10)
                 .attr("y", 430)
                 .style("font-size", "11px")
+                .style("font-weight", 100)
                 .text("Source:  Compiled by CBGA team from Union Budget for various years");
 
 
@@ -527,6 +529,7 @@
                 .attr("class", "header")
                 .attr("x", 10)
                 .attr("y", 500)
+                .style("font-weight", 100)
                 .text("Source -  Compiled by CBGA from Union Budget, Expenditure Budget, Volume II, for various years");
 
             streamData = generateStreamData(data)
@@ -568,7 +571,7 @@
                 chart.rotateLabels(-40)
             }
             chart.groupSpacing(0.3)
-            .wrapLabels(true)
+                .wrapLabels(true)
             chart.yAxis.ticks(10)
                 .tickFormat(function(d) {
                     return formatAbbr(d)
@@ -595,6 +598,7 @@
                 .attr("x", 10)
                 .attr("y", 440)
                 .style("font-size", "11px")
+                .style("font-weight", 100)
                 .text("Source: Compiled by CBGA from Union Budget for various years");
 
             nv.utils.windowResize(chart.update);
