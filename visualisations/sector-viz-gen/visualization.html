@@ -188,15 +188,11 @@
     </div>
     <script>
     var currentLocation = window.location;
-
     query_parameters = currentLocation.hash.split("/")
-
 
     charttype = query_parameters[0].substring(1, query_parameters[0].length)
     dataset = query_parameters[1]
     indicator = query_parameters[2]
-
-    // end document ready function
 
     function loadDatasets() {
         var table_data = {};
@@ -281,14 +277,7 @@
             table_data["allocations_for_schemes_related_to_climate_change_adaptation"] = allocations_for_schemes_related_to_climate_change_adaptation;
             table_data["allocations_for_selective_missions_under_napcc"] = allocations_for_selective_missions_under_napcc;
             setup_environment(table_data)
-
-
         }
-
-        //setup_environment(table_data)
-        //drawviz(table_data)
-
-
     }
 
     var formatNumber = d3.format(".1f"),
@@ -310,15 +299,11 @@
         return (v >= .9995e7 ? formatCrore : v >= .9995e5 ? formatLakh : v >= .999e3 ? formatThousand : formatLowerDenom)(x);
     }
 
-
-
-
     loadDatasets();
 
     function setup_environment(data) {
         drawviz(charttype, data[dataset])
     }
-
 
     function drawviz(charttype, data) {
         function filter_indicator(data) {
@@ -326,7 +311,6 @@
                 if (data[i]["slug_name"] == indicator)
                     return data[i]
             }
-
             if (charttype == "barchart") {
                 indicator_data = filter_indicator(data)
                 draw_barchart(find_years(indicator_data));
@@ -335,7 +319,6 @@
             } else if (charttype == "linechart") {
                 indicator_data = filter_indicator(data)
                 draw_linechart(indicator_data);
-
             }
         }
 
@@ -362,12 +345,13 @@
         }
 
         if (charttype == "barchart") {
-
             indicator_data = filter_indicator(data)
             draw_barchart(find_years(indicator_data));
-        } else if (charttype == "groupbarchart") {
+        } 
+        else if (charttype == "groupbarchart") {
             draw_groupbarchart(data)
-        } else if (charttype == "linechart") {
+        } 
+        else if (charttype == "linechart") {
             indicator_data = filter_indicator(data)
             draw_linechart(indicator_data);
         }
@@ -375,9 +359,7 @@
 
     function draw_linechart(data) {
         function find_years(data) {
-
             obj_keys = Object.keys(data)
-
             var streamData = {}
             streamData["key"] = data.index_name
             streamData["values"] = []
@@ -386,7 +368,6 @@
 
             for (var j = 0; j < obj_keys.length; j++) {
                 if (parseInt(obj_keys[j][0]) == 2) {
-
                     if (!isNaN(parseFloat(data[obj_keys[j]]))) {
                         var temp = new Object();
                         temp.label = parseInt(obj_keys[j].substring(0, 4));
@@ -396,21 +377,12 @@
                         streamData["values"].push(temp);
                     }
                 }
-
             }
-
             return [streamData];
         }
+
         streamData = find_years(data)
         nv.addGraph(function() {
-
-
-            d3.select('#chart1 svg')
-                .append("text")
-                .attr("class", "header")
-                .attr("x", 50)
-                .attr("y", 20)
-                .text(streamData[0].key);
 
             d3.select('#chart1 svg')
                 .append("text")
@@ -421,38 +393,30 @@
                 .style("font-weight", 100)
                 .text("Source:  Compiled by CBGA team from Union Budget for various years");
 
-
             var chart = nv.models.lineChart()
                 .margin({
-                    left: 100
-                })
-                .margin({
-                    top: 60,
+                    top: 10,
                     right: 50,
                     bottom: 90,
                     left: 70
                 })
                 .xTickFormat(function(d) {
-
-                    return d.tickvalue
-                }) //Adjust chart margins to give the x-axis some breathing room.
+                    return streamData[0].values[d].tickvalue;
+                })
                 .x(function(d, i) {
                     return i;
                 })
                 .y(function(d) {
                     return parseFloat(d.value);
                 })
-                //We want nice looking tooltips and a guideline!
-                .showLegend(true) //Show the legend, allowing users to turn on/off line series.
-                .showYAxis(true) //Show the y-axis
-                .showXAxis(true) //Show the x-axis
+                .showLegend(false)
+                .showYAxis(true)
+                .showXAxis(true)
                 .padData(true)
                 .padDataOuter(-0.5)
                 .clipEdge(false)
                 .clipVoronoi(false)
                 .color([streamData[0].color]);
-
-            chart.showLegend(false)
 
             chart.yAxis.ticks(10)
                 .tickFormat(function(d) {
@@ -461,13 +425,6 @@
                 .axisLabel(streamData[0].unit)
                 .tickPadding(5);
 
-            chart.y(function(d) {
-                return parseFloat(d.value)
-            })
-
-            chart.xTickFormat(function(d) {
-                return streamData[0].values[d].tickvalue;
-            })
             chart.xAxis.tickPadding(20);
 
             chart.tooltip.valueFormatter(function(d) {
@@ -477,36 +434,27 @@
                     return "";
                 })
 
-
-
             d3.select('#chart1 svg')
                 .datum(streamData)
                 .call(chart);
+
             nv.utils.windowResize(chart.update);
             return chart;
         });
-
     }
 
     function draw_groupbarchart(data) {
-
         function generateStreamData(data) {
             series = []
-
             for (stream in data) {
-
                 obj_keys = Object.keys(data[stream])
-
                 var stream_inst = {}
                 stream_inst["key"] = data[stream].index_name
                 stream_inst["values"] = []
                 stream_inst["unit"] = data[stream].unit
                 stream_inst["color"] = data[stream].color
-
                 for (var j = 0; j < obj_keys.length; j++) {
                     if (parseInt(obj_keys[j][0]) == 2) {
-
-
                         if (!isNaN(parseFloat(data[stream][obj_keys[j]]))) {
                             var temp = new Object();
                             temp.label = obj_keys[j];
@@ -523,7 +471,6 @@
 
 
         nv.addGraph(function() {
-
             d3.select('#chart1 svg')
                 .append("text")
                 .attr("class", "header")
@@ -532,37 +479,37 @@
                 .style("font-weight", 100)
                 .text("Source -  Compiled by CBGA from Union Budget, Expenditure Budget, Volume II, for various years");
 
-            streamData = generateStreamData(data)
-
+            streamData = generateStreamData(data);
             var chart = nv.models.multiBarChart()
                 .x(function(d) {
                     return d.label
                 })
                 .y(function(d) {
-                    return d.value
+                    return parseFloat(d.value)
                 })
                 .margin({
                     top: 60,
                     right: 20,
                     bottom: 60,
-                    left: 70
-                }).color(function(d, i) {
-
+                    left: 70 })
+                .color(function(d, i) {
                     return d.color;
                 })
                 .reduceXTicks(false)
-                //Show bar value next to each bar.
-                .showControls(true); //Allow user to switch between "Grouped" and "Stacked" mode.
+                .showControls(true)
+                .groupSpacing(0.3)
+                .wrapLabels(true);
 
             if (indicator == "nostack") {
                 chart.stacked(false)
                 chart.showControls(false)
-
             }
+
             if (indicator == "stack") {
                 chart.stacked(true)
                     .showControls(false)
             }
+
             chart.legend.align(false).width(400)
             chart.legend.margin({ top: 5, right: 70, left: 40, bottom: 0 });
 
@@ -570,8 +517,7 @@
                 chart.height(250)
                 chart.rotateLabels(-40)
             }
-            chart.groupSpacing(0.3)
-                .wrapLabels(true)
+
             chart.yAxis.ticks(10)
                 .tickFormat(function(d) {
                     return formatAbbr(d)
@@ -579,10 +525,6 @@
                 .axisLabel(data[0].unit)
                 .axisLabelDistance(0)
                 .tickPadding(5);
-
-            chart.y(function(d) {
-                return parseFloat(d.value)
-            })
 
             chart.tooltip.valueFormatter(function(d) {
                 return d3.format(",.f")(d) + " " + data[0].unit;
@@ -607,17 +549,7 @@
         });
     }
 
-
-
     function draw_barchart(data) {
-
-
-        d3.select('#chart1 svg')
-            .append("text")
-            .attr("class", "header")
-            .attr("x", 50)
-            .attr("y", 20)
-            .text(data[0].key);
 
         d3.select('#chart1 svg')
             .append("text")
@@ -625,6 +557,7 @@
             .attr("x", 10)
             .attr("y", 430)
             .style("font-size", "11px")
+            .style("font-weight", 100)
             .text("Source: Compiled by CBGA from Union Budget for various years");
 
         nv.addGraph(function() {
@@ -633,10 +566,10 @@
                     return d.label
                 })
                 .staggerLabels(false)
-                //.staggerLabels(historicalBarChart[0].values.length > 8)
                 .showValues(true)
                 .duration(250)
-                .color([data[0].color]);
+                .color([data[0].color])
+                .wrapLabels(true);
 
             var unit = data[0].unit;
 
@@ -644,8 +577,7 @@
                 "left": 70,
                 "right": 10,
                 "top": 50,
-                "bottom": 110
-            })
+                "bottom": 80})
 
             chart.yAxis.ticks(10)
                 .tickFormat(function(d) {
@@ -661,16 +593,13 @@
 
             if (screen.width < 480) {
                 chart.xAxis
-                    .axisLabelDistance(30)
+                .axisLabelDistance(30)
                 chart.rotateLabels(-40)
-
-            } else {
+            } 
+            else {
                 chart.xAxis
-                    .axisLabelDistance(10)
+                .axisLabelDistance(10)
             }
-
-
-            chart.wrapLabels(true)
 
             chart.y(function(d) {
                 return parseFloat(d.value)
@@ -679,7 +608,6 @@
             chart.tooltip.valueFormatter(function(d) {
                 return d3.format(",.f")(d) + " " + unit;
             })
-
 
             d3.select('#chart1 svg')
                 .datum(data)
