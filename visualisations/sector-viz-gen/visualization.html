@@ -11,6 +11,9 @@
     <script src="https://cdn.rawgit.com/eligrey/canvas-toBlob.js/f1a01896135ab378aa5c0118eadd81da55e698d8/canvas-toBlob.js"></script>
     <script src="https://cdn.rawgit.com/eligrey/FileSaver.js/e9d941381475b5df8b7d7691013401e171014e89/FileSaver.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <style>
     svg {
         display: block;
@@ -22,7 +25,8 @@
     svg {
         font-family: Open Sans, sans-serif;
         margin: 0px;
-        padding: 0px;
+        background: transparent;
+        padding: 10px 0px;
         height: 100%;
         width: 100%;
     }
@@ -77,17 +81,16 @@
 
     .btn {
         display: inline-block;
-        padding: 6px 12px;
+        padding: 5px 10px;
         margin-bottom: 20px;
-        margin-right: 50px;
-        font-size: 14px;
+
+        font-size: 11px;
         line-height: 20px;
         text-align: center;
         vertical-align: middle;
         cursor: pointer;
         color: #333333;
         text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
-        background-color: #f7f7f7;
         background-image: -moz-linear-gradient(top, #ffffff, #eaeaea);
         background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#eaeaea));
         background-image: -webkit-linear-gradient(top, #ffffff, #eaeaea);
@@ -106,6 +109,23 @@
         -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
         -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
+    }
+
+    .download-btn {
+        margin-right: 50px;
+    }
+
+    .btn.active.focus,
+    .btn.active:focus,
+    .btn.focus,
+    .btn:active.focus,
+    .btn:active:focus,
+    .btn:focus {
+        outline: none
+    }
+
+    .btn.active.focus {
+        outline: 1px solid rgba(0, 0, 0, 0.15);
     }
 
     .btn-blue {
@@ -178,21 +198,55 @@
     .nvd3 rect {
         fill-opacity: 1;
     }
+
+    .option-select {
+        float: left;
+        margin: 0px 30px;
+    }
+
+    .option-select button i {
+        font-size: 13px;
+        padding: 3px 5px;
+    }
+
+    .option-select button span {
+        font-weight: 100;
+        font-size: 12px;
+    }
+
+    .nvd3 g.nv-y g.zero line {
+        stroke: rgba(0, 0, 0, 1);
+        stroke-opacity: 0.9 !important;
+        stroke-width: 1px;
+    }
+
+    .nvd3 g.nv-groups path.nv-line {
+        stroke-width: 2px;
+    }
+
+    .nvd3 .nv-axis.nv-x path.domain {
+        stroke-opacity: 1!important;
+    }
+
+
     </style>
 </head>
 
 <body>
-    <button type="button" class="btn " id='saveButton'>Download</button>
+    <button type="button" class="btn download-btn " id='saveButton'>Download</button>
+    <div class="option-select"></div>
     <div id="chart1">
         <svg id="chartsvg"></svg>
     </div>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script>
     var currentLocation = window.location;
     query_parameters = currentLocation.hash.split("/")
 
-    charttype = query_parameters[0].substring(1, query_parameters[0].length)
-    dataset = query_parameters[1]
-    indicator = query_parameters[2]
+    analysistype = query_parameters[0].substring(1, query_parameters[0].length)
+    charttype = query_parameters[1]
+    dataset = query_parameters[2]
+    indicator = query_parameters[3]
 
     function loadDatasets() {
         var table_data = {};
@@ -298,9 +352,10 @@
         var v = Math.abs(x);
         return (v >= .9995e7 ? formatCrore : v >= .9995e5 ? formatLakh : v >= .999e3 ? formatThousand : formatLowerDenom)(x);
     }
-
+    console.log("Load dataset Started")
     loadDatasets();
-
+    console.log("Load dataset Finished")
+    
     function setup_environment(data) {
         drawviz(charttype, data[dataset])
     }
@@ -311,53 +366,98 @@
                 if (data[i]["slug_name"] == indicator)
                     return data[i]
             }
-            if (charttype == "barchart") {
-                indicator_data = filter_indicator(data)
-                draw_barchart(find_years(indicator_data));
-            } else if (charttype == "groupbarchart") {
-                draw_groupbarchart(data)
-            } else if (charttype == "linechart") {
-                indicator_data = filter_indicator(data)
-                draw_linechart(indicator_data);
-            }
         }
 
-        function find_years(data) {
+        if (analysistype == "trend") {
+            indicator_data = filter_indicator(data)
+            show_trend(indicator_data)
+        } else if (analysistype == "distrib") {
+            show_distrib(data);
+        }
+    }
 
-            obj_keys = Object.keys(data)
-            var streamData = {}
-            streamData["key"] = data.index_name
-            streamData["values"] = []
-            streamData["unit"] = data.unit
-            streamData["color"] = data.color
+    function show_distrib(data) {
 
-            for (var j = 0; j < obj_keys.length; j++) {
-                if (parseInt(obj_keys[j][0]) == 2) {
-                    if (!isNaN(parseFloat(data[obj_keys[j]]))) {
-                        var temp = new Object();
-                        temp.label = obj_keys[j];
-                        temp.value = data[obj_keys[j]];
-                        streamData["values"].push(temp);
-                    }
+
+        draw_groupbarchart(data);
+    }
+
+    function show_trend(record) {
+
+
+        trend_options = [{
+                "name": "Bar Chart",
+                "icon": "fa fa-bar-chart",
+                "vis_slug": "barchart"
+            },
+            {
+                "name": "Line Chart",
+                "icon": "fa fa-line-chart",
+                "vis_slug": "linechart"
+            }
+        ]
+
+        var button_grp = d3.select("body").select("div.option-select")
+            .append("div")
+            .attr("class", "btn-group");
+
+        var select_buttons = button_grp
+            .selectAll("button")
+            .data(trend_options)
+            .enter().append("button")
+            .attr("value", function(d) {
+
+                return d.name;
+            })
+            .attr("class", function(d, i) {
+
+                if (d.vis_slug == charttype) {
+                    return "active focus";
                 }
-            }
-            return [streamData];
-        }
+            })
+            .classed("btn visbtn", true)
+            .on("click", function(d, i) {
+
+                if (d.name == "Bar Chart") {
+                    //indicator_data = filter_indicator(data)
+                    draw_barchart(record);
+                } else if (d.name == "Line Chart") {
+                    //indicator_data = filter_indicator(data)
+                    draw_linechart(record);
+                }
+                select_buttons.classed("active", function(d, i) {
+                    return !d3.select(this).classed("active");
+                });
+            });
+
+        select_buttons.append("i")
+            .attr("class", function(d) {
+                return d.icon;
+            })
+            .attr("aria-hidden", "true")
+
+        select_buttons.append("span")
+            .text(function(d) {
+                return d.name
+            })
 
         if (charttype == "barchart") {
-            indicator_data = filter_indicator(data)
-            draw_barchart(find_years(indicator_data));
-        } 
-        else if (charttype == "groupbarchart") {
-            draw_groupbarchart(data)
-        } 
-        else if (charttype == "linechart") {
-            indicator_data = filter_indicator(data)
-            draw_linechart(indicator_data);
+            //indicator_data = filter_indicator(data)
+            draw_barchart(record);
+        } else if (charttype == "linechart") {
+            //indicator_data = filter_indicator(data)
+            draw_linechart(record);
         }
     }
 
     function draw_linechart(data) {
+
+        d3.select("#chart1 svg").selectAll("*")
+            /*.transition()
+            .duration(1000)
+            .style("opacity", 0)*/
+            .remove();
+
         function find_years(data) {
             obj_keys = Object.keys(data)
             var streamData = {}
@@ -382,7 +482,9 @@
         }
 
         streamData = find_years(data)
+        console.log(streamData)
         nv.addGraph(function() {
+            var unit = streamData[0].unit;
 
             d3.select('#chart1 svg')
                 .append("text")
@@ -401,6 +503,7 @@
                     left: 70
                 })
                 .xTickFormat(function(d) {
+                    console.log(streamData[0].values[d].tickvalue)
                     return streamData[0].values[d].tickvalue;
                 })
                 .x(function(d, i) {
@@ -416,7 +519,9 @@
                 .padDataOuter(-0.5)
                 .clipEdge(false)
                 .clipVoronoi(false)
+                .duration(1000)
                 .color([streamData[0].color]);
+
 
             chart.yAxis.ticks(10)
                 .tickFormat(function(d) {
@@ -428,7 +533,7 @@
             chart.xAxis.tickPadding(20);
 
             chart.tooltip.valueFormatter(function(d) {
-                    return d
+                    return d3.format(",.f")(d) + " " + unit;
                 })
                 .headerFormatter(function(d, i) {
                     return "";
@@ -491,7 +596,8 @@
                     top: 60,
                     right: 20,
                     bottom: 60,
-                    left: 70 })
+                    left: 70
+                })
                 .color(function(d, i) {
                     return d.color;
                 })
@@ -551,6 +657,36 @@
 
     function draw_barchart(data) {
 
+        d3.select("#chart1 svg").selectAll("*")
+            /*.transition()
+            .duration(1000)
+            .style("opacity", 0)*/
+            .remove();
+
+        function find_years(data) {
+
+            obj_keys = Object.keys(data)
+            var streamData = {}
+            streamData["key"] = data.index_name
+            streamData["values"] = []
+            streamData["unit"] = data.unit
+            streamData["color"] = data.color
+
+            for (var j = 0; j < obj_keys.length; j++) {
+                if (parseInt(obj_keys[j][0]) == 2) {
+                    if (!isNaN(parseFloat(data[obj_keys[j]]))) {
+                        var temp = new Object();
+                        temp.label = obj_keys[j];
+                        temp.value = data[obj_keys[j]];
+                        streamData["values"].push(temp);
+                    }
+                }
+            }
+            return [streamData];
+        }
+        data = find_years(data)
+
+
         d3.select('#chart1 svg')
             .append("text")
             .attr("class", "header")
@@ -562,28 +698,35 @@
 
         nv.addGraph(function() {
             var chart = nv.models.discreteBarChart()
+                .margin({
+                    "left": 70,
+                    "right": 10,
+                    "top": 20,
+                    "bottom": 80
+                })
                 .x(function(d) {
+
                     return d.label
+                })
+                .y(function(d) {
+
+                    return parseFloat(d.value)
                 })
                 .staggerLabels(false)
                 .showValues(true)
-                .duration(250)
+                .duration(1000)
                 .color([data[0].color])
                 .wrapLabels(true);
 
             var unit = data[0].unit;
 
-            chart.margin({
-                "left": 70,
-                "right": 10,
-                "top": 50,
-                "bottom": 80})
+
 
             chart.yAxis.ticks(10)
                 .tickFormat(function(d) {
                     return formatAbbr(d)
                 })
-                .axisLabel(data[0].unit)
+                .axisLabel(data.unit)
                 .axisLabelDistance(0)
                 .tickPadding(5);
 
@@ -593,17 +736,14 @@
 
             if (screen.width < 480) {
                 chart.xAxis
-                .axisLabelDistance(30)
+                    .axisLabelDistance(30)
                 chart.rotateLabels(-40)
-            } 
-            else {
+            } else {
                 chart.xAxis
-                .axisLabelDistance(10)
+                    .axisLabelDistance(10)
             }
 
-            chart.y(function(d) {
-                return parseFloat(d.value)
-            })
+
 
             chart.tooltip.valueFormatter(function(d) {
                 return d3.format(",.f")(d) + " " + unit;
@@ -612,6 +752,7 @@
             d3.select('#chart1 svg')
                 .datum(data)
                 .call(chart);
+
             nv.utils.windowResize(chart.update);
             return chart;
         });
