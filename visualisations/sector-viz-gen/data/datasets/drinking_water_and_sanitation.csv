@@ -1,6 +1,5 @@
-slug_name,index_name,2012-13 Actuals,2013-14 Actuals,2014-15 Actuals,2015-16 Actuals,2016-17 BE,2016-17 RE,2016-17(AC),2017-18 BE,2017-18 BE(RE),2018-19(BE),color,unit
-national_rural_drinking_water_programme,National Rural Drinking Water Programme,10490.0,9691.0,9242.3,4369.55,5000.0,6000.0,5980.0,6050.0,7050.0,7000.0,#26393D,Rs. Crore
-swachh_bharat_mission_(r)nirmal_bharat_abhiyan,Swachh Bharat Mission (R) / Nirmal Bharat Abhiyan,2474.0,2244.0,2841.0,6703.4,9000.0,10500.0,10484.0,13948.27,16948.27,15343.1,#e4af1b,Rs. Crore
-swachh_bharat_mission_(u),Swachh Bharat Mission (U),...,...,859.5,765.84,2300.0,2300.0,2135.0,2300.0,2300.0,2500.0,#2aa5bb,Rs. Crore
-allocation_ministry_drinking_water,Allocation for Ministry of Drinking Water and Sanitation ( in Rs. Crore),12969.0,11935.0,12091.0,11081.0,14010.0,16512.0,16475.7,20010.79,24011.18,22356.6,#e4af1b,Rs. Crore
-,,12964.0,11935.0,12083.3,11072.95,14000.0,16500.0,16464.0,19998.27,23998.27,22343.1,,
+slug_name,index_name,2012-13 (A),2013-14 (A),2014-15 (A),2015-16 (A),2016-17 (BE),2016-17 (RE),2016-17 (A),2017-18 (BE),2017-18 (RE),2018-19 (BE),color,unit
+national_rural_drinking_water_programme,National Rural Drinking Water Programme,10490,9691,9242.3,4369.55,5000,6000,5980,6050,7050,7000,#26393D,Rs. Crore
+swachh_bharat_mission_(r)_/_nirmal_bharat_abhiyan,Swachh Bharat Mission (R) / Nirmal Bharat Abhiyan,2474,2244,2841,6703.4,9000,10500,10484,13948.27,16948.27,15343.1,#e4af1b,Rs. Crore
+swachh_bharat_mission_(u),Swachh Bharat Mission (U),...,...,859.5,765.84,2300,2300,2135,2300,2300,2500,#2aa5bb,Rs. Crore
+allocation_for_ministry_of_drinking_water_and_sanitation_(_in_rs._crore),Allocation for Ministry of Drinking Water and Sanitation ( in Rs. Crore),12969,11935,12091,11081,14010,16512,16475.7,20010.79,24011.18,22356.6,#e4af1b,Rs. Crore
