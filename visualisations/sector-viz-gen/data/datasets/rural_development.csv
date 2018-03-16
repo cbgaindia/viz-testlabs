@@ -1,7 +1,7 @@
-slug_name,index_name,2012-13,2013-14,2014-15,2015-16,2016-17 (BE),2016-17 (RE),2016-17 (A),2017-18 (BE),2017-18 (RE),2018-19 (BE),unit,color
-allocations_for_department_of_rural_development,Allocations for Department of Rural Development,50187.0,58666.0,67311.0,77369.0,86055.0,96060.0,95069.0,105448.0,109042.0,112404.0,Rs crore,#2aa5bb
-allocations_for_department_of_rural_development_as_percent_of_total_budget_expenditure,Allocations for Department of Rural Development as percent of Total Budget Expenditure,3.6,3.8,4.0,4.3,4.4,4.8,4.8,4.9,5.1,4.8,Percentage,#2aa5bb
-mahatma_gandhi_national_rural_employment_guarantee_act_(mgnrega),Mahatma Gandhi National Rural Employment Guarantee Act (MGNREGA),30273.0,32993.0,32969.0,37341.0,38500.0,47499.0,48215.0,48000.0,55000.0,55000.0,Rs crore,#2aa5bb
-national_rural_livelihood_mission_(nrlm),National Rural Livelihood Mission (NRLM),2195.0,2022.0,1413.0,2514.0,3000.0,3000.0,3158.0,4500.0,4350.0,5750.0,Rs crore,#2aa5bb
-pradhan_mantri_awaas_yojana_/_indira_awaas_yojna,Pradhan Mantri Awaas Yojana / Indira Awaas Yojna,7869.0,12981.0,11105.0,10116.2,15000.0,16000.0,16071.0,23000.0,23000.0,21000.0,Rs crore,#2aa5bb
-pradhan_mantri_gram_sadak_yojana_(pmgsy),Pradhan Mantri Gram Sadak Yojana (PMGSY),3057.0,3978.0,5868.0,18290.0,19000.0,19000.0,17923.0,19000.0,16900.0,19000.0,Rs crore,#2aa5bb
+slug_name,index_name,2012-13 (A),2013-14 (A),2014-15 (A),2015-16 (A),2016-17 (BE),2016-17 (RE),2016-17 (A),2017-18 (BE),2017-18 (RE),2018-19 (BE),unit,color
+allocations_for_department_of_rural_development,Allocations for Department of Rural Development,50187,58666,67311,77369,86055,96060,95069,105448,109042,112404,Rs crore,#449001
+rural_development_as_percent_of_total_budget_expenditure,Rural Development as percent of Total Budget Expenditure,3.6,3.8,4,4.3,4.4,4.8,4.8,4.9,5.1,4.8,Percentage,#449001
+mahatma_gandhi_national_rural_employment_guarantee_act_(mgnrega),Mahatma Gandhi National Rural Employment Guarantee Act (MGNREGA),30273,32993,32969,37341,38500,47499,48215,48000,55000,55000,Rs crore,#449001
+national_rural_livelihood_mission_(nrlm),National Rural Livelihood Mission (NRLM),2195,2022,1413,2514,3000,3000,3158,4500,4350,5750,Rs crore,#449001
+pradhan_mantri_awaas_yojana_/_indira_awaas_yojna,Pradhan Mantri Awaas Yojana / Indira Awaas Yojna,7869,12981,11105,10116.2,15000,16000,16071,23000,23000,21000,Rs crore,#449001
+pradhan_mantri_gram_sadak_yojana_(pmgsy),Pradhan Mantri Gram Sadak Yojana (PMGSY),3057,3978,5868,18290,19000,19000,17923,19000,16900,19000,Rs crore,#449001

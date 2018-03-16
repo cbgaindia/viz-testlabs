@@ -28,7 +28,7 @@
     }
 
     .nvd3 text {
-        font-family:  Open Sans, sans-serif;
+        font-family: Open Sans, sans-serif;
     }
 
     svg {
@@ -62,8 +62,7 @@
     button#saveButton {
         float: right;
     }
-    </style>
-    <style>
+
     .bs-example>.btn,
     .bs-example>.btn-group {
         margin-top: 5px;
@@ -80,8 +79,7 @@
     .btn {
         display: inline-block;
         padding: 5px 10px;
-        margin-bottom: 20px;
-
+        margin-bottom: 10px;
         font-size: 11px;
         line-height: 20px;
         text-align: center;
@@ -176,7 +174,7 @@
 
     .nv-point {
         stroke-opacity: 1!important;
-        stroke-width: 5px!important;
+        stroke-width: 7px!important;
         fill-opacity: 0!important;
     }
 
@@ -226,15 +224,51 @@
     }
 
     text.nv-axislabel {
-        font-weight: 400;
+        font-weight: 600;
         font-size: 13px;
     }
+
     .nv-axis g .tick text {
-    font-weight: 100;
-}
-.nvd3 .nv-discretebar .nv-groups text{
-    font-weight: 700;
-    font-size: 10px;
+        font-weight: 100;
+        font-size: 11px;
+    }
+
+    .nvd3 .nv-discretebar .nv-groups text {
+        font-weight: 600;
+        font-size: 10px;
+    }
+
+    .nvtooltip {
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.19), 0 1px 3px rgba(0, 0, 0, 0.23);
+        background: rgba(255, 255, 255, 1);
+    }
+
+    .nv-y .tick.zero line {
+        stroke-width: 1px;
+    }
+
+    .nv-y .nv-axis g path.domain {
+        stroke-width: 1px;
+    }
+
+    .nv-lineChart .nv-axis.nv-x path.domain {
+        stroke-opacity: 1!important;
+        stroke-width: 2px;
+    }
+
+    .nvd3 g.nv-groups path.nv-line {
+        stroke-width: 3px;
+    }
+
+    .nvd3 .nv-discretebar .nv-groups rect {
+        stroke-opacity: 1;
+        stroke-width: 1px;
+        fill-opacity: 0.85;
+        stroke: rgba(0, 0, 0, 0.29);
+        transition: fill-opacity 250ms linear;
+    }
+    .tick line:not(.zero) {
+  opacity: 0.5!important;
 }
     </style>
 </head>
@@ -258,6 +292,8 @@
     var indicator = query_parameters[3];
 
     var current_key;
+
+
 
     function loadDatasets() {
         var table_data = {};
@@ -300,9 +336,13 @@
             .defer(d3.csv, "data/datasets/persons_with_disabilities.csv")
             .defer(d3.csv, "data/datasets/allocations_for_schemes_related_to_climate_change_adaptation.csv")
             .defer(d3.csv, "data/datasets/allocations_for_selective_missions_under_napcc.csv")
+            .defer(d3.csv, "data/datasets/compo_agri.csv")
+            .defer(d3.csv, "data/datasets/compo_health.csv")
+            .defer(d3.csv, "data/datasets/compo_rural_schemes.csv")
+            .defer(d3.csv, "data/datasets/compo_social_assistance.csv")
             .await(populateTableData);
 
-        function populateTableData(error, budget_overview, transfer_of_resources_to_states, total_cess_and_surcharges, total_expenditure_by_select_ministries, education, health, drinking_water_and_sanitation, /* ministry_of_rural_development,*/ agriculture, rural_development, nutrition, climate_change, women, children, dalits, adivasis, religious_minorities, social_security, urban_poverty, /* disability, share_of_expenditure_by_moa, share_of_food_subsidy_allocation, */ compo_mhrd, /*compo_energy, compo_prog_mnre, children,*/ compo_children_sector_budget, compo_outlays_dalits, compo_outlays_adivasis, compo_drinking_water, tax_gdp, compo_misc_capital_recipts, outlays_for_nutrition_schemes, allocations_for_ministry_of_new_renewable_energy, allocations_for_schemes_under_mnre, persons_with_disabilities, allocations_for_schemes_related_to_climate_change_adaptation, allocations_for_selective_missions_under_napcc) {
+        function populateTableData(error, budget_overview, transfer_of_resources_to_states, total_cess_and_surcharges, total_expenditure_by_select_ministries, education, health, drinking_water_and_sanitation, /* ministry_of_rural_development,*/ agriculture, rural_development, nutrition, climate_change, women, children, dalits, adivasis, religious_minorities, social_security, urban_poverty, /* disability, share_of_expenditure_by_moa, share_of_food_subsidy_allocation, */ compo_mhrd, /*compo_energy, compo_prog_mnre, children,*/ compo_children_sector_budget, compo_outlays_dalits, compo_outlays_adivasis, compo_drinking_water, tax_gdp, compo_misc_capital_recipts, outlays_for_nutrition_schemes, allocations_for_ministry_of_new_renewable_energy, allocations_for_schemes_under_mnre, persons_with_disabilities, allocations_for_schemes_related_to_climate_change_adaptation, allocations_for_selective_missions_under_napcc, compo_agri, compo_health, compo_rural_schemes, compo_social_assistance) {
             table_data["budget_overview"] = budget_overview;
             table_data["transfer_of_resources_to_states"] = transfer_of_resources_to_states;
             table_data["total_cess_and_surcharges"] = total_cess_and_surcharges;
@@ -341,7 +381,11 @@
             table_data["persons_with_disabilities"] = persons_with_disabilities;
             table_data["allocations_for_schemes_related_to_climate_change_adaptation"] = allocations_for_schemes_related_to_climate_change_adaptation;
             table_data["allocations_for_selective_missions_under_napcc"] = allocations_for_selective_missions_under_napcc;
-            setup_environment(table_data)
+            table_data["compo_agri"] = compo_agri;
+            table_data["compo_health"] = compo_health;
+            table_data["compo_rural_schemes"] = compo_rural_schemes;
+            table_data["compo_social_assistance"] = compo_social_assistance;
+            setup_environment(table_data);
         }
     }
 
@@ -356,7 +400,7 @@
             return formatNumber(x / 1e3) + "k";
         },
         formatLowerDenom = function(x) {
-            return x;
+            return x.toFixed(2);
         };
 
     function formatAbbr(x) {
@@ -367,20 +411,20 @@
     loadDatasets();
 
     function setup_environment(data) {
-        drawviz(charttype, data[dataset])
+        drawviz(charttype, data[dataset]);
     }
 
     function drawviz(charttype, data) {
         function filter_indicator(data) {
             for (var i = 0; i < data.length; i++) {
                 if (data[i]["slug_name"] == indicator)
-                    return data[i]
+                    return data[i];
             }
         }
 
         if (analysistype == "trend") {
-            indicator_data = filter_indicator(data)
-            show_trend(indicator_data)
+            indicator_data = filter_indicator(data);
+            show_trend(indicator_data);
         } else if (analysistype == "distrib") {
             show_distrib(data);
         }
@@ -389,6 +433,112 @@
     function show_distrib(data) {
         draw_groupbarchart(data);
     }
+
+    function draw_groupbarchart(data) {
+        function generateStreamData(data) {
+            series = [];
+            for (stream in data) {
+                obj_keys = Object.keys(data[stream]);
+                var stream_inst = {};
+                stream_inst["key"] = data[stream].index_name;
+                stream_inst["values"] = [];
+                stream_inst["unit"] = data[stream].unit;
+                stream_inst["color"] = data[stream].color;
+                for (var j = 0; j < obj_keys.length; j++) {
+                    if (parseInt(obj_keys[j][0]) == 2) {
+                        if (!isNaN(parseFloat(data[stream][obj_keys[j]]))) {
+                            var temp = new Object();
+                            temp.label = obj_keys[j];
+                            temp.value = parseFloat(data[stream][obj_keys[j]]);
+                            stream_inst["values"].push(temp);
+                        }
+                    }
+                }
+                series.push(stream_inst);
+            }
+            return series;
+        }
+
+        nv.addGraph(function() {
+
+            streamData = generateStreamData(data);
+
+            var chart = nv.models.multiBarChart()
+                .x(function(d) {
+                    return d.label
+                })
+                .y(function(d) {
+                    return parseFloat(d.value)
+                })
+                .margin({
+                    top: 50,
+                    right: 20,
+                    bottom: 90,
+                    left: 80
+                })
+                .color(function(d, i) {
+                    return d.color;
+                })
+                .reduceXTicks(false)
+                .showControls(true)
+                .groupSpacing(0.3)
+                .wrapLabels(true)
+                .clipEdge(true)
+                .useInteractiveGuideline(true);
+
+            if (indicator == "nostack") {
+                chart.stacked(false)
+                    .showControls(false);
+            }
+
+            if (indicator == "stack") {
+                chart.stacked(true)
+                    .showControls(false);
+            }
+
+            chart.legend.align(false)
+                .width(400)
+                .margin({ top: 5, right: 40, left: 70, bottom: 0 });
+
+            if (screen.width < 480) {
+                chart.height(250)
+                    .rotateLabels(-40);
+            }
+
+            chart.yAxis.ticks(7)
+                .tickFormat(function(d) {
+                    return formatAbbr(d)
+                })
+                .axisLabel(streamData[0].unit)
+                .axisLabelDistance(10)
+                .tickPadding(10);
+
+            chart.xAxis.axisLabelDistance(18)
+                .axisLabel("Years")
+                .tickPadding(10);
+
+            chart.tooltip.valueFormatter(function(d) {
+                return d3.format(",.f")(d) + " " + streamData[0].unit;
+            });
+
+            d3.select('#viz-area svg')
+                .datum(streamData)
+                .call(chart);
+
+            nv.utils.windowResize(chart.update);
+
+            var xticks = d3.select("g.nv-x g g").selectAll("g");
+
+            var g = xticks.filter(function(d, i) {
+                if (this == xticks[0][xticks[0].length - 1]) {
+                    return this;
+                }
+            }).select("text").style("font-weight", "700").style("font-size", "14px");
+
+            return chart;
+        });
+    }
+
 
     function show_trend(record) {
 
@@ -402,7 +552,7 @@
                 "icon": "fa fa-line-chart",
                 "vis_slug": "linechart"
             }
-        ]
+        ];
 
         var button_grp = d3.select("body").select("div.option-select")
             .append("div")
@@ -413,7 +563,6 @@
             .data(trend_options)
             .enter().append("button")
             .attr("value", function(d) {
-
                 return d.name;
             })
             .attr("class", function(d, i) {
@@ -456,12 +605,12 @@
         d3.select("#viz-area svg").selectAll("*").remove();
 
         function find_years(data) {
-            obj_keys = Object.keys(data)
-            var streamData = {}
-            streamData["key"] = data.index_name
-            streamData["values"] = []
-            streamData["unit"] = data.unit
-            streamData["color"] = data.color
+            obj_keys = Object.keys(data);
+            var streamData = {};
+            streamData["key"] = data.index_name;
+            streamData["values"] = [];
+            streamData["unit"] = data.unit;
+            streamData["color"] = data.color;
 
             for (var j = 0; j < obj_keys.length; j++) {
                 if (parseInt(obj_keys[j][0]) == 2) {
@@ -478,27 +627,18 @@
             return [streamData];
         }
 
-        streamData = find_years(data)
+        streamData = find_years(data);
 
         nv.addGraph(function() {
             var unit = streamData[0].unit;
             current_key = streamData[0].key;
-
-            d3.select('#viz-area svg')
-                .append("text")
-                .attr("class", "header")
-                .attr("x", 10)
-                .attr("y", 430)
-                .style("font-size", "11px")
-                .style("font-weight", 100)
-                .text("Source:  Compiled by CBGA from Union Budget for various years");
 
             var chart = nv.models.lineChart()
                 .margin({
                     top: 20,
                     right: 50,
                     bottom: 100,
-                    left: 70
+                    left: 90
                 })
                 .xTickFormat(function(d) {
                     return streamData[0].values[d].tickvalue;
@@ -514,21 +654,20 @@
                 .showXAxis(true)
                 .padData(true)
                 .padDataOuter(-0.5)
-                .clipEdge(false)
-                .clipVoronoi(false)
+                .isArea(false)
                 .duration(1000)
+                .clipEdge(false)
                 .color([streamData[0].color]);
 
-
-            chart.yAxis.ticks(10)
+            chart.yAxis.ticks(8)
                 .tickFormat(function(d) {
                     return formatAbbr(d)
                 })
                 .axisLabel(streamData[0].unit)
                 .axisLabelDistance(10)
-                .tickPadding(5);
+                .tickPadding(10);
 
-            chart.xAxis.tickPadding(20)
+            chart.xAxis.tickPadding(15)
                 .axisLabelDistance(20)
                 .axisLabel("Years");
 
@@ -548,119 +687,9 @@
         });
     }
 
-    function draw_groupbarchart(data) {
-        function generateStreamData(data) {
-            series = [];
-            for (stream in data) {
-                obj_keys = Object.keys(data[stream]);
-                var stream_inst = {};
-                // console.log(data, data[stream])
-                stream_inst["key"] = data[stream].index_name;
-                stream_inst["values"] = [];
-                stream_inst["unit"] = data[stream].unit;
-                stream_inst["color"] = data[stream].color;
-                for (var j = 0; j < obj_keys.length; j++) {
-                    if (parseInt(obj_keys[j][0]) == 2) {
-                        if (!isNaN(parseFloat(data[stream][obj_keys[j]]))) {
-                            var temp = new Object();
-                            temp.label = obj_keys[j];
-                            temp.value = parseFloat(data[stream][obj_keys[j]]);
-                            stream_inst["values"].push(temp);
-                        }
-                    }
-                }
-                series.push(stream_inst);
-            }
-            return series;
-        }
-
-        nv.addGraph(function() {
-            d3.select('#viz-area svg')
-                .append("text")
-                .attr("class", "header")
-                .attr("x", 10)
-                .attr("y", 520)
-                .style("font-weight", 100)
-                .text("Source -  Compiled by CBGA from Union Budget, Expenditure Budget, Volume II, for various years");
-
-            streamData = generateStreamData(data);
-
-            var chart = nv.models.multiBarChart()
-                .x(function(d) {
-                    return d.label
-                })
-                .y(function(d) {
-                    return parseFloat(d.value)
-                })
-                .margin({
-                    top: 60,
-                    right: 20,
-                    bottom: 80,
-                    left: 70
-                })
-                .color(function(d, i) {
-                    return d.color;
-                })
-                .reduceXTicks(false)
-                .showControls(true)
-                .groupSpacing(0.3)
-                .wrapLabels(true);
-
-            if (indicator == "nostack") {
-                chart.stacked(false);
-            }
-
-            if (indicator == "stack") {
-                chart.stacked(true);
-            }
-
-            chart.legend.align(false)
-                .width(400)
-                .margin({ top: 5, right: 70, left: 40, bottom: 0 });
-
-            if (screen.width < 480) {
-                chart.height(250)
-                    .rotateLabels(-40);
-            }
-
-            chart.yAxis.ticks(10)
-                .tickFormat(function(d) {
-                    return formatAbbr(d)
-                })
-                .axisLabel(data[0].unit)
-                .axisLabelDistance(5)
-                .tickPadding(5);
-
-            chart.xAxis.axisLabelDistance(20)
-                .axisLabel("Years")
-
-            chart.tooltip.valueFormatter(function(d) {
-                return d3.format(",.f")(d) + " " + data[0].unit;
-            })
-
-            d3.select('#viz-area svg')
-                .datum(streamData)
-                .call(chart);
-
-            d3.select('#viz-area svg')
-                .append("text")
-                .attr("class", "header")
-                .attr("x", 10)
-                .attr("y", 440)
-                .style("font-size", "11px")
-                .style("font-weight", 100)
-                .text("Source: Compiled by CBGA from Union Budget for various years");
-
-            nv.utils.windowResize(chart.update);
-
-            return chart;
-        });
-    }
-
     function draw_barchart(data) {
 
         d3.select("#viz-area svg").selectAll("*").remove();
-
 
         function find_years(data) {
 
@@ -683,26 +712,17 @@
             }
             return [streamData];
         }
+
         data = find_years(data);
         current_key = data[0].key;
 
-        d3.select('#viz-area svg')
-            .append("text")
-            .attr("class", "header")
-            .attr("x", 10)
-            .attr("y", 430)
-            .style("font-size", "11px")
-            .style("font-weight", 100)
-            .text("Source: Compiled by CBGA from Union Budget for various years");
-
         nv.addGraph(function() {
-            // console.log(data)
             var chart = nv.models.discreteBarChart()
                 .margin({
                     top: 20,
-                    right: 50,
+                    right: 70,
                     bottom: 100,
-                    left: 70
+                    left: 90
                 })
                 .x(function(d) {
                     return d.label
@@ -714,30 +734,31 @@
                 .showValues(true)
                 .duration(1000)
                 .color([data[0].color])
-                .wrapLabels(true)
-                
+                .wrapLabels(true);
+
             var unit = data[0].unit;
 
-            chart.yAxis.ticks(10)
+            chart.yAxis.ticks(8)
                 .tickFormat(function(d) {
                     return formatAbbr(d)
                 })
                 .axisLabel(unit)
                 .axisLabelDistance(10)
-                .tickPadding(5);
+                .tickPadding(10);
 
-            chart.xAxis.ticks(10)
+            chart.xAxis
                 .axisLabel("Years")
-                .tickPadding(5)
+                .tickPadding(10);
 
+            chart.tooltip.headerEnabled(true);
 
             if (screen.width < 480) {
                 chart.xAxis
-                    .axisLabelDistance(30)
-                chart.rotateLabels(-40)
+                    .axisLabelDistance(30);
+                chart.rotateLabels(-40);
             } else {
                 chart.xAxis
-                    .axisLabelDistance(15)
+                    .axisLabelDistance(15);
             }
 
             chart.tooltip.valueFormatter(function(d) {
@@ -748,19 +769,19 @@
                 .datum(data)
                 .call(chart);
 
-            var xticks = d3.select("g.nv-x g g").selectAll("g")
+            var xticks = d3.select("g.nv-x g g").selectAll("g");
 
-            var g = xticks.filter(function(d, i){
-                if(this == xticks[0][xticks[0].length-1]){
-                    return this
+            var g = xticks.filter(function(d, i) {
+                if (this == xticks[0][xticks[0].length - 1]) {
+                    return this;
                 }
             }).select("text").style("font-weight", "700").style("font-size", "14px")
-            console.log(g)
 
             nv.utils.windowResize(chart.update);
             return chart;
         });
     }
+
     d3.select('#saveButton').on('click', function() { downloadImage() });
     </script>
     <script type="text/javascript">
@@ -773,11 +794,10 @@
     }
 
     function downloadImage() {
-        // console.log(current_key)
         domtoimage.toBlob(document.getElementById('viz-area'), { filter: filter, quality: 1 })
             .then(blob => {
                 if (!current_key) {
-                    current_key = "Visualization - OpenBudgetsIndia"
+                    current_key = "Visualization - OpenBudgetsIndia";
                 }
                 window.saveAs(blob, current_key + '.png');
             })
