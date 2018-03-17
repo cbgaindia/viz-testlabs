@@ -1,7 +1,7 @@
-slug_name,index_name,2012-13 (A),2013-14 (A),2014-15 (A),2015-16 (A),2016-17 (BE),2016-17 (RE),2016-17 (A),2017-18 (BE),2017-18 (RE),2018-19 (BE),unit,color
-allocations_for_department_of_rural_development,Allocations for Department of Rural Development,50187,58666,67311,77369,86055,96060,95069,105448,109042,112404,Rs crore,#449001
-rural_development_as_percent_of_total_budget_expenditure,Rural Development as percent of Total Budget Expenditure,3.6,3.8,4,4.3,4.4,4.8,4.8,4.9,5.1,4.8,Percentage,#449001
-mahatma_gandhi_national_rural_employment_guarantee_act_(mgnrega),Mahatma Gandhi National Rural Employment Guarantee Act (MGNREGA),30273,32993,32969,37341,38500,47499,48215,48000,55000,55000,Rs crore,#449001
-national_rural_livelihood_mission_(nrlm),National Rural Livelihood Mission (NRLM),2195,2022,1413,2514,3000,3000,3158,4500,4350,5750,Rs crore,#449001
-pradhan_mantri_awaas_yojana_/_indira_awaas_yojna,Pradhan Mantri Awaas Yojana / Indira Awaas Yojna,7869,12981,11105,10116.2,15000,16000,16071,23000,23000,21000,Rs crore,#449001
-pradhan_mantri_gram_sadak_yojana_(pmgsy),Pradhan Mantri Gram Sadak Yojana (PMGSY),3057,3978,5868,18290,19000,19000,17923,19000,16900,19000,Rs crore,#449001
+slug_name,index_name,2012-13 (A),2013-14 (A),2014-15 (A),2015-16 (A),2016-17 (BE),2016-17 (RE),2016-17 (A),2017-18 (BE),2017-18 (RE),2018-19 (BE),unit,color,notes
+allocations_for_department_of_rural_development,Allocations for Department of Rural Development,50187,58666,67311,77369,86055,96060,95069,105448,109042,112404,Rs crore,#449001,
+rural_development_as_percent_of_total_budget_expenditure,Rural Development as percent of Total Budget Expenditure,3.6,3.8,4,4.3,4.4,4.8,4.8,4.9,5.1,4.8,Percentage,#449001,
+mahatma_gandhi_national_rural_employment_guarantee_act_(mgnrega),Mahatma Gandhi National Rural Employment Guarantee Act (MGNREGA),30273,32993,32969,37341,38500,47499,48215,48000,55000,55000,Rs crore,#449001,
+national_rural_livelihood_mission_(nrlm),National Rural Livelihood Mission (NRLM),2195,2022,1413,2514,3000,3000,3158,4500,4350,5750,Rs crore,#449001,
+pradhan_mantri_awaas_yojana,Pradhan Mantri Awaas Yojana,7869,12981,11105,10116.2,15000,16000,16071,23000,23000,21000,Rs crore,#449001,Also known as Indira Awaas Yojna
+pradhan_mantri_gram_sadak_yojana_(pmgsy),Pradhan Mantri Gram Sadak Yojana (PMGSY),3057,3978,5868,18290,19000,19000,17923,19000,16900,19000,Rs crore,#449001,
