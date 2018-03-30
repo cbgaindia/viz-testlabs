@@ -241,6 +241,10 @@
     .nvtooltip {
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.19), 0 1px 3px rgba(0, 0, 0, 0.23);
         background: rgba(255, 255, 255, 1);
+        font-family: Open Sans, sans-serif;
+        white-space: normal;
+        padding: 0px;
+        border: 1px solid rgba(0, 0, 0, 0.35);
     }
 
     .nv-y .tick.zero line {
@@ -269,6 +273,52 @@
 
     text.nv-legend-text {
         font-size: 11px;
+    }
+
+    .tooltip-point-title {
+        padding: 10px;
+        border-radius: 4px 4px 0px 0px;
+        background: #1c2128;
+        max-width: 350px;
+        font-weight: 700;
+        color: rgba(255, 255, 255, 0.92);
+        text-align: center;
+        font-size: 12px;
+        overflow-wrap: break-word;
+    }
+
+    span.tooltip-x-val {
+        padding-right: 20px;
+        font-weight: 400;
+    }
+
+    span.tooltip-y-value {
+        font-weight: 700;
+        padding-right: 15px;
+        font-size: 13px;
+    }
+
+    .tooltip-point-body span {
+        padding-left: 10px;
+        vertical-align: bottom;
+    }
+
+    .legend-color-guide div {
+        width: 15px;
+        height: 15px;
+    }
+
+    .tooltip-point-body {
+        padding: 8px;
+    }
+
+    .tooltip-point-title hr {
+        margin: 10px;
+        border-top: 1px solid #ddd;
+    }
+
+    .nv-x g .tick text {
+        font-size: 10px;
     }
     </style>
 </head>
@@ -518,14 +568,14 @@
                 .axisLabel("Years")
                 .tickPadding(10);
 
-            if (screen.width < 1200){
+            if (screen.width < 1200) {
                 chart.legend.align(true)
-                .width(400)
-                .maxKeyLength(17)
-                .margin({ top: 0, right: 20, left: 20, bottom: 0 });
+                    .width(400)
+                    .maxKeyLength(17)
+                    .margin({ top: 0, right: 20, left: 20, bottom: 0 });
 
                 chart.xAxis.axisLabelDistance(30)
-                .tickPadding(5);
+                    .tickPadding(5);
             }
 
             chart.tooltip.valueFormatter(function(d) {
@@ -646,6 +696,7 @@
                     return streamData[0].values[d].tickvalue;
                 })
                 .x(function(d, i) {
+
                     return i;
                 })
                 .y(function(d) {
@@ -674,12 +725,14 @@
                 .axisLabelDistance(20)
                 .axisLabel("Years");
 
-            chart.tooltip.valueFormatter(function(d) {
-                    return d3.format(",.f")(d) + " " + unit;
-                })
-                .headerFormatter(function(d, i) {
-                    return "";
-                })
+            chart.tooltip.contentGenerator(function(obj) {
+                var header = obj.series[0].key
+                var headerhtml = "<div class='row'><div class='col-lg-12'><div class='tooltip-point-title'>" + header + "</div></div></div>"
+
+                var bodyhtml = "<div class='row'><div class='col-lg-12 text-center'><div class='tooltip-point-body'><span class='legend-color-guide'><div style='background-color: " + obj.point.color + ";'></div></span><span class='tooltip-x-val'>" + obj.point.tickvalue + "</span><span class='tooltip-y-value'>" + obj.point.value + " " + unit + "</span></div></div>";
+
+                return headerhtml + '' + bodyhtml;
+            });
 
             d3.select('#viz-area svg')
                 .datum(streamData)
@@ -768,6 +821,14 @@
             chart.tooltip.valueFormatter(function(d) {
                 return d3.format(",.f")(d) + " " + unit;
             })
+
+            chart.tooltip.contentGenerator(function(obj) {
+                var header = obj.series[0].key
+                var headerhtml = "<div class='row'><div class='col-lg-12'><div class='tooltip-point-title'>" + current_key + "</div></div></div>"
+
+                var bodyhtml = "<div class='row'><div class='col-lg-12 text-center'><div class='tooltip-point-body' ><span class='legend-color-guide'> <div style='background-color: " + obj.color + ";'></div></span><span class='tooltip-x-val'>" + obj.data.label + "</span><span class='tooltip-y-value'>" + obj.data.value + " " + unit + "</span></div></div>";
+                return headerhtml + '' + bodyhtml;
+            });
 
             d3.select('#viz-area svg')
                 .datum(data)
