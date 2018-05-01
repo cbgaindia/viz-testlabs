@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.5/nv.d3.css" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.5/nv.d3.js"></script>
+    <script type="text/javascript" src="js/queue.v1.min.js"></script>
+    <script src="https://cdn.rawgit.com/eligrey/canvas-toBlob.js/f1a01896135ab378aa5c0118eadd81da55e698d8/canvas-toBlob.js"></script>
+    <script src="https://cdn.rawgit.com/eligrey/FileSaver.js/e9d941381475b5df8b7d7691013401e171014e89/FileSaver.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style>
+    html,
+    body,
+    #viz-area,
+    svg {
+        font-family: Open Sans, sans-serif;
+        margin: 0px;
+        background: rgb(253, 253, 253);
+        padding: 10px 0px;
+        height: 100%;
+        width: 100%;
+    }
+
+    .nvd3 text {
+        font-family: Open Sans, sans-serif;
+    }
+
+    svg {
+        display: block;
+        min-height: 300px;
+        max-height: 450px;
+    }
+
+    .nvd3 .nv-background {
+        fill: transparent;
+    }
+
+    .caret-up {
+        width: 0;
+        height: 0;
+        display: inline-block;
+        margin-left: 2px;
+        vertical-align: middle;
+    }
+
+    .particular-select {
+        margin-left: 20px;
+    }
+
+    div#indicator-name {
+        margin-top: 40px;
+        font-weight: 900;
+        font-size: 20px;
+    }
+
+    button#saveButton {
+        float: right;
+    }
+
+    .bs-example>.btn,
+    .bs-example>.btn-group {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    .btn-group,
+    .btn-group-vertical {
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 5px 10px;
+        margin-bottom: 10px;
+        font-size: 11px;
+        line-height: 20px;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+        color: #333333;
+        text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+        background-image: -moz-linear-gradient(top, #ffffff, #eaeaea);
+        background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#eaeaea));
+        background-image: -webkit-linear-gradient(top, #ffffff, #eaeaea);
+        background-image: -o-linear-gradient(top, #ffffff, #eaeaea);
+        background-image: linear-gradient(to bottom, #ffffff, #eaeaea);
+        background-repeat: repeat-x;
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffeaeaea', GradientType=0);
+        border-color: #eaeaea #eaeaea #c4c4c4;
+        border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+        filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+        border: 1px solid #cccccc;
+        border-bottom-color: #b3b3b3;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
+        -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
+    }
+
+    .download-btn {
+        margin-right: 50px;
+    }
+
+    .btn.active.focus,
+    .btn.active:focus,
+    .btn.focus,
+    .btn:active.focus,
+    .btn:active:focus,
+    .btn:focus {
+        outline: none
+    }
+
+    .btn.active.focus {
+        outline: 1px solid rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-blue {
+        background: #4593e3;
+        color: #000;
+        font-weight: 300;
+        box-shadow: 0 4px #226fbe;
+        -webkit-transition: none;
+        -moz-transition: none;
+        transition: none;
+    }
+
+    .btn-default {
+        color: #FFF;
+        background-color: #40627C;
+        border-color: #ccc;
+    }
+
+    .btn:focus {
+        outline-color: #DDD;
+        outline: 0;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+    }
+
+    button,
+    select {
+        text-transform: none;
+    }
+
+    button {
+        overflow: visible;
+    }
+
+    .btn:active {
+        background-image: none;
+        outline: 0;
+        background-color: #dad6d6;
+        -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, .15), 0 1px 2px rgba(0, 0, 0, .05);
+        -moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, .15), 0 1px 2px rgba(0, 0, 0, .05);
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, .15), 0 1px 2px rgba(0, 0, 0, .05);
+    }
+
+    .nv-point {
+        stroke-opacity: 1!important;
+        stroke-width: 7px!important;
+        fill-opacity: 0!important;
+    }
+
+    .nv-point.hover {
+        stroke-width: 15px!important;
+        fill-opacity: .95 !important;
+        stroke-opacity: .95 !important;
+    }
+
+    @media(max-width: 480px) {
+        .nvd3 .nv-discretebar .nv-groups text {
+            display: none;
+        }
+    }
+
+    .nvd3 rect {
+        fill-opacity: 1;
+    }
+
+    .option-select {
+        float: left;
+        margin: 0px 30px;
+    }
+
+    .option-select button i {
+        font-size: 13px;
+        padding: 3px 5px;
+    }
+
+    .option-select button span {
+        font-weight: 100;
+        font-size: 12px;
+    }
+
+    .nvd3 g.nv-y g.zero line {
+        stroke: rgba(0, 0, 0, 1);
+        stroke-opacity: 0.9 !important;
+        stroke-width: 1px;
+    }
+
+    .nvd3 g.nv-groups path.nv-line {
+        stroke-width: 2px;
+    }
+
+    .nvd3 .nv-axis.nv-x path.domain {
+        stroke-opacity: 1!important;
+    }
+
+    text.nv-axislabel {
+        font-weight: 600;
+        font-size: 13px;
+    }
+
+    .nv-axis g .tick text {
+        font-weight: 100;
+        font-size: 11px;
+    }
+
+    .nvd3 .nv-discretebar .nv-groups text {
+        font-weight: 600;
+        font-size: 10px;
+    }
+
+    .nvtooltip {
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.19), 0 1px 3px rgba(0, 0, 0, 0.23);
+        background: rgba(255, 255, 255, 1);
+        font-family: Open Sans, sans-serif;
+        white-space: normal;
+        padding: 0px;
+        border: 1px solid rgba(0, 0, 0, 0.35);
+    }
+
+    .nv-y .tick.zero line {
+        stroke-width: 1px;
+    }
+
+    .nv-y .nv-axis g path.domain {
+        stroke-width: 1px;
+    }
+
+    .nvd3 g.nv-groups path.nv-line {
+        stroke-width: 3px;
+    }
+
+    .nvd3 .nv-discretebar .nv-groups rect {
+        stroke-opacity: 1;
+        stroke-width: 1px;
+        fill-opacity: 0.85;
+        stroke: rgba(0, 0, 0, 0.29);
+        transition: fill-opacity 250ms linear;
+    }
+
+    .tick line:not(.zero) {
+        opacity: 0.5!important;
+    }
+
+    text.nv-legend-text {
+        font-size: 11px;
+    }
+
+    .tooltip-point-title {
+        padding: 10px;
+        border-radius: 4px 4px 0px 0px;
+        background: #1c2128;
+        max-width: 350px;
+        font-weight: 700;
+        color: rgba(255, 255, 255, 0.92);
+        text-align: center;
+        font-size: 12px;
+        overflow-wrap: break-word;
+    }
+
+    span.tooltip-x-val {
+        padding-right: 20px;
+        font-weight: 400;
+    }
+
+    span.tooltip-y-value {
+        font-weight: 700;
+        padding-right: 15px;
+        font-size: 13px;
+    }
+
+    .tooltip-point-body span {
+        padding-left: 10px;
+        vertical-align: bottom;
+    }
+
+    .legend-color-guide div {
+        width: 15px;
+        height: 15px;
+    }
+
+    .tooltip-point-body {
+        padding: 8px;
+    }
+
+    .tooltip-point-title hr {
+        margin: 10px;
+        border-top: 1px solid #ddd;
+    }
+
+    .nv-x g .tick text {
+        font-size: 10px;
+    }
+    </style>
+</head>
+
+<body>
+    <button type="button" class="btn download-btn " id='saveButton'>Download</button>
+    <div class="option-select"></div>
+    <div id="viz-area">
+        <svg id="chartsvg"></svg>
+    </div>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+    <script>
+    var currentLocation = window.location;
+    var query_parameters = currentLocation.hash.split("/");
+
+    var analysistype = query_parameters[0].substring(1, query_parameters[0].length);
+    var charttype = query_parameters[1];
+    var dataset = query_parameters[2];
+    var indicator = query_parameters[3];
+
+    var current_key;
+
+
+
+    function loadDatasets() {
+        var table_data = {};
+        queue()
+            .defer(d3.csv, "data/datasets/budget_overview.csv")
+            .defer(d3.csv, "data/datasets/transfer_of_resources_to_states.csv")
+            .defer(d3.csv, "data/datasets/total_cess_and_surcharges.csv")
+            .defer(d3.csv, "data/datasets/total_expenditure_by_select_ministries.csv")
+            .defer(d3.csv, "data/datasets/education.csv")
+            .defer(d3.csv, "data/datasets/health.csv")
+            .defer(d3.csv, "data/datasets/drinking_water_and_sanitation.csv")
+            //.defer(d3.csv, "data/datasets/ministry_of_rural_development.csv")
+            .defer(d3.csv, "data/datasets/agriculture.csv")
+            .defer(d3.csv, "data/datasets/rural_development.csv")
+            .defer(d3.csv, "data/datasets/nutrition.csv")
+            .defer(d3.csv, "data/datasets/climate_change.csv")
+            .defer(d3.csv, "data/datasets/women.csv")
+            .defer(d3.csv, "data/datasets/children.csv")
+            .defer(d3.csv, "data/datasets/dalits.csv")
+            .defer(d3.csv, "data/datasets/adivasis.csv")
+            .defer(d3.csv, "data/datasets/religious_minorities.csv")
+            .defer(d3.csv, "data/datasets/social_security.csv")
+            .defer(d3.csv, "data/datasets/urban_poverty.csv")
+            /*.defer(d3.csv, "data/datasets/disability.csv")*/
+            /*.defer(d3.csv, "data/datasets/share_of_expenditure_by_moa.csv")
+            .defer(d3.csv, "data/datasets/share_of_food_subsidy_allocation.csv")*/
+            .defer(d3.csv, "data/datasets/compo_mhrd.csv")
+            /*.defer(d3.csv, "data/datasets/energy/compo_energy.csv")
+            .defer(d3.csv, "data/datasets/energy/compo_prog_mnre.csv")
+            .defer(d3.csv, "data/datasets/children.csv")*/
+            .defer(d3.csv, "data/datasets/compo_children_sector_budget.csv")
+            .defer(d3.csv, "data/datasets/compo_outlays_dalits.csv")
+            .defer(d3.csv, "data/datasets/compo_outlays_adivasis.csv")
+            .defer(d3.csv, "data/datasets/compo_drinking_water.csv")
+            .defer(d3.csv, "data/datasets/tax_gdp.csv")
+            .defer(d3.csv, "data/datasets/compo_misc_capital_recipts.csv")
+            .defer(d3.csv, "data/datasets/outlays_for_nutrition_schemes.csv")
+            .defer(d3.csv, "data/datasets/allocations_for_ministry_of_new_renewable_energy.csv")
+            .defer(d3.csv, "data/datasets/allocations_for_schemes_under_mnre.csv")
+            .defer(d3.csv, "data/datasets/persons_with_disabilities.csv")
+            .defer(d3.csv, "data/datasets/allocations_for_schemes_related_to_climate_change_adaptation.csv")
+            .defer(d3.csv, "data/datasets/allocations_for_selective_missions_under_napcc.csv")
+            .defer(d3.csv, "data/datasets/compo_agri.csv")
+            .defer(d3.csv, "data/datasets/compo_health.csv")
+            .defer(d3.csv, "data/datasets/compo_rural_schemes.csv")
+            .defer(d3.csv, "data/datasets/compo_social_assistance.csv")
+            .await(populateTableData);
+
+        function populateTableData(error, budget_overview, transfer_of_resources_to_states, total_cess_and_surcharges, total_expenditure_by_select_ministries, education, health, drinking_water_and_sanitation, /* ministry_of_rural_development,*/ agriculture, rural_development, nutrition, climate_change, women, children, dalits, adivasis, religious_minorities, social_security, urban_poverty, /* disability, share_of_expenditure_by_moa, share_of_food_subsidy_allocation, */ compo_mhrd, /*compo_energy, compo_prog_mnre, children,*/ compo_children_sector_budget, compo_outlays_dalits, compo_outlays_adivasis, compo_drinking_water, tax_gdp, compo_misc_capital_recipts, outlays_for_nutrition_schemes, allocations_for_ministry_of_new_renewable_energy, allocations_for_schemes_under_mnre, persons_with_disabilities, allocations_for_schemes_related_to_climate_change_adaptation, allocations_for_selective_missions_under_napcc, compo_agri, compo_health, compo_rural_schemes, compo_social_assistance) {
+            table_data["budget_overview"] = budget_overview;
+            table_data["transfer_of_resources_to_states"] = transfer_of_resources_to_states;
+            table_data["total_cess_and_surcharges"] = total_cess_and_surcharges;
+            table_data["total_expenditure_by_select_ministries"] = total_expenditure_by_select_ministries;
+            table_data["education"] = education;
+            table_data["health"] = health;
+            table_data["drinking_water_and_sanitation"] = drinking_water_and_sanitation;
+            //table_data["ministry_of_rural_development"] = ministry_of_rural_development;
+            table_data["agriculture"] = agriculture;
+            table_data["rural_development"] = rural_development;
+            table_data["nutrition"] = nutrition;
+            table_data["climate_change"] = climate_change;
+            table_data["women"] = women;
+            table_data["children"] = children;
+            table_data["dalits"] = dalits;
+            table_data["adivasis"] = adivasis;
+            table_data["religious_minorities"] = religious_minorities;
+            table_data["social_security"] = social_security;
+            table_data["urban_poverty"] = urban_poverty;
+            /*table_data["disability"] = disability;
+            table_data["share_of_expenditure_by_moa"] = share_of_expenditure_by_moa;
+            table_data["share_of_food_subsidy_allocation"] = share_of_food_subsidy_allocation;*/
+            table_data["compo_mhrd"] = compo_mhrd;
+            /*table_data["compo_energy"] = compo_energy;
+            table_data["compo_prog_mnre"] = compo_prog_mnre;
+            table_data["children"] = children;*/
+            table_data["compo_children_sector_budget"] = compo_children_sector_budget;
+            table_data["compo_outlays_adivasis"] = compo_outlays_adivasis;
+            table_data["compo_outlays_dalits"] = compo_outlays_dalits;
+            table_data["compo_drinking_water"] = compo_drinking_water;
+            table_data["tax_gdp"] = tax_gdp;
+            table_data["compo_misc_capital_recipts"] = compo_misc_capital_recipts;
+            table_data["outlays_for_nutrition_schemes"] = outlays_for_nutrition_schemes;
+            table_data["allocations_for_ministry_of_new_renewable_energy"] = allocations_for_ministry_of_new_renewable_energy;
+            table_data["allocations_for_schemes_under_mnre"] = allocations_for_schemes_under_mnre;
+            table_data["persons_with_disabilities"] = persons_with_disabilities;
+            table_data["allocations_for_schemes_related_to_climate_change_adaptation"] = allocations_for_schemes_related_to_climate_change_adaptation;
+            table_data["allocations_for_selective_missions_under_napcc"] = allocations_for_selective_missions_under_napcc;
+            table_data["compo_agri"] = compo_agri;
+            table_data["compo_health"] = compo_health;
+            table_data["compo_rural_schemes"] = compo_rural_schemes;
+            table_data["compo_social_assistance"] = compo_social_assistance;
+            setup_environment(table_data);
+        }
+    }
+
+    var formatNumber = d3.format(".1f"),
+        formatCrore = function(x) {
+            return formatNumber(x / 1e7) + "Cr";
+        },
+        formatLakh = function(x) {
+            return formatNumber(x / 1e5) + "L";
+        },
+        formatThousand = function(x) {
+            return formatNumber(x / 1e3) + "k";
+        },
+        formatLowerDenom = function(x) {
+            return x.toFixed(2);
+        };
+
+    function formatAbbr(x) {
+        var v = Math.abs(x);
+        return (v >= .9995e7 ? formatCrore : v >= .9995e5 ? formatLakh : v >= .999e3 ? formatThousand : formatLowerDenom)(x);
+    }
+
+    loadDatasets();
+
+    function setup_environment(data) {
+        drawviz(charttype, data[dataset]);
+    }
+
+    function drawviz(charttype, data) {
+        function filter_indicator(data) {
+            for (var i = 0; i < data.length; i++) {
+                if (data[i]["slug_name"] == indicator)
+                    return data[i];
+            }
+        }
+
+        if (analysistype == "trend") {
+            indicator_data = filter_indicator(data);
+            show_trend(indicator_data);
+        } else if (analysistype == "distrib") {
+            show_distrib(data);
+        }
+    }
+
+    function show_distrib(data) {
+        draw_groupbarchart(data);
+    }
+
+    function draw_groupbarchart(data) {
+        function generateStreamData(data) {
+            series = [];
+            for (stream in data) {
+                obj_keys = Object.keys(data[stream]);
+                var stream_inst = {};
+                stream_inst["key"] = data[stream].index_name;
+                stream_inst["values"] = [];
+                stream_inst["unit"] = data[stream].unit;
+                stream_inst["color"] = data[stream].color;
+                for (var j = 0; j < obj_keys.length; j++) {
+                    if (parseInt(obj_keys[j][0]) == 2) {
+                        if (!isNaN(parseFloat(data[stream][obj_keys[j]]))) {
+                            var temp = new Object();
+                            temp.label = obj_keys[j];
+                            temp.value = parseFloat(data[stream][obj_keys[j]]);
+                            stream_inst["values"].push(temp);
+                        }
+                    }
+                }
+                series.push(stream_inst);
+            }
+            return series;
+        }
+
+        nv.addGraph(function() {
+
+            streamData = generateStreamData(data);
+
+            var chart = nv.models.multiBarChart()
+                .x(function(d) {
+                    return d.label
+                })
+                .y(function(d) {
+                    return parseFloat(d.value)
+                })
+                .margin({
+                    top: 90,
+                    right: 20,
+                    bottom: 90,
+                    left: 80
+                })
+                .color(function(d, i) {
+                    return d.color;
+                })
+                .reduceXTicks(false)
+                .showControls(true)
+                .groupSpacing(0.3)
+                .wrapLabels(true)
+                .clipEdge(true)
+                .useInteractiveGuideline(true);
+
+            if (indicator == "nostack") {
+                chart.stacked(false)
+                    .showControls(false);
+            }
+
+            if (indicator == "stack") {
+                chart.stacked(true)
+                    .showControls(false);
+            }
+
+
+            chart.legend.align(false)
+                .width(400)
+                .margin({ top: 0, right: 20, left: 20, bottom: 0 });
+
+            if (screen.width < 480) {
+                chart.height(250)
+                    .rotateLabels(-40);
+            }
+
+            chart.yAxis.ticks(7)
+                .tickFormat(function(d) {
+                    return formatAbbr(d)
+                })
+                .axisLabel(streamData[0].unit)
+                .axisLabelDistance(10)
+                .tickPadding(10);
+
+            chart.xAxis.axisLabelDistance(20)
+                .axisLabel("Years")
+                .tickPadding(10);
+
+            if (screen.width < 1200) {
+                chart.legend.align(true)
+                    .width(400)
+                    .maxKeyLength(17)
+                    .margin({ top: 0, right: 20, left: 20, bottom: 0 });
+
+                chart.xAxis.axisLabelDistance(30)
+                    .tickPadding(5);
+            }
+
+            chart.tooltip.valueFormatter(function(d) {
+                return d3.format(",.f")(d) + " " + streamData[0].unit;
+            });
+
+            d3.select('#viz-area svg')
+                .datum(streamData)
+                .call(chart);
+
+            nv.utils.windowResize(chart.update);
+            return chart;
+        });
+    }
+
+
+    function show_trend(record) {
+
+        trend_options = [{
+                "name": "Bar Chart",
+                "icon": "fa fa-bar-chart",
+                "vis_slug": "barchart"
+            },
+            {
+                "name": "Line Chart",
+                "icon": "fa fa-line-chart",
+                "vis_slug": "linechart"
+            }
+        ];
+
+        var button_grp = d3.select("body").select("div.option-select")
+            .append("div")
+            .attr("class", "btn-group");
+
+        var select_buttons = button_grp
+            .selectAll("button")
+            .data(trend_options)
+            .enter().append("button")
+            .attr("value", function(d) {
+                return d.name;
+            })
+            .attr("class", function(d, i) {
+                if (d.vis_slug == charttype) {
+                    return "active focus";
+                }
+            })
+            .classed("btn visbtn", true)
+            .on("click", function(d, i) {
+                if (d.name == "Bar Chart") {
+                    draw_barchart(record);
+                } else if (d.name == "Line Chart") {
+                    draw_linechart(record);
+                }
+                select_buttons.classed("active", function(d, i) {
+                    return !d3.select(this).classed("active");
+                });
+            });
+
+        select_buttons.append("i")
+            .attr("class", function(d) {
+                return d.icon;
+            })
+            .attr("aria-hidden", "true")
+
+        select_buttons.append("span")
+            .text(function(d) {
+                return d.name
+            })
+
+        if (charttype == "barchart") {
+            draw_barchart(record);
+        } else if (charttype == "linechart") {
+            draw_linechart(record);
+        }
+    }
+
+    function draw_linechart(data) {
+
+        d3.select("#viz-area svg").selectAll("*").remove();
+
+        function find_years(data) {
+            obj_keys = Object.keys(data);
+            var streamData = {};
+            streamData["key"] = data.index_name;
+            streamData["values"] = [];
+            streamData["unit"] = data.unit;
+            streamData["color"] = data.color;
+
+            for (var j = 0; j < obj_keys.length; j++) {
+                if (parseInt(obj_keys[j][0]) == 2) {
+                    if (!isNaN(parseFloat(data[obj_keys[j]]))) {
+                        var temp = new Object();
+                        temp.label = parseInt(obj_keys[j].substring(0, 4));
+                        temp.tickvalue = obj_keys[j];
+
+                        temp.value = data[obj_keys[j]];
+                        streamData["values"].push(temp);
+                    }
+                }
+            }
+            return [streamData];
+        }
+
+        streamData = find_years(data);
+
+        nv.addGraph(function() {
+            var unit = streamData[0].unit;
+            current_key = streamData[0].key;
+
+            var chart = nv.models.lineChart()
+                .margin({
+                    top: 20,
+                    right: 50,
+                    bottom: 100,
+                    left: 90
+                })
+                .xTickFormat(function(d) {
+                    return streamData[0].values[d].tickvalue;
+                })
+                .x(function(d, i) {
+
+                    return i;
+                })
+                .y(function(d) {
+                    return parseFloat(d.value);
+                })
+                .showLegend(false)
+                .showYAxis(true)
+                .showXAxis(true)
+                .padData(true)
+                .padDataOuter(-0.5)
+                .isArea(false)
+                .duration(1000)
+                .pointSize(15)
+                .clipEdge(false)
+                .color([streamData[0].color]);
+
+            chart.yAxis.ticks(8)
+                .tickFormat(function(d) {
+                    return formatAbbr(d)
+                })
+                .axisLabel(streamData[0].unit)
+                .axisLabelDistance(10)
+                .tickPadding(10);
+
+            chart.xAxis.tickPadding(15)
+                .axisLabelDistance(20)
+                .axisLabel("Years");
+
+            chart.tooltip.contentGenerator(function(obj) {
+                var header = obj.series[0].key
+                var headerhtml = "<div class='row'><div class='col-lg-12'><div class='tooltip-point-title'>" + header + "</div></div></div>"
+
+                var bodyhtml = "<div class='row'><div class='col-lg-12 text-center'><div class='tooltip-point-body'><span class='legend-color-guide'><div style='background-color: " + obj.point.color + ";'></div></span><span class='tooltip-x-val'>" + obj.point.tickvalue + "</span><span class='tooltip-y-value'>" + obj.point.value + " " + unit + "</span></div></div>";
+
+                return headerhtml + '' + bodyhtml;
+            });
+
+            d3.select('#viz-area svg')
+                .datum(streamData)
+                .call(chart);
+
+            nv.utils.windowResize(chart.update);
+            return chart;
+        });
+    }
+
+    function draw_barchart(data) {
+
+        d3.select("#viz-area svg").selectAll("*").remove();
+
+        function find_years(data) {
+
+            obj_keys = Object.keys(data);
+            var streamData = {};
+            streamData["key"] = data.index_name;
+            streamData["values"] = [];
+            streamData["unit"] = data.unit;
+            streamData["color"] = data.color;
+
+            for (var j = 0; j < obj_keys.length; j++) {
+                if (parseInt(obj_keys[j][0]) == 2) {
+                    if (!isNaN(parseFloat(data[obj_keys[j]]))) {
+                        var temp = new Object();
+                        temp.label = obj_keys[j];
+                        temp.value = data[obj_keys[j]];
+                        streamData["values"].push(temp);
+                    }
+                }
+            }
+            return [streamData];
+        }
+
+        data = find_years(data);
+        current_key = data[0].key;
+
+        nv.addGraph(function() {
+            var chart = nv.models.discreteBarChart()
+                .margin({
+                    top: 20,
+                    right: 30,
+                    bottom: 100,
+                    left: 90
+                })
+                .x(function(d) {
+                    return d.label
+                })
+                .y(function(d) {
+                    return parseFloat(d.value)
+                })
+                .staggerLabels(false)
+                .showValues(true)
+                .duration(1000)
+                .color([data[0].color])
+                .wrapLabels(true)
+                .valueFormat(d3.format(''));
+
+            var unit = data[0].unit;
+
+            chart.yAxis.ticks(8)
+                .tickFormat(function(d) {
+                    return formatAbbr(d)
+                })
+                .axisLabel(unit)
+                .axisLabelDistance(10)
+                .tickPadding(10);
+
+            chart.xAxis
+                .axisLabel("Years")
+                .tickPadding(10);
+
+            chart.tooltip.headerEnabled(true);
+
+            if (screen.width < 480) {
+                chart.xAxis
+                    .axisLabelDistance(30);
+                chart.rotateLabels(-40);
+            } else {
+                chart.xAxis
+                    .axisLabelDistance(25);
+            }
+
+            chart.tooltip.valueFormatter(function(d) {
+                return d3.format(",.f")(d) + " " + unit;
+            })
+
+            chart.tooltip.contentGenerator(function(obj) {
+                var header = obj.series[0].key
+                var headerhtml = "<div class='row'><div class='col-lg-12'><div class='tooltip-point-title'>" + current_key + "</div></div></div>"
+
+                var bodyhtml = "<div class='row'><div class='col-lg-12 text-center'><div class='tooltip-point-body' ><span class='legend-color-guide'> <div style='background-color: " + obj.color + ";'></div></span><span class='tooltip-x-val'>" + obj.data.label + "</span><span class='tooltip-y-value'>" + obj.data.value + " " + unit + "</span></div></div>";
+                return headerhtml + '' + bodyhtml;
+            });
+
+            d3.select('#viz-area svg')
+                .datum(data)
+                .call(chart);
+
+            nv.utils.windowResize(chart.update);
+            return chart;
+        });
+    }
+
+    d3.select('#saveButton').on('click', function() { downloadImage() });
+    </script>
+    <script type="text/javascript">
+    function filter(node) {
+        try {
+            return (node.getAttribute("class") !== 'nv-controlsWrap');
+        } catch (err) {
+            return true;
+        }
+    }
+
+    function downloadImage() {
+        domtoimage.toBlob(document.getElementById('viz-area'), { filter: filter, quality: 1 })
+            .then(blob => {
+                if (!current_key) {
+                    current_key = "Visualization - OpenBudgetsIndia";
+                }
+                window.saveAs(blob, current_key + '.png');
+            })
+            .catch(function(error) {});
+    }
+    </script>
+</body>
+
+</html>
