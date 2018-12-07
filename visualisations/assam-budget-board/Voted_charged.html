@@ -141,18 +141,6 @@ svg.append("text")      // text label for the x axis
       .on('mouseover', tip.show)
       .on('mouseout', tip.hide)
 
-     svg.selectAll(".bar")
-      .data(data)
-    .enter().append("rect")
-      .attr("class", "bar")
-      .attr("x", function(d) { return x(d.Voted_Charged); })
-      .attr("width", x.rangeBand())
-      .attr("y", function(d) { return y(d.BUDGET_2018_19); })
-      .attr("height", function(d) { return height - y(d.BUDGET_2018_19); })
-  		
-      .on('mouseover', tip.show)
-      .on('mouseout', tip.hide)
-
 });
 
 function type(d) {
