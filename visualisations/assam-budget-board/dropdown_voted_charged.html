@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+<style>
+
+.rectangle {
+	fill: steelblue;
+}
+.rectangle:hover {
+	fill: orange;
+}
+.axis {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+</style>
+</head>
+<body>
+<div id="drop" align=center></div>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+
+var margin = {top: 80, right: 180, bottom: 80, left: 180},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+var svg = d3.select("body").append("svg")
+	.attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+	.append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var charged_actuals  = [];
+    var charged_budget_2017 = [];
+    var charged_revised_2017 = [];
+    var charged_budget_2018 = [];
+
+    var voted_actuals  = [];
+    var voted_budget_2017 = [];
+    var voted_revised_2017 = [];
+    var voted_budget_2018 = [];
+    d3.csv('3---administration-of-justice.csv', function(d){
+            for( var i in d){
+            d[i].Actuals_2016_17 = +d[i].Actuals_2016_17
+            d[i].Budget_Estimates_2017_18 = +d[i].Budget_Estimates_2017_18
+            d[i].Revised_Estimates_2017_18 = +d[i].Revised_Estimates_2017_18
+            d[i].Budget_Estimates_2018_19 = +d[i].Budget_Estimates_2018_19
+                  
+            if (d[i].Voted_Charged == 'Charged'){
+                 charged_actuals.push(d[i].Actuals_2016_17);
+                 charged_budget_2017.push(d[i].Budget_Estimates_2017_18);
+                 charged_revised_2017.push(d[i].Revised_Estimates_2017_18);
+                 charged_budget_2018.push(d[i].Budget_Estimates_2018_19);
+            }
+
+            if(d[i].Voted_Charged == 'Voted'){
+                voted_actuals.push(d[i].Actuals_2016_17);
+                voted_budget_2017.push(d[i].Budget_Estimates_2017_18);
+                voted_revised_2017.push(d[i].Revised_Estimates_2017_18);
+                voted_budget_2018.push(d[i].Budget_Estimates_2018_19);
+                
+            }
+        }
+        var sum_charged_actuals = d3.sum(charged_actuals)
+        var sum_charged_budget_2017 = d3.sum(charged_budget_2017)
+        var sum_charged_revised_2017 = d3.sum(charged_revised_2017)
+        var sum_charged_budget_2018 = d3.sum(charged_budget_2018)
+
+        var sum_voted_actuals = d3.sum(voted_actuals)
+        var sum_voted_budget_2017 = d3.sum(voted_budget_2017)
+        var sum_voted_revised_2017 = d3.sum(voted_revised_2017)
+        var sum_voted_budget_2018 = d3.sum(voted_budget_2018)
+
+
+
+        var obj_voted = {Voted_Charged: "Voted", 
+        "Actuals_2016_17":sum_voted_actuals,
+        "Budget_Estimates_2017_18" :sum_voted_budget_2017,
+        "Revised_Estimates_2017_18":sum_voted_revised_2017,
+        "Budget_Estimates_2018_19" :sum_voted_budget_2018 };
+
+        var obj_charged  = {Voted_Charged:'Charged',
+        "Actuals_2016_17":sum_charged_actuals,
+        "Budget_Estimates_2017_18" : sum_charged_budget_2017,
+        "Revised_Estimates_2017_18":sum_charged_revised_2017,
+        "Budget_Estimates_2018_19" :sum_charged_budget_2018 };
+
+
+        console.log(obj_voted);
+        console.log(obj_charged);
+        var arr = [obj_voted,obj_charged];
+        console.log(arr);
+
+        var keys = Object.keys(arr[0]).slice(1);
+	    var selection = keys[0];
+	var y = d3.scale.linear()
+			.domain([0, d3.max(arr, function(d){
+				return +d[selection];
+			})])
+			.range([height, 0]);
+
+	var x = d3.scale.ordinal()
+			.domain(arr.map(function(d){ return d.Voted_Charged;}))
+			.rangeBands([0, width]);
+ var formatNumber = d3.format(".1f");
+
+	var xAxis = d3.svg.axis()
+		.scale(x)
+	    .orient("bottom");
+
+	var yAxis = d3.svg.axis()
+		.scale(y)
+	    .orient("left"); 
+
+	svg.append("g")
+    	.attr("class", "x axis")
+    	.attr("transform", "translate(0," + height + ")")
+    	.call(xAxis)
+    	.selectAll("text")
+    	.style("font-size", "8px")
+      	.style("text-anchor", "end")
+      	.attr("dx", "-.8em")
+      	.attr("dy", "-.55em")
+      	.attr("transform", "rotate(-90)" );
+
+
+ 	svg.append("g")
+    	.attr("class", "y axis")
+    	.call(yAxis);
+
+	svg.selectAll("rectangle")
+		.data(arr)
+		.enter()
+		.append("rect")
+		.attr("class","rectangle")
+		.attr("width", width/3)
+		.attr("height", function(d){
+			return height - y(+d[selection]);
+		})
+		.attr("x", function(d, i){
+			return (width / 2.5) * i ;
+		})
+		.attr("y", function(d){
+			return y(+d[selection]);
+		})
+		.append("title")
+		.text(function(d){
+			return d.Voted_Charged + " : " + d[selection];
+		});
+
+	var selector = d3.select("#drop")
+    	.append("select")
+    	.attr("id","dropdown")
+    	.on("change", function(d){
+        	selection = document.getElementById("dropdown");
+
+        	y.domain([0, d3.max(arr, function(d){
+				return +d[selection.value];})]);
+
+        	yAxis.scale(y);
+
+        	d3.selectAll(".rectangle")
+           		.transition()
+	            .attr("height", function(d){
+					return height - y(+d[selection.value]);
+				})
+				.attr("x", function(d, i){
+					return (width / arr.length) * i ;
+				})
+				.attr("y", function(d){
+					return y(+d[selection.value]);
+				})
+           		.ease("linear")
+           		.select("title")
+           		.text(function(d){
+           			return d.Voted_Charged + " : " + d[selection.value];
+           		});
+      
+           	d3.selectAll("g.y.axis")
+           		.transition()
+           		.call(yAxis);
+
+         });
+
+    selector.selectAll("option")
+      .data(keys)
+      .enter().append("option")
+      .attr("value", function(d){
+        return d;
+      })
+      .text(function(d){
+        return d;
+      })
+
+
+});
+
+</script>
+</body>
