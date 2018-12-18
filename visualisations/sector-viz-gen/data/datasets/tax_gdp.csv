@@ -1,0 +1,4 @@
+slug_name,index_name,2012-13,2013-14 (A),2014-15 (A),2015-16 (A),2016-17 (BE),2016-17 (RE),2016-17 (A),2017-18 (BE),2017-18 (RE),2018-19 (BE),color,unit,Note
+central_gross_tax-gdp_ratio,Central Gross Tax-GDP Ratio,10.4,10.1,10,10.6,10.8,11.3,11.3,11.3,11.2,11.7,#385052,Percentage (%),The amount of GST compensation cess has been excluded in calculating the tax-GDP ratio
+central_direct_tax-gdp_ratio,Central Direct Tax-GDP Ratio,5.6,5.7,5.6,5.4,5.6,5.6,5.6,5.8,6,6.1,#128085,Percentage (%),
+central_indirect_tax-gdp_ratio,Central Indirect Tax-GDP Ratio,4.8,4.4,4.4,5.2,5.2,5.7,5.7,5.5,5.2,5.6,#F0AD44,Percentage (%),

@@ -98,12 +98,13 @@ body {
 .left-panel-text {
     padding: 20px;
     font-weight: 400;
-    margin-top: 10px;
-    margin-bottom: 20px;
+    /* margin-top: 10px; */
+    /* margin-bottom: 20px; */
 }
 
 .left-panel {
     margin-left: 60px;
+    margin-top: -50px;
 }
 
 .visualization-container {
@@ -137,6 +138,20 @@ h4.total-exp {
     margin-left: 15px;
     white-space: nowrap;
 }
+
+p.notes {
+    text-align: justify;
+    font-size: 10px;
+    color: rgba(0, 0, 0, 0.67);
+    margin-top: 20px;
+}
+
+@media (max-width: 1241px) {
+    .total-exp-val,
+    .total-receipt-val {
+        font-size: 23px;
+    }
+}
 </style>
 
 <body>
@@ -145,7 +160,7 @@ h4.total-exp {
             <h1>Budget Profile</h1>
         </div>
         <div class="row text-center">
-            <div class="col-lg-3 left-panel">
+            <div class="col-md-3 left-panel ">
                 <div class="row">
                     <div class="total-exp text-center">
                         Total Budgetary Expenditure
@@ -158,6 +173,7 @@ h4.total-exp {
                 <div class="row">
                     <div class="left-panel-text">
                         This section presents the comprehensive money flow data of the Union Budget 2018-19. It presents both the sources of revenue of the Union Government and the expenditure commitments it has made on different heads.
+                        <p class="notes">Note: Percentage changes have been calculated with respect to 2017-18 Budget Estimate Figures. The figures for total Union Budget Expenditure, for 2017-18 RE and 2018-19 BE, include Funds collected from GST Compensation Cess, which are transferred to a non-lapsable fund in the Public Account.</p>
                     </div>
                 </div>
                 <div class="row">
@@ -170,7 +186,7 @@ h4.total-exp {
                     </div>
                 </div>
             </div>
-            <div class="col-lg-8">
+            <div class="col-md-8">
                 <div class="visualization-container">
                     <svg></svg>
                 </div>
@@ -178,7 +194,6 @@ h4.total-exp {
         </div>
         <div class="row text-center">
             <p>&nbsp;</p>
-            <p>Note: Percentage changes have been calculated with respect to 2017-18 Budget Estimate Figures.</p>
         </div>
     </div>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -300,7 +315,7 @@ h4.total-exp {
             //Central Net Tax Revenue Children
             "Goods and Services Tax (GST)": {
                 x: width * 11 / 50,
-                y: height * 24 / 50
+                y: height * 24.5 / 50
             },
             "Taxes on Income": {
                 x: width * 6.5 / 50,
@@ -311,7 +326,7 @@ h4.total-exp {
                 y: height * 15 / 50
             },
             "Less - State's share": {
-                x: width * 13.5 / 50,
+                x: width * 14 / 50,
                 y: height * 7.5 / 50
             },
             "Customs": {
@@ -328,7 +343,7 @@ h4.total-exp {
             },
             "Less - NCCD transferred to NCCF/NDRF": {
                 x: width * 8.5 / 50,
-                y: height * 5.25 / 50
+                y: height * 5 / 50
             },
 
             //Total Debt Receipts and Children
@@ -354,7 +369,7 @@ h4.total-exp {
             },
             "Securities issued against Small Savings": {
                 x: width * 9 / 50,
-                y: height * 32 / 50
+                y: height * 31.5 / 50
             },
             "State Provident Fund (Net)": {
                 x: width * 13 / 50,
@@ -541,7 +556,7 @@ h4.total-exp {
             .style("opacity", 0)
 
         node_labels.attr("x", function(d) { return d.x = Math.max(d.r, Math.min(width - d.r, d.x)); })
-            .attr("y", function(d) {
+            .attr("y", function(d){
                 d.y = Math.max(d.r, Math.min(height - d.r, d.y));
                 if (d.label_pos == "top") {
                     return d.y - d.r - 6
