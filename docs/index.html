@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<!-- saved from url=(0050)https://v4-alpha.getbootstrap.com/examples/cover/# -->
+<html lang="en" class="gr__v4-alpha_getbootstrap_com">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="OpenBudgetsIndia">
+    <meta name="description" content="Dataviz Lab is a dedicated repository for creating different visualizations prototypes for the OpenBudgetsIndia(OBI). Aimed at fostering research and development of data visualizations for OBI. This is where the all the fun visualization prototypes are built. The prototypes are developed for the OpenBudgetsIndia initiative. Want to contribute, reuse, learn? Explore">
+    <meta name="keywords" content="Data Visualization ,Open Budgets India, Data Science,OBI , R&D, Prototypes , D3, CSV, Budget Data, Analysis" />
+    <meta name="application-name" content="cbgaindia.github.io/dataviz-lab/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@OpenBudgetsIn">
+    <meta name="twitter:title" content="Dataviz Lab">
+    <meta name="twitter:description" content="Repository for different visualizations prototypes for the OpenBudgetsIndia">
+    <meta name="twitter:url" content="http://cbgaindia.github.io/dataviz-lab/">
+    <meta name="twitter:image:src" content="assets/meta/dataviz-lab.png">
+    <meta property="og:title" content="Home - Dataviz Lab - OpenBudgetsIndia" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://cbgaindia.github.io/dataviz-lab/" />
+    <meta property="og:image" content="assets/meta/dataviz-lab.png">
+    <meta property="og:site_name" content="Dataviz Lab">
+    <meta property="og:description" content="Homepage of Dataviz Labs. Repository for different visualizations prototypes for the OpenBudgetsIndia">
+    <meta property="og:locale" content="en_US" />
+    <meta name="apple-mobile-web-app-title" content="Dataviz Lab">
+    <link rel="shortcut icon" type="image/png" href="https://raw.githubusercontent.com/cbgaindia/design/master/logo_OBI/favicon/draft_final.ico/favicon.ico" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+    <title>Home - Dataviz Lab - OpenBudgetsIndia</title>
+    <!-- Bootstrap core CSS -->
+    <link href="./assets/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="./assets/cover.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro|Ubuntu" rel="stylesheet">
+    <style type="text/css">
+    /* ---- reset ---- */
+
+    body {
+        margin: 0;
+        font-family: Open Sans, sans-serif;
+    }
+
+    canvas {
+        display: block;
+        vertical-align: bottom;
+    }
+    /* ---- particles.js container ---- */
+
+    #particles-js {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+        background-size: cover;
+        background-position: 50% 50%;
+    }
+    /* ---- stats.js ---- 
+
+    .count-particles {
+        background: #000022;
+        position: absolute;
+        top: 48px;
+        left: 0;
+        width: 80px;
+        color: #13E8E9;
+        font-size: .8em;
+        text-align: left;
+        text-indent: 4px;
+        line-height: 14px;
+        padding-bottom: 2px;
+        font-family: Helvetica, Arial, sans-serif;
+        font-weight: bold;
+    }
+
+    .js-count-particles {
+        font-size: 1.1em;
+    }
+
+    #stats,
+    .count-particles {
+        -webkit-user-select: none;
+    }
+
+    #stats {
+        border-radius: 3px 3px 0 0;
+        overflow: hidden;
+    }
+
+    .count-particles {
+        border-radius: 0 0 3px 3px;
+    }
+    */
+    canvas.particles-js-canvas-el {
+        width: 100%;
+        position: absolute;
+        height: 100%;
+        top: 0px;
+        background-color: #333;
+        background: background-color: #33;
+        z-index: -20;
+    }
+
+    .brand-icon {
+        width: 21px;
+        margin-top: -5px;
+        margin-right: 10px;
+    }
+
+    .masthead-brand {
+        font-weight: 100;
+    }
+
+    h1.cover-heading {
+        font-weight: 700;
+    }
+
+    .social-networks i {
+        font-size: 33px;
+        padding: 7px 10px;
+    }
+
+    .mastfoot .inner {
+        font-size: 12px;
+    }
+    </style>
+</head>
+
+<body data-gr-c-s-loaded="true" id="particles-js">
+    <div class="site-wrapper">
+        <div class="site-wrapper-inner">
+            <div class="cover-container">
+                <div class="masthead clearfix">
+                    <div class="inner">
+                        <h3 class="masthead-brand"></h3>
+                        <nav class="nav nav-masthead">
+                            <a class="nav-link active" href="#">Home</a>
+                            <a class="nav-link" href="prototypes.html">Prototypes</a>
+                            <a class="nav-link" target="_blank" href="https://github.com/cbgaindia/dataviz-lab/wiki/How-to-Contribute">
+                                How to Contribute?
+                            </a>
+                            <a class="nav-link" target="_blank" href="https://openbudgetsindia.org/about">About</a>
+                        </nav>
+                    </div>
+                </div>
+                <div class="inner cover">
+                    <h1 class="cover-heading"><img class="brand-icon" src="assets/icon.png">DataViz Lab</h1>
+                    <p class="lead">This is where the all the fun visualization protoype are build.
+                        <br> The prototypes are developed for the <a href="https://openbudgetsindia.org/">OpenBudgetsIndia</a> initiative.
+                        <br>Want to contribute, resuse, learn? .</p>
+                    <p class="lead">
+                        <a href="prototypes.html" class="btn btn-lg btn-secondary">Explore!</a>
+                    </p>
+                </div>
+                <div class="mastfoot">
+                    <a href="https://openbudgetsindia.org/">
+                        <img src="https://openbudgetsindia.org/Logo_OBI4-31.png" />
+                    </a>
+                    <div class="social-networks">
+                        <a href="https://twitter.com/OpenBudgetsIn" target="_blank" class="twitter"><i class="fa fa-twitter"></i></a>
+                        <a href="https://www.facebook.com/OpenBudgetsIndia" target="_blank" class="facebook"><i class="fa fa-facebook"></i></a>
+                        <a href="https://github.com/cbgaindia" target="_blank" class="google"><i class="fa fa-github"></i></a>
+                    </div>
+                    <div class="inner">
+                        <p>Template by - <a href="https://twitter.com/mdo">@mdo</a>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./assets/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+    window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')
+    </script>
+    <script src="./assets/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="./assets/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="./assets/ie10-viewport-bug-workaround.js"></script>
+    <script type="text/javascript">
+    particlesJS.load('particles-js', 'assets/particles-config.json', function() {
+        console.log('callback - particles.js config loaded');
+    });
+    </script>
+</body>
+
+</html>

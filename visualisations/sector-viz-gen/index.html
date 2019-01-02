@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title></title>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -343,8 +342,6 @@
 
     var current_key;
 
-
-
     function loadDatasets() {
         var table_data = {};
         queue()
@@ -565,6 +562,7 @@
                 .tickPadding(10);
 
             chart.xAxis.axisLabelDistance(20)
+
                 .axisLabel("Years")
                 .tickPadding(10);
 
@@ -734,6 +732,14 @@
                 return headerhtml + '' + bodyhtml;
             });
 
+            chart.tooltip.valueFormatter(function(d) {
+                    return d3.format(",.f")(d) + " " + unit;
+                })
+                .headerFormatter(function(d, i) {
+                    return "";
+                })
+
+
             d3.select('#viz-area svg')
                 .datum(streamData)
                 .call(chart);
@@ -862,5 +868,4 @@
     }
     </script>
 </body>
-
 </html>

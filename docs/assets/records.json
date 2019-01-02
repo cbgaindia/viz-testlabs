@@ -1,0 +1,203 @@
+[
+    {
+        "title": "Static Force Directed Graph",
+        "suitable_for": "Flow, Magnitude Comparisions",
+        "prod_link" : "https://union2018.openbudgetsindia.org/en/",
+        "img_src": "assets/vis-img/network.gif",
+        "link": "../visualisations/force-layout/index.html",
+        "description": "A culmination of different types of visualizations. Aimed at showing an abstract view of how money flows across different heads of accounts. At the core of the visualization is the static force layout graph. Circles as elements added to aid the flow effect. The aim of the visualization to help general audience gain interest in how budgets work.",
+        "inspiration": [
+        {
+            "name": "Mike Bostock",
+            "link": "http://bl.ocks.org/mbostock/1667139/4837e76e497bbc54ee0a7fc99ded9cfad4fd1f23"
+        }],
+    	"status": "Production",
+        "version" : [{
+            "name" : "Budget Profile",
+            "link" : "https://union2018.openbudgetsindia.org/en/"
+        },
+        {
+            "name" : "Budget Profile - Small",
+            "link" : "../visualisations/force-layout-plain/index.html"
+        }],
+        "developers" : [
+            {
+                "name":"Akshay Verma",
+                "link" : "http://akshay2905.github.io/"
+            }]
+
+    },
+    {
+        "title": "Animated Bubble Chart",
+        "suitable_for": "Clustering, Ranking, Magnitude Comparisions",
+        "prod_link" : "https://union2018.openbudgetsindia.org/en/schemes/",
+        "img_src": "assets/vis-img/bubble.png",
+        "link": "../visualisations/union-budget-scheme/index.html",
+        "description": "Bubble Chart with clustering using different parameter. The visualization provides interactivity to view bubbles in different clusters.",
+        "inspiration": [
+        {
+            "name": "Jim Vallandingham",
+            "link": "http://vallandingham.me/bubble_charts_in_d3.html"
+        }, 
+        {
+            "name": "Shan Carter",
+            "link": "http://www.nytimes.com/interactive/2012/02/13/us/politics/2013-budget-proposal-graphic.html"
+        }],
+        "status": "Production",
+        "version" : [{
+            "name" : "Expenditure Budget of Ministries and Departments",
+            "link" : "https://union2018.openbudgetsindia.org/en/expenditure-budget/expenditure-ministries-2018-19/"
+        },
+        {
+            "name" : "Major Schemes",
+            "link" : "https://union2018.openbudgetsindia.org/en/schemes/"
+        }],
+        "developers" : [
+            {
+                "name":"Akshay Verma",
+                "link" : "http://akshay2905.github.io/"
+            }]
+    },
+    {
+        "title": "3 Column Balance",
+        "suitable_for": "Balance Comparisions",
+        "prod_link" : "https://union2018.openbudgetsindia.org/en/",
+        "img_src": "assets/vis-img/summary.png",
+        "link": "../visualisations/summary/index.html",
+        "description": "3 Column layout to display information. This layout symbolises the balance aspect. This is not a visualisation but a layout to present sub-visualisations.",
+        "inspiration": [],
+        "status": "Production",
+        "version" : [{
+            "name" : "Budget Summary",
+            "link" : "https://union2018.openbudgetsindia.org/en/"
+        }],
+        "developers" : [
+            {
+                "name":"Akshay Verma",
+                "link" : "http://akshay2905.github.io/"
+            }]
+    },
+    {
+        "title": "Group Bar Chart",
+        "suitable_for": "Trends, Magnitude comparisions.",
+        "prod_link" : "https://openbudgetsindia.org/dataset/bruhat-bengaluru-mahanagara-palike-budget-summary-statement",
+        "img_src": "assets/vis-img/municipal.png",
+        "link": "../visualisations/group-bar-chart/index.html",
+        "description": "Group Bar Chart with Sidebar. The visualizations offers feature to select and deselect series. Tooltip is also provided to provide extra information. ",
+        "inspiration": [],
+        "status": "Production",
+        "version" : [{
+            "name" : "Municipal Dataset Visualisations",
+            "link" : "https://openbudgetsindia.org/dataset/bruhat-bengaluru-mahanagara-palike-budget-summary-statement"
+        },
+        {
+            "name" : "Union Budget DGs",
+            "link" : "../visualisations/union-expenditure-dg/index.html"
+        }],
+        "developers" : [
+            {
+                "name":"Akshay Verma",
+                "link" : "http://akshay2905.github.io/"
+            }]
+    },
+    {
+        "title": "Hierarchial Bar Chart",
+        "suitable_for": "Hierarchial Visualization, Ranking, Proportions, Distribution, Flow, Magnitude comparisions.",
+        "prod_link" : "",
+        "img_src": "assets/vis-img/hierarchial.png",
+        "link": "../visualisations/hierarchial-barchart/index.html",
+        "description": "Hierarchial Bar Chart to showcase hiearchies. The hierarchial can be navigaated by clicking on the bars, empty space area or sidebar records. ",
+        "inspiration": [
+        {
+            "name": "Mike Bostock",
+            "link": "https://bl.ocks.org/mbostock/1283663"
+        }],
+        "status": "Dormant. Potential Candidate. ",
+        "version" : [{
+            "name" : "Prototype",
+            "link" : "../visualisations/hierarchial-barchart/index.html"
+        }],
+        "developers" : [
+            {
+                "name":"Akshay Verma",
+                "link" : "http://akshay2905.github.io/"
+            }]
+    },
+    {
+        "title": "Bar Chart with Negative Values",
+        "suitable_for": "Magnitude Comparisions, Ranking, Deviations, Distribution. ",
+        "prod_link" : "",
+        "img_src": "assets/vis-img/bar-negative.png",
+        "link": "../visualisations/horizontal_bar-with_negative/index.html",
+        "description": "Sorted Horizontal Bar Chart with Negative Values. Ideal for showing trends across records with the accuracy in estimation of bar charts. Ideal for viewing spectrum of values.",
+        "inspiration": [
+        {
+            "name": "Mike Bostock",
+            "link": "https://bl.ocks.org/mbostock/2368837"
+        }],
+        "status": "Active Development",
+        "version" : [{
+            "name" : "Prototype",
+            "link" : "../visualisations/horizontal_bar-with_negative/index.html"
+        }],
+        "developers" : [
+            {
+                "name":"Akshay Verma",
+                "link" : "http://akshay2905.github.io/"
+            }]
+    },
+    {
+        "title": "Sunburst",
+        "suitable_for": "Hierarchies, Proportions, Magnitude, Flow",
+        "prod_link" : "",
+        "img_src": "assets/vis-img/sunburst.png",
+        "link": "../visualisations/sunburst/index.html",
+        "description": "Simple Sunburst to visualize hierarchies. While it can be quite fancy to view, but visualizations is a little unconventional for non-tech audience like traditional budget researchers.  ",
+        "inspiration": [
+        {
+            "name": "Kerry Rodden",
+            "link": "https://bl.ocks.org/kerryrodden/7090426"
+        }],
+        "status": "Deprecated",
+        "version" : [{
+            "name" : "Hierarchial Datasets",
+            "link" : "../visualisations/sunburst/index.html"
+        }],
+        "developers" : [
+            {
+                "name":"Akshay Verma",
+                "link" : "http://akshay2905.github.io/"
+            }]
+    },
+    {
+        "title": "Mutliseries Line Chart",
+        "suitable_for": "Trends, Magnitude Comparisions",
+        "prod_link" : "",
+        "img_src": "assets/vis-img/multiseries.png",
+        "link": "../visualisations/multiseries-select(RBI)/index.html",
+        "description": "Mutliseries Line Chart with option to select and deselect series. The visualisations also offers a sub scale to select an interval.",
+        "inspiration": [],
+        "status": "Production",
+        "version" : [{
+            "name" : "Union Budget at a Glance",
+            "link" : "https://openbudgetsindia.org/dataset/union-budget-at-a-glance-timeseries"
+        },
+        {
+            "name" : "RBI Datasets",
+            "link" : "https://openbudgetsindia.org/dataset/primary-deficit"
+        },
+        {
+            "name" : "IPFS Datasets",
+            "link" : "https://openbudgetsindia.org/dataset/revenue-surplus-deficit-of-the-centre-and-the-states"
+        },
+        {
+            "name" : "First dataviz-lab protoype",
+            "link" : "../visualisations/mutliseries-select/index.html"
+        }],
+        "developers" : [
+            {
+                "name":"Akshay Verma",
+                "link" : "http://akshay2905.github.io/"
+            }]
+    }
+]
