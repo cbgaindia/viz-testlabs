@@ -12,3 +12,6 @@ python -m SimpleHTTPServer 8000
 ```
 ## Contributing
 Interested in building prototypes which can be beneficial for the OBI platform? Checkout how you can contribute - [How to Contribute](https://github.com/cbgaindia/dataviz-lab/wiki/How-to-Contribute) 
+
+## License
+All work is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License, see the LICENSE file for details. 
