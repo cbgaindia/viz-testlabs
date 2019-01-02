@@ -23,7 +23,7 @@
         "developers" : [
             {
                 "name":"Akshay Verma",
-                "link" : "http://akshay2905.github.io/"
+                "link" : "http://imakshayverma.github.io/"
             }]
 
     },
@@ -55,7 +55,7 @@
         "developers" : [
             {
                 "name":"Akshay Verma",
-                "link" : "http://akshay2905.github.io/"
+                "link" : "http://imakshayverma.github.io/"
             }]
     },
     {
@@ -74,7 +74,7 @@
         "developers" : [
             {
                 "name":"Akshay Verma",
-                "link" : "http://akshay2905.github.io/"
+                "link" : "http://imakshayverma.github.io/"
             }]
     },
     {
@@ -97,7 +97,7 @@
         "developers" : [
             {
                 "name":"Akshay Verma",
-                "link" : "http://akshay2905.github.io/"
+                "link" : "http://imakshayverma.github.io/"
             }]
     },
     {
@@ -120,7 +120,7 @@
         "developers" : [
             {
                 "name":"Akshay Verma",
-                "link" : "http://akshay2905.github.io/"
+                "link" : "http://imakshayverma.github.io/"
             }]
     },
     {
@@ -143,7 +143,7 @@
         "developers" : [
             {
                 "name":"Akshay Verma",
-                "link" : "http://akshay2905.github.io/"
+                "link" : "http://imakshayverma.github.io/"
             }]
     },
     {
@@ -166,7 +166,7 @@
         "developers" : [
             {
                 "name":"Akshay Verma",
-                "link" : "http://akshay2905.github.io/"
+                "link" : "http://imakshayverma.github.io/"
             }]
     },
     {
@@ -197,7 +197,26 @@
         "developers" : [
             {
                 "name":"Akshay Verma",
-                "link" : "http://akshay2905.github.io/"
+                "link" : "http://imakshayverma.github.io/"
+            }]
+    },
+    {
+        "title": "Small Multiples",
+        "suitable_for": "Overview Trends, Magnitude Comparisions",
+        "prod_link" : "",
+        "img_src": "assets/vis-img/small_multiple.png",
+        "link": "../visualisations/small_multiples/index.html",
+        "description": "Small Multiples help us to get an overview of a dataset/section like grants/departmental expenditure. ",
+        "inspiration": [],
+        "status": "Development",
+        "version" : [{
+            "name" : "Prototype",
+            "link" : "../visualisations/small_multiples/index.html"
+        }],
+        "developers" : [
+            {
+                "name":"Akshay Verma",
+                "link" : "http://imakshayverma.github.io/"
             }]
     }
 ]
