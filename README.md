@@ -9,11 +9,6 @@ git clone https://github.com/cbgaindia/dataviz-lab.git
 - ##### Start a HTTPServer.
 ```
 python -m SimpleHTTPServer 8000 
-```
-Python is prefered becuase you don't have to install and configure anything. Apache, LAMP, Node would also work fine.
-Change the port number if another server is already using it. 
-
-- #### Fire up the browser to http://localhost:8000/
 
 ## Contributing
-Interested in building prototypes for OBI? Casual hacking?
+Interested in building prototypes which can be beneficial for the OBI platform? Checkout how you can contribute - [How to Contribute](https://github.com/cbgaindia/dataviz-lab/wiki/How-to-Contribute) 
