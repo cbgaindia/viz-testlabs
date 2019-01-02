@@ -254,11 +254,6 @@
         stroke-width: 1px;
     }
 
-    .nv-lineChart .nv-axis.nv-x path.domain {
-        stroke-opacity: 1!important;
-        stroke-width: 2px;
-    }
-
     .nvd3 g.nv-groups path.nv-line {
         stroke-width: 3px;
     }
@@ -548,6 +543,7 @@
                     .showControls(false);
             }
 
+
             chart.legend.align(false)
                 .width(400)
                 .margin({ top: 0, right: 20, left: 20, bottom: 0 });
@@ -566,6 +562,7 @@
                 .tickPadding(10);
 
             chart.xAxis.axisLabelDistance(20)
+
                 .axisLabel("Years")
                 .tickPadding(10);
 
@@ -579,10 +576,6 @@
                     .tickPadding(5);
             }
 
-            chart.xAxis.axisLabelDistance(18)
-                .axisLabel("Years")
-                .tickPadding(10);
-
             chart.tooltip.valueFormatter(function(d) {
                 return d3.format(",.f")(d) + " " + streamData[0].unit;
             });
@@ -592,15 +585,6 @@
                 .call(chart);
 
             nv.utils.windowResize(chart.update);
-
-            var xticks = d3.select("g.nv-x g g").selectAll("g");
-
-            var g = xticks.filter(function(d, i) {
-                if (this == xticks[0][xticks[0].length - 1]) {
-                    return this;
-                }
-            }).select("text").style("font-weight", "700").style("font-size", "14px");
-
             return chart;
         });
     }
@@ -710,6 +694,7 @@
                     return streamData[0].values[d].tickvalue;
                 })
                 .x(function(d, i) {
+
                     return i;
                 })
                 .y(function(d) {
@@ -746,12 +731,14 @@
 
                 return headerhtml + '' + bodyhtml;
             });
+
             chart.tooltip.valueFormatter(function(d) {
                     return d3.format(",.f")(d) + " " + unit;
                 })
                 .headerFormatter(function(d, i) {
                     return "";
                 })
+
 
             d3.select('#viz-area svg')
                 .datum(streamData)
@@ -852,14 +839,6 @@
             d3.select('#viz-area svg')
                 .datum(data)
                 .call(chart);
-
-            var xticks = d3.select("g.nv-x g g").selectAll("g");
-
-            var g = xticks.filter(function(d, i) {
-                if (this == xticks[0][xticks[0].length - 1]) {
-                    return this;
-                }
-            }).select("text").style("font-weight", "700").style("font-size", "14px")
 
             nv.utils.windowResize(chart.update);
             return chart;
