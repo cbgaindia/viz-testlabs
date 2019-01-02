@@ -4,7 +4,7 @@
         "suitable_for": "Flow, Magnitude Comparisions",
         "prod_link" : "https://union2018.openbudgetsindia.org/en/",
         "img_src": "assets/vis-img/network.gif",
-        "link": "../visualisations/force-layout/index.html",
+        "link": "./visualisations/force-layout/index.html",
         "description": "A culmination of different types of visualizations. Aimed at showing an abstract view of how money flows across different heads of accounts. At the core of the visualization is the static force layout graph. Circles as elements added to aid the flow effect. The aim of the visualization to help general audience gain interest in how budgets work.",
         "inspiration": [
         {
@@ -18,7 +18,7 @@
         },
         {
             "name" : "Budget Profile - Small",
-            "link" : "../visualisations/force-layout-plain/index.html"
+            "link" : "./visualisations/force-layout-plain/index.html"
         }],
         "developers" : [
             {
@@ -32,7 +32,7 @@
         "suitable_for": "Clustering, Ranking, Magnitude Comparisions",
         "prod_link" : "https://union2018.openbudgetsindia.org/en/schemes/",
         "img_src": "assets/vis-img/bubble.png",
-        "link": "../visualisations/union-budget-scheme/index.html",
+        "link": "./visualisations/union-budget-scheme/index.html",
         "description": "Bubble Chart with clustering using different parameter. The visualization provides interactivity to view bubbles in different clusters.",
         "inspiration": [
         {
@@ -63,7 +63,7 @@
         "suitable_for": "Balance Comparisions",
         "prod_link" : "https://union2018.openbudgetsindia.org/en/",
         "img_src": "assets/vis-img/summary.png",
-        "link": "../visualisations/summary/index.html",
+        "link": "./visualisations/summary/index.html",
         "description": "3 Column layout to display information. This layout symbolises the balance aspect. This is not a visualisation but a layout to present sub-visualisations.",
         "inspiration": [],
         "status": "Production",
@@ -82,7 +82,7 @@
         "suitable_for": "Trends, Magnitude comparisions.",
         "prod_link" : "https://openbudgetsindia.org/dataset/bruhat-bengaluru-mahanagara-palike-budget-summary-statement",
         "img_src": "assets/vis-img/municipal.png",
-        "link": "../visualisations/group-bar-chart/index.html",
+        "link": "./visualisations/group-bar-chart/index.html",
         "description": "Group Bar Chart with Sidebar. The visualizations offers feature to select and deselect series. Tooltip is also provided to provide extra information. ",
         "inspiration": [],
         "status": "Production",
@@ -92,7 +92,7 @@
         },
         {
             "name" : "Union Budget DGs",
-            "link" : "../visualisations/union-expenditure-dg/index.html"
+            "link" : "./visualisations/union-expenditure-dg/index.html"
         }],
         "developers" : [
             {
@@ -105,7 +105,7 @@
         "suitable_for": "Hierarchial Visualization, Ranking, Proportions, Distribution, Flow, Magnitude comparisions.",
         "prod_link" : "",
         "img_src": "assets/vis-img/hierarchial.png",
-        "link": "../visualisations/hierarchial-barchart/index.html",
+        "link": "./visualisations/hierarchial-barchart/index.html",
         "description": "Hierarchial Bar Chart to showcase hiearchies. The hierarchial can be navigaated by clicking on the bars, empty space area or sidebar records. ",
         "inspiration": [
         {
@@ -115,7 +115,7 @@
         "status": "Dormant. Potential Candidate. ",
         "version" : [{
             "name" : "Prototype",
-            "link" : "../visualisations/hierarchial-barchart/index.html"
+            "link" : "./visualisations/hierarchial-barchart/index.html"
         }],
         "developers" : [
             {
@@ -128,7 +128,7 @@
         "suitable_for": "Magnitude Comparisions, Ranking, Deviations, Distribution. ",
         "prod_link" : "",
         "img_src": "assets/vis-img/bar-negative.png",
-        "link": "../visualisations/horizontal_bar-with_negative/index.html",
+        "link": "./visualisations/horizontal_bar-with_negative/index.html",
         "description": "Sorted Horizontal Bar Chart with Negative Values. Ideal for showing trends across records with the accuracy in estimation of bar charts. Ideal for viewing spectrum of values.",
         "inspiration": [
         {
@@ -138,7 +138,7 @@
         "status": "Active Development",
         "version" : [{
             "name" : "Prototype",
-            "link" : "../visualisations/horizontal_bar-with_negative/index.html"
+            "link" : "./visualisations/horizontal_bar-with_negative/index.html"
         }],
         "developers" : [
             {
@@ -151,7 +151,7 @@
         "suitable_for": "Hierarchies, Proportions, Magnitude, Flow",
         "prod_link" : "",
         "img_src": "assets/vis-img/sunburst.png",
-        "link": "../visualisations/sunburst/index.html",
+        "link": "./visualisations/sunburst/index.html",
         "description": "Simple Sunburst to visualize hierarchies. While it can be quite fancy to view, but visualizations is a little unconventional for non-tech audience like traditional budget researchers.  ",
         "inspiration": [
         {
@@ -161,7 +161,7 @@
         "status": "Deprecated",
         "version" : [{
             "name" : "Hierarchial Datasets",
-            "link" : "../visualisations/sunburst/index.html"
+            "link" : "./visualisations/sunburst/index.html"
         }],
         "developers" : [
             {
@@ -174,7 +174,7 @@
         "suitable_for": "Trends, Magnitude Comparisions",
         "prod_link" : "",
         "img_src": "assets/vis-img/multiseries.png",
-        "link": "../visualisations/multiseries-select(RBI)/index.html",
+        "link": "./visualisations/multiseries-select(RBI)/index.html",
         "description": "Mutliseries Line Chart with option to select and deselect series. The visualisations also offers a sub scale to select an interval.",
         "inspiration": [],
         "status": "Production",
@@ -192,7 +192,7 @@
         },
         {
             "name" : "First dataviz-lab protoype",
-            "link" : "../visualisations/mutliseries-select/index.html"
+            "link" : "./visualisations/mutliseries-select/index.html"
         }],
         "developers" : [
             {
@@ -205,13 +205,13 @@
         "suitable_for": "Overview Trends, Magnitude Comparisions",
         "prod_link" : "",
         "img_src": "assets/vis-img/small_multiple.png",
-        "link": "../visualisations/small_multiples/index.html",
+        "link": "./visualisations/small_multiples/index.html",
         "description": "Small Multiples help us to get an overview of a dataset/section like grants/departmental expenditure. ",
         "inspiration": [],
         "status": "Development",
         "version" : [{
             "name" : "Prototype",
-            "link" : "../visualisations/small_multiples/index.html"
+            "link" : "./visualisations/small_multiples/index.html"
         }],
         "developers" : [
             {
