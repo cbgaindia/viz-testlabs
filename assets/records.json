@@ -20,10 +20,11 @@
             "name" : "Budget Profile - Small",
             "link" : "./visualisations/force-layout-plain/index.html"
         },
-	{
+      	{
             "name" : "Budget Profile - Assam",
             "link" : "./visualisations/assam-budget-board/budget%20profile/budget_profile.html"
-        }],
+        },],
+
         "developers" : [
             {
                 "name":"Akshay Verma",
