@@ -22,8 +22,8 @@
         },
 	{
             "name" : "Budget Profile - Assam",
-            "link" : "https://github.com/cbgaindia/dataviz-lab/blob/develop-assam-budget-board/visualisations/assam-budget-board/budget%20profile/budget_profile.html"
-        },],
+            "link" : "./visualisations/assam-budget-board/budget%20profile/budget_profile.html"
+        }],
         "developers" : [
             {
                 "name":"Akshay Verma",
