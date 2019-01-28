@@ -19,12 +19,20 @@
         {
             "name" : "Budget Profile - Small",
             "link" : "./visualisations/force-layout-plain/index.html"
-        }],
+        },
+	{
+            "name" : "Budget Profile - Assam",
+            "link" : "https://github.com/cbgaindia/dataviz-lab/blob/develop-assam-budget-board/visualisations/assam-budget-board/budget%20profile/budget_profile.html"
+        },],
         "developers" : [
             {
                 "name":"Akshay Verma",
                 "link" : "http://imakshayverma.github.io/"
-            }]
+            },
+	    {
+		"name":"Shreya Agrawal",
+                "link" : "https://shreyaagrawal0809.github.io/"
+	    }]
 
     },
     {
