@@ -1,0 +1,13 @@
+no.,Type,Category,Particular,color_group,label_display,label_pos,Notes,Actuals 2016-2017,Budget Estimates 2017-2018,Revised Estimates 2017-2018,Budget Estimates 2018-2019
+0,Receipts,...,Total Receipts,1,1,bottom,...,53140,84732,70401,90673
+1,Receipts,Revenue Receipts,Total Revenue Receipts,1,1,bottom,...,49220,70719,55905,74119
+2,Receipts,Revenue Receipts,State's Own Tax,1,1,,...,12080,16434,12043,17451
+3,Receipts,Revenue Receipts,State's Own Non-Tax,1,1,,,4353,7464,6409,8192
+4,Receipts,Revenue Receipts,Share in Central Taxes,1,1,top,,20189,25651,20025,26096
+5,Receipts,Revenue Receipts,Grants-in-aid from Centre,1,1,,,12598,21170,17428,22380
+6,Receipts,Capital Receipts,Total Capital Receipts,2,1,bottom,,3920,14013,14496,16555
+7,Receipts,Capital Receipts,Borrowings,2,1,,,3902,11265,12354,14008
+8,Receipts,Capital Receipts,Other receipts,2,1,,,19,2747,2142,2547
+9,Expenditure,,Total Expenditure,5,1,bottom,,57407,85923,99453,90270
+10,Expenditure,Total Budgetary Expenditure,Revenue Expenditure,5,1,top,,49363,68319,79257,71329
+11,Expenditure,Total Budgetary Expenditure,Capital Expenditure,5,1,,,49363,68319,79257,71329
