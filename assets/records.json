@@ -85,6 +85,9 @@
         "version" : [{
             "name" : "Budget Summary",
             "link" : "https://union2018.openbudgetsindia.org/en/"
+        },
+        {   "name" : "Budget Summary(2019-2020)",
+            "link" : "./visualisations/nion-budget-explorer(2019)/3-balance-column/index.html"
         }],
         "developers" : [
             {
