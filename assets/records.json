@@ -79,16 +79,12 @@
         "inspiration": [],
         "status": "Production",
         "version" : [{
-            "name" : "Expenditure Budget of Ministries and Departments",
-            "link" : "https://union2018.openbudgetsindia.org/en/expenditure-budget/expenditure-ministries-2018-19/"
+            "name" : "Budget Summary",
+            "link" : "https://union2018.openbudgetsindia.org/en/"
         },
-        {
-            "name" : "Major Schemes",
-            "link" : "https://union2018.openbudgetsindia.org/en/schemes/"
-        },
-	{   "name" : "Major Schemes(2019-20)",
-        "link" : "./visualisations/union-budget-explorer(2019)/Schemes/index.html"
-	}],
+    {   "name" : "Budget Summary(2018-19)",
+        "link" : "./visualisations/union-budget-explorer(2019)/3-balance-column/index.html"
+    }],
         "developers" : [
             {
                 "name":"Akshay Verma",
