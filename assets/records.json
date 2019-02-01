@@ -20,7 +20,7 @@
             "name" : "Budget Profile - Small",
             "link" : "./visualisations/force-layout-plain/index.html"
         },
-	{
+      	{
             "name" : "Budget Profile - Assam",
             "link" : "./visualisations/assam-budget-board/budget%20profile/index.html"
         }],
@@ -31,7 +31,7 @@
             },
 	    {
 		"name":"Shreya Agrawal",
-                "link" : "https://shreyaagrawal0809.github.io/"
+        "link" : "https://shreyaagrawal0809.github.io/"
 	    }]
 
     },
