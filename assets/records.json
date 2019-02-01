@@ -83,7 +83,7 @@
             "link" : "https://union2018.openbudgetsindia.org/en/"
         },
     {   "name" : "Budget Summary(2018-19)",
-            "link" : "./visualisations/union-budget-explorer(2019)/3 balance column/index.html"
+        "link" : "./visualisations/union-budget-explorer(2019)/3-balance-column/index.html"
     }],
         "developers" : [
             {
