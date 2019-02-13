@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <meta charset="utf-8">
 <title>Force-Directed Graph</title>
@@ -47,6 +46,12 @@ body {
     font-size: 16px;
     font-weight: 600;
 }
+
+.tooltip-notes {
+    font-size: 14px;
+    font-weight: 200;
+}
+
 
 .tooltip .name {
     font-weight: bold;
@@ -173,8 +178,8 @@ p.notes {
                 </div>
                 <div class="row">
                     <div class="left-panel-text">
-                        This section presents the comprehensive money flow data of the Assam Budget 2018-19. It presents both the sources of revenue of the Assa Government and the expenditure commitments it has made on different heads.
-                        <p class="notes">Note: Percentage changes have been calculated with respect to 2017-18 Budget Estimate Figures. The figures for total Assam Budget Expenditure, for 2017-18 RE and 2018-19 BE, include Funds collected from GST Compensation Cess, which are transferred to a non-lapsable fund in the Public Account.</p>
+                        This section presents the comprehensive money flow data of the Union Budget 2019-20 (Interim). It presents both the sources of revenue of the Union Government and the expenditure commitments it has made on different heads.
+                        <p class="notes">Note: Percentage changes have been calculated with respect to 2018-19 Budget Estimate Figures. The figures for total Union Budget Expenditure, for budget estimates of 2018-19 and 2019-20(I), include Funds collected from GST Compensation Cess, which are transferred to a non-lapsable fund in the Public Account.</p>
                     </div>
                 </div>
                 <div class="row">
@@ -209,7 +214,7 @@ p.notes {
         root;
 
     var force = d3.layout.force()
-        .size([width, height])
+        .size([width, 500])
         .on("end", function() {
             rendercircle();
         });
@@ -217,8 +222,10 @@ p.notes {
     var tooltip = CustomTooltip("obi_tooltip", 260)
 
     var svg = d3.select(".visualization-container").select("svg")
-        .attr("width", width)
-        .attr("height", height);
+        .attr("width", '100%')
+        .attr("height", height)
+       
+        
 
     var link = svg.selectAll(".link"),
         node = svg.selectAll(".node"),
@@ -227,8 +234,8 @@ p.notes {
 
 
     var app_config = {
-        selected_year: "Budget Estimates 2018-2019",
-        previous_year: "Budget Estimates 2017-2018"
+        selected_year: "Budget Estimates 2019-2020",
+        previous_year: "Budget Estimates 2018-2019"
     };
     queue()
         .defer(d3.csv, 'data.csv')
@@ -243,7 +250,7 @@ p.notes {
 
         var fixed_notes = {
             "Total Expenditure": {
-                x: width * 24 / 30,
+                x: width * 24 / 35,
                 y: height * 27 / 50
             },
             "Total Receipts": {
@@ -252,54 +259,83 @@ p.notes {
             },
             
             "Total Revenue Receipts": {
-                x: width * 18 / 50,
-                y: height * 16 / 50
+                x: width * 15 / 50,
+                y: height * 20 / 50
             },
             "Total Capital Receipts": {
-                x: width * 18 / 50,
+                x: width * 15 / 50,
                 y: height * 37 / 50
             },
 
             "State's Own Tax": {
                 x: width * 10 / 50,
-                y: height * 10 / 50
+                y: height * 28 / 50
             },
-            "State's Own Non-Tax": {
-                x: width * 10 / 50,
-                y: height * 25 / 50
+            "Non-Tax Revenue": {
+                x: width * 7 / 50,
+                y: height * 22.5 / 50
             },
-            "Share in Central Taxes": {
-                x: width * 14 / 50,
-                y: height * 7 / 50
+            "Share of Central Taxes": {
+                x: width * 6 / 50,
+                y: height * 15 / 50
             },
 
-            "Grants-in-aid from Centre": {
+            "Centrally Sponsored Schemes": {
                 x: width * 10 / 50,
-                y: height * 18 / 50
+                y: height * 6 / 50
+            },            
+            
+            "Finance Commission Grants": {
+                x: width * 8 / 50,
+                y: height * 9 / 50
             },
-           
-            "Borrowings": {
-                x: width * 10 / 50,
-                y: height * 40 / 50
+
+            "Other Transfer/Grants to States with Legislature": {
+                x: width * 13 / 50,
+                y: height * 5 / 50
             },
-            "Other receipts": {
-                x: width * 10 / 50,
-                y: height * 35 / 50
+
+            "Public Debt": {
+                x: width * 20/ 50,
+                y: height * 10 / 50
             },
-            "Revenue Expenditure": {
+            "Recoveries of Loans & Advances": {
+                x: width * 17 / 50,
+                y: height * 5 / 50
+            },
+
+            "General Services": {
+                x: width * 40 / 50,
+                y: height * 10 / 50
+            },
+            "Social Services": {
                 x: width * 45 / 50,
-                y: height * 16 / 50
+                y: height * 15 / 50
             },
-            "Capital Expenditure": {
+            "Economic Services": {
+                x: width * 47 / 50,
+                y: height * 25 / 50
+            },
+            "Grants-in-Aid & Contributions": {
                 x: width * 45 / 50,
-                y: height * 37 / 50
+                y: height * 34 / 50
             },
+
+            "Public Debt(Exp)": {
+                x: width * 42/ 50,
+                y: height * 40/ 50
+            },
+            "Loans & Advances": {
+                x: width * 40/ 50,
+                y: height * 43/ 50
+            },
+      
+            
             
         }
 
         // Restart the force layout.
         var nodes = [];
-        
         nodes_data.forEach(function(d) {
 
             var node = {
@@ -311,10 +347,9 @@ p.notes {
                 label_display: +d["label_display"],
                 label_pos: d["label_pos"],
                 color_group: +d["color_group"],
+                notes: d["Notes"],
                 change: ((d[app_config["selected_year"]] - d[app_config["previous_year"]]) / d[app_config["previous_year"]] * 100)
             };
-
-          
 
             if (fixed_notes[d["Particular"]]) {
                 node.x = fixed_notes[d["Particular"]].x
@@ -344,7 +379,6 @@ p.notes {
         var radius_scale = d3.scale.pow().exponent(0.5).domain([0, max_amount]).range([2, 35]);
 
         var links = [];
-        console.log(links_data)
         links_data.forEach(function(d) {
             var link = {
                 source: +d.source,
@@ -353,17 +387,11 @@ p.notes {
                 destination_name: d.destination_name,
                 value: +d.value,
                 type: d.type
-                
             }
-           
-         
+
             links.push(link);
         })
 
-        
-      //  console.log(links)
-       // console.log(nodes)
-        
         force
             .nodes(nodes)
             .links(links)
@@ -371,6 +399,7 @@ p.notes {
 
         // Update the links…
         link = link.data(links, function(d) { return d.target.id; });
+
         // Exit any old links.
         link.exit().remove();
 
@@ -450,10 +479,20 @@ p.notes {
             .style("font-size", "10px")
             .style("opacity", 0)
 
-        node_labels.attr("x", function(d) { return d.x = Math.max(d.r, Math.min(width - d.r, d.x)); })
-            .attr("y", function(d){
+        node_labels.attr("x", function(d){ 
+                d.x = Math.max(d.r, Math.min(width - d.r, d.x));
+                if (d.label_pos.includes("left")) {
+                    return d.x - d.r - 4
+                } else if (d.label_pos.includes("right")) {
+                    return d.x + d.r + 4
+                } else {
+                    return d.x
+                }
+            });
+
+        node_labels.attr("y", function(d){
                 d.y = Math.max(d.r, Math.min(height - d.r, d.y));
-                if (d.label_pos == "top") {
+                if (d.label_pos.includes("top")) {
                     return d.y - d.r - 6
                 } else {
                     return d.y + d.r + 12
@@ -550,6 +589,9 @@ p.notes {
         var percent_class = isNaN(data.change) ? "n-a" : data.change > 0 ? 'positive ' : 'negative'
 
         content += "<span id ='tooltip-percent'  class=" + percent_class + ">" + (isNaN(data.change) ? "N.A." : (data.change.toFixed(2) < 0 ? -1 * data.change.toFixed(2) : data.change.toFixed(2)) + " %") + "</span>";
+        if(data.notes != "..."){
+            content += "<hr class='tooltip-hr' /><span class='tooltip-notes'> Note: " + data.notes + "  </span>";
+        }
         tooltip.showTooltip(content, d3.event);
     }
 

@@ -1,13 +1,19 @@
-no.,Type,Category,Particular,color_group,label_display,label_pos,Notes,Actuals 2016-2017,Budget Estimates 2017-2018,Revised Estimates 2017-2018,Budget Estimates 2018-2019
-0,Receipts,...,Total Receipts,1,1,bottom,...,53140,84732,70401,90673
-1,Receipts,Revenue Receipts,Total Revenue Receipts,1,1,bottom,...,49220,70719,55905,74119
-2,Receipts,Revenue Receipts,State's Own Tax,1,1,,...,12080,16434,12043,17451
-3,Receipts,Revenue Receipts,State's Own Non-Tax,1,1,,,4353,7464,6409,8192
-4,Receipts,Revenue Receipts,Share in Central Taxes,1,1,top,,20189,25651,20025,26096
-5,Receipts,Revenue Receipts,Grants-in-aid from Centre,1,1,,,12598,21170,17428,22380
-6,Receipts,Capital Receipts,Total Capital Receipts,2,1,bottom,,3920,14013,14496,16555
-7,Receipts,Capital Receipts,Borrowings,2,1,,,3902,11265,12354,14008
-8,Receipts,Capital Receipts,Other receipts,2,1,,,19,2747,2142,2547
-9,Expenditure,,Total Expenditure,5,1,bottom,,57407,85923,99453,90270
-10,Expenditure,Total Budgetary Expenditure,Revenue Expenditure,5,1,top,,49363,68319,79257,71329
-11,Expenditure,Total Budgetary Expenditure,Capital Expenditure,5,1,,,49363,68319,79257,71329
+no.,Type,Category,Particular,color_group,label_display,label_pos,Notes,Budget Estimates 2018-2019,Budget Estimates 2019-2020
+0,Receipts,...,Total Receipts,1,1,bottom,...,90673,98339.05
+1,Receipts,Revenue Receipts,Total Revenue Receipts,2,1,"bottom,right",...,74118.49,83147.99
+2,Receipts,Revenue Receipts,State's Own Tax,3,1,bottom,...,17452,17994.15
+3,Receipts,Revenue Receipts,Non-Tax Revenue,3,1,,,8192,8531.65
+4,Receipts,Revenue Receipts,Share of Central Taxes,3,1,,,26095,34374.2
+5,Receipts,Revenue Receipts,Centrally Sponsored Schemes,3,1,top,,17473,18182.34
+6,Receipts,Revenue Receipts,Finance Commission Grants,3,1,,,3313,2441.26
+7,Receipts,Revenue Receipts,Other Transfer/Grants to States with Legislature,3,,top,,1594,1624.39
+8,Receipts,Revenue Receipts,Public Debt,3,1,bottom right,,14008,14142.73
+9,Receipts,Revenue Receipts,Recoveries of Loans & Advances,3,1,,,2547,1048.33
+10,Receipts,Capital Receipts,Total Capital Receipts,2,1,bottom,,16554.92,15191.05
+11,Expenditure,,Total Expenditure,6,1,bottom,,90269.91,99418.92
+12,Expenditure,Total Budgetary Expenditure,General Services,5,1,top,,23124.58,26591.73
+13,Expenditure,Total Budgetary Expenditure,Social Services,5,1,top,,32628.5,36449.23
+14,Expenditure,Total Budgetary Expenditure,Economic Services,5,1,top,,15334.36,16215.21
+15,Expenditure,Total Budgetary Expenditure,Grants-in-Aid & Contributions,5,1,top,,14813.48,15705.27
+16,Expenditure,Total Budgetary Expenditure,Public Debt(Exp),5,1,top,,3830.31,4109.12
+17,Expenditure,Total Budgetary Expenditure,Loans & Advances,5,1,,,538.67,348.32

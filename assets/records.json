@@ -111,6 +111,10 @@
         {
             "name" : "Union Budget DGs",
             "link" : "./visualisations/union-expenditure-dg/index.html"
+        },
+        {
+            "name" : "Assam Expenditure Receipts",
+            "link" : "visualisations/assam-budget-board/Expenditure_receipts/index.html"
         }],
         "developers" : [
             {
