@@ -115,6 +115,10 @@
         {
             "name" : "Assam Expenditure Receipts",
             "link" : "visualisations/assam-budget-board/Expenditure_receipts/index.html"
+        },
+        {
+            "name" : "Assam Budget Trends",
+            "link" : "visualisations/assam-budget-board/Budget_Trends/index.html"
         }],
         "developers" : [
             {
