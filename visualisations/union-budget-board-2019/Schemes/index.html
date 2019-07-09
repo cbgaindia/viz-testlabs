@@ -388,8 +388,10 @@
 
         function categorizeChange(c) {
 
-            if (isNaN(c) || c == 0) {
+            if (isNaN(c)) {
                 return 0;
+            }else if(c == 0){
+                return 1; 
             } else if (c < -0.25) {
                 return -3;
             } else if (c < -0.10) {
@@ -550,7 +552,7 @@
             d3.select(element).attr("stroke-width", 3).attr("z-index", 10000).attr("stroke", "black");
             var content = "<span class='dept-name'>  " + data.id + "  </span><hr class='tooltip-hr' />";
             content += "<span class='tooltipcurrent-year'> <span class=\"value\">  &#8377; " + formatComma(data.value) + " Cr.</span></span>";
-            var percent_class = data.percent_change > 0 ? 'positive ' : 'negative'
+            var percent_class = data.percent_change >= 0 | isNaN(data.percent_change) ? 'positive ' : 'negative'
             
             content += "<span id='tooltip-percent' class=" + percent_class + ">" +  (isNaN(data.percent_change) ? "N.A.": (data.percent_change.toFixed(2) < 0 ? -1 * data.percent_change.toFixed(2) : data.percent_change.toFixed(2)) + " %" ) + "</span>";
             tooltip.showTooltip(content, d3.event);
