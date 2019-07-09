@@ -15,7 +15,7 @@ no.,Type,Category,Sub-category,Particular,color_group,label_display,label_pos,No
 13,Receipts,Revenue Receipts,Non-Tax Revenue,Dividends and Profits,2,0,,...,123016.55,142430.49,106433.24,107311.96,91361,107312,119264,163528.44
 14,Receipts,Revenue Receipts,Non-Tax Revenue,Other Non Tax Revenue,2,0,,...,131781.33,125788.2,114113.31,120552.64,82338,120553,110619,132784
 15,Receipts,Revenue Receipts,Non-Tax Revenue,Receipts of Union Territories,2,0,,...,1804.03,1517.65,1876.43,2062.1,1890,2062,2076,2149
-16,Receipts,Capital Receipts,,Total Capital Receipts,3,1,bottom,...,609885.86,618119.5,751701.56,673409.51,702649,673409,686352,772529
+16,Receipts,Capital Receipts,,Total Capital Receipts,3,1,bottom,...,609885.86,618119.5,751701.56,673409.51,702649,673409,686352,823588.42
 17,Receipts,Capital Receipts,Non-debt Receipts,Total Non-debt Receipts,3,0,,...,65372.11,84432.25,117473.33,92199.08,115678,92199,93155,119827.72
 18,Receipts,Capital Receipts,Non-debt Receipts,Recoveries of loans and advances,3,0,,"Excludes recoveries of short-term loans and advances from States, loans to Government servants, etc.",17629.56,11932.25,17473.33,12199.08,15633,12199,13155,14827.72
 19,Receipts,Capital Receipts,Non-debt Receipts,Miscellaneous Capital Receipts,3,0,,...,47742.55,72500,100000,80000,100045,80000,80000,105000
@@ -26,7 +26,7 @@ no.,Type,Category,Sub-category,Particular,color_group,label_display,label_pos,No
 24,Receipts,Capital Receipts,Debt Receipts,Securities issued against Small Savings,4,0,,...,67435.14,100157.16,102628,75000,102627.95,75000,125000,130000
 25,Receipts,Capital Receipts,Debt Receipts,State Provident Fund (Net),4,0,,...,17745.42,14000,15000,17000,15798.67,17000,17000,18000
 26,Receipts,Capital Receipts,Debt Receipts,Other Receipts (Net),4,0,,"Includes receipts from reserve funds, deposits and advances, etc.",86130.36,53512.69,34318.82,84678.55,5407.31,84678.55,8352.7,59531.61
-27,Receipts,Draw-Down of Cash Balance,Draw-Down of Cash Balance,Total Draw-Down of Cash Balance,4,0,,...,-8895.13,12844.2,-39379,43066,4093,43066,41201,51059
+27,Receipts,Capital Receipts,Draw-Down of Cash Balance,Total Draw-Down of Cash Balance,4,0,,...,-8895.13,12844.2,-39379,43066,4093,43066,41201,51059
 28,Expenditure,Total Budgetary Expenditure,...,Total Budgetary Expenditure,6,1,,...,1975193.71,2146734.78,2217750.06,2442213.3,2141975,2442213,2457235,2786349.45
 29,Expenditure,Total Budgetary Expenditure,Central Expenditure ,Total Central Expenditure,6,1,,...,1583698.1,1723406.77,1741241.52,1895350.02,1683716,1895350,1949430,2189220
 30,Expenditure,Total Budgetary Expenditure,Central Expenditure ,Establishment,6,1,,...,423850.62,437537.6,468914.03,508399.6,473031,508400,517025,546296.24
