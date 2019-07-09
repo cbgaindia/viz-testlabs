@@ -1,7 +1,6 @@
 source,source_name,target,destination_name,value,type
 0,Total Receipts,1,Total Revenue Receipts,5,reverse
 0,Total Receipts,16,Total Capital Receipts,5,reverse
-0,Total Receipts,27,Draw-Down of Cash Balance,1,reverse
 1,Total Revenue Receipts,2,Centre's Net Tax Revenue,3,reverse
 1,Total Revenue Receipts,11,Total Non-Tax Revenue,3,reverse
 2,Centre's Net Tax Revenue,3,Corporation Tax,1,reverse
@@ -18,6 +17,7 @@ source,source_name,target,destination_name,value,type
 11,Total Non-Tax Revenue,15,Receipts of Union Territories,1,reverse
 16,Total Capital Receipts,17,Non-debt Receipts,3,reverse
 16,Total Capital Receipts,20,Debt Receipts,3,reverse
+16,Total Capital Receipts,27,Draw-Down of Cash Balance,3,reverse
 17,Non-debt Receipts,18,Recoveries of loans and advances,1,reverse
 17,Non-debt Receipts,19,Miscellaneous Capital Receipts,1,reverse
 20,Debt Receipts,21,Market Loans (Gross),1,reverse
