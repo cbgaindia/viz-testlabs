@@ -23,6 +23,10 @@
       	{
             "name" : "Budget Profile - Assam",
             "link" : "./visualisations/assam-budget-board/budget%20profile/index.html"
+        },
+        {
+            "name" : "Budget Profile - Union Budget",
+            "link" : "./visualisations/union-budget-explorer(2020)/budget-profile/index.html"
         }],
         "developers" : [
             {
