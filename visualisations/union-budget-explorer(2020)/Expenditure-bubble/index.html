@@ -42,6 +42,11 @@
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.19), 0 1px 3px rgba(0, 0, 0, 0.23);
     }
 
+
+    .tooltip .na {
+        color: grey;
+    }
+
     .tooltip .dept-name {
         font-size: 16px;
         font-weight: 600;
@@ -259,12 +264,12 @@
                 </div>
                 <div class="row">
                     <div class="left-panel-text">
-                        This section presents the ministry-wise allocations presented in the Union Budget 2020-21. In this year's budget there are 99 Demands in total.
+                        This section presents the ministry-wise allocations presented in the Union Budget 2019-20. In this year's budget there are 100 Demands in total.
                     </div>
                 </div>
                 <div class="row">
                     <div id="obi-colorKey">
-                        <p class="help-text-1">Colour represents increase and cut in allocation in comparison with 2019-2020 </p>
+                        <p class="help-text-1">Colour represents increase and cut in allocation in comparison with 2018-2019 </p>
                         <ul class="obi-colorSwatches">
                             <li class="change-decrease3"></li>
                             <li class="change-decrease2"></li>
@@ -288,6 +293,7 @@
                             <li>+25%</li>
                         </ul>
                         <p class="help-text-2">The size of the bubble represents the amount of allocations relative to other departments/ministry. </p>
+                        <p class="help-text-2"><b>Note:</b>  Since the Department of Fisheries got recently seperated from the Department of Animal Husbandry, Dairying and Fisheries (previously referenced), therefore we had to exclude allocations for the same in this visualization.</p>
                     </div>
                 </div>
             </div>
@@ -317,8 +323,8 @@
     <script type="text/javascript">
     "use strict";
 
-    var width = 450,
-        height = 500,
+    var width = 430,
+        height = 510,
         tooltip = CustomTooltip("obi_tooltip", 260),
         layout_gravity = -0.01,
         selected_year = "Budget Estimates 2020-2021 Total",
@@ -331,17 +337,17 @@
 
     var center = { x: width / 2, y: (height * 5.5 / 10) };
 
-        var fillColor = d3.scale.ordinal().domain([-3, -2, -1, 0, 1, 2, 3]).range(['#d73027', '#f46d43', '#fdae61', '#e1e2dd', '#abd9e9', '#74add1', '#4575b4'])
+       var fillColor = d3.scale.ordinal().domain([-3, -2, -1, 0, 1, 2, 3]).range(['#d73027', '#f46d43', '#fdae61', '#e1e2dd', '#abd9e9', '#74add1', '#4575b4'])
 
     var strokeColor = d3.scale.ordinal().domain([-3, -2, -1, 0, 1, 2, 3]).range(['#d73027', '#f46d43', '#fdae61', '#fdae61', '#abd9e9', '#74add1', '#4575b4'])
 
 
     function categorizeChange(c, p) {
 
-            if (isNaN(c)) {
+             if (isNaN(c)) {
                 return 0;
             }else if(c == 0){
-                return 1; 
+                return 0; 
             } else if (c < -0.25) {
                 return -3;
             } else if (c < -0.10) {
@@ -356,7 +362,6 @@
                 return 2;
             } else { return 3; }
         }
-
 
     function custom_chart(data) {
 
@@ -530,7 +535,7 @@
 
     var formatComma = d3.format(",")
 
-        function show_details(data, i, element) {
+    function show_details(data, i, element) {
 
             d3.select(element).attr("stroke-width", 3).attr("z-index", 10000).attr("stroke", "black");
             var content = "<span class='dept-name'>  " + data.id + "  </span><hr class='tooltip-hr' />";
@@ -539,7 +544,7 @@
             
             content += "<span id='tooltip-percent' class=" + percent_class + ">" +  (isNaN(data.percent_change) ? "N.A.": (data.percent_change.toFixed(2) < 0 ? -1 * data.percent_change.toFixed(2) : data.percent_change.toFixed(2)) + " %" ) + "</span>";
             tooltip.showTooltip(content, d3.event);
-        }
+    }
 
     function hide_details(data, i, element) {
         d3.select(element).attr("stroke-width", 1)
