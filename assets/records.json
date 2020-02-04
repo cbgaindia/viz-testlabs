@@ -23,6 +23,10 @@
       	{
             "name" : "Budget Profile - Assam",
             "link" : "./visualisations/assam-budget-board/budget%20profile/index.html"
+        },
+        {
+            "name" : "Budget Profile - Union Budget",
+            "link" : "./visualisations/union-budget-explorer(2020)/budget-profile/index.html"
         }],
         "developers" : [
             {
@@ -66,7 +70,15 @@
 	{
 	    "name" : "Expenditure Budget of Ministries and Departments(2019-20)",
             "link" : "./visualisations/union-budget-explorer(2019)/Expenditure-bubble/index.html"
-	}],
+	},
+    {
+        "name" : "Expenditure Budget of Ministries and Departments((2020-21)",
+            "link" : "./visualisations/union-budget-explorer(2020)/Expenditure-bubble/index.html"
+    },
+    {
+        "name" : "Major Schemes(2020-21)",
+            "link" : "./visualisations/union-budget-explorer(2020)/Schemes/index.html"
+    }],
         "developers" : [
             {
                 "name":"Akshay Verma",
@@ -88,6 +100,9 @@
         },
         {   "name" : "Budget Summary(2019-2020)",
             "link" : "./visualisations/union-budget-explorer(2019)/3-balance-column/index.html"
+        },
+        {   "name" : "Budget Summary(2020-2021)",
+            "link" : "./visualisations/union-budget-explorer(2020)/3-balance-column/index.html"
         }],
         "developers" : [
             {
