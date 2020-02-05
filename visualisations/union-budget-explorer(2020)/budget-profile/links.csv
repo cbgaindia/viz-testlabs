@@ -1,7 +1,7 @@
 source,source_name,target,destination_name,value,type
 0,Total Receipts,1,Total Revenue Receipts,5,reverse
 0,Total Receipts,16,Total Capital Receipts,5,reverse
-0,Total Receipts,27,Draw-Down of Cash Balance,1,reverse
+0,Total Receipts,27,Draw-Down of Cash Balance,1,
 1,Total Revenue Receipts,2,Centre's Net Tax Revenue,3,reverse
 1,Total Revenue Receipts,11,Total Non-Tax Revenue,3,reverse
 2,Centre's Net Tax Revenue,3,Corporation Tax,1,reverse
