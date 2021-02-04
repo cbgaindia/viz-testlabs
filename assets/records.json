@@ -80,6 +80,10 @@
             "link" : "./visualisations/union-budget-explorer(2020)/Expenditure-bubble/index.html"
     },
     {
+        "name" : "Expenditure Budget of Ministries and Departments(2021-22)",
+            "link" : "./visualisations/union-budget-explorer(2021)/Expenditure-bubble/index.html"
+    },
+    {
         "name" : "Major Schemes(2020-21)",
             "link" : "./visualisations/union-budget-explorer(2020)/Schemes/index.html"
     },
